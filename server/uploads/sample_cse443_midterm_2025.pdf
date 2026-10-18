@@ -1,0 +1,105 @@
+%PDF-1.4
+%âãÏÓ
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 5 0 R 7 0 R] /Count 3 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 9 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 560 >>
+stream
+BT
+/F1 18 Tf
+50 730 Td
+(Part A: Cryptographic Primitives & Key Exchange) Tj
+/F1 11 Tf
+0 -30 Td
+(Question 1: Explain the mathematical basis of Diffie-Hellman Key Exchange.) Tj
+0 -20 Td
+(Consider prime p = 23 and primitive root g = 5.) Tj
+0 -20 Td
+(Alice selects private key a = 6. Calculate her public key A.) Tj
+0 -20 Td
+(Bob selects private key b = 15. Calculate his public key B.) Tj
+0 -20 Td
+(Compute the shared secret key s computed by both parties.) Tj
+0 -20 Td
+(Explain how Man-in-the-Middle \(MitM\) attacks threaten unauthenticated DH.) Tj
+0 -20 Td
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 6 0 R /Resources << /Font << /F1 9 0 R >> >> >>
+endobj
+6 0 obj
+<< /Length 553 >>
+stream
+BT
+/F1 18 Tf
+50 730 Td
+(Part B: Block Ciphers & Modes of Operation) Tj
+/F1 11 Tf
+0 -30 Td
+(Question 2: Compare ECB mode versus CBC and GCM modes in AES-256.) Tj
+0 -20 Td
+(Why does Electronic Codebook \(ECB\) fail semantic security for structured images?) Tj
+0 -20 Td
+(Describe the initialization vector \(IV\) requirements in Cipher Block Chaining.) Tj
+0 -20 Td
+(Explain how Galois/Counter Mode \(GCM\) provides both confidentiality and authentication.) Tj
+0 -20 Td
+(Demonstrate how bit-flipping attacks in CBC mode can alter plaintext.) Tj
+0 -20 Td
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 8 0 R /Resources << /Font << /F1 9 0 R >> >> >>
+endobj
+8 0 obj
+<< /Length 560 >>
+stream
+BT
+/F1 18 Tf
+50 730 Td
+(Part C: Web Security & Access Control) Tj
+/F1 11 Tf
+0 -30 Td
+(Question 3: Distinguish between Cross-Site Scripting \(XSS\) and CSRF.) Tj
+0 -20 Td
+(Provide a realistic scenario where an attacker leverages Reflected XSS to steal cookies.) Tj
+0 -20 Td
+(What defensive properties does the SameSite=Strict cookie attribute confer?) Tj
+0 -20 Td
+(How does Content Security Policy \(CSP\) mitigate malicious script execution?) Tj
+0 -20 Td
+(Describe Role-Based Access Control \(RBAC\) vs Attribute-Based Access Control \(ABAC\).) Tj
+0 -20 Td
+ET
+endstream
+endobj
+9 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 10
+0000000000 65535 f 
+0000000019 00000 n 
+0000000068 00000 n 
+0000000137 00000 n 
+0000000263 00000 n 
+0000000873 00000 n 
+0000000999 00000 n 
+0000001602 00000 n 
+0000001728 00000 n 
+0000002338 00000 n 
+trailer
+<< /Size 10 /Root 1 0 R >>
+startxref
+2408
+%%EOF

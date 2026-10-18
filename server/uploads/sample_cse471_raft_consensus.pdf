@@ -1,0 +1,70 @@
+%PDF-1.4
+%âãÏÓ
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 5 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 7 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 410 >>
+stream
+BT
+/F1 18 Tf
+50 730 Td
+(Raft: Understandable Distributed Consensus) Tj
+/F1 11 Tf
+0 -30 Td
+(Node States: Follower, Candidate, Leader.) Tj
+0 -20 Td
+(Heartbeat intervals: Leaders send AppendEntries RPCs every 50ms.) Tj
+0 -20 Td
+(Election timeout: Randomized between 150ms and 300ms to avoid split votes.) Tj
+0 -20 Td
+(Majority quorum: A cluster of 2F+1 nodes tolerates F Byzantine/crash failures.) Tj
+0 -20 Td
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 6 0 R /Resources << /Font << /F1 7 0 R >> >> >>
+endobj
+6 0 obj
+<< /Length 389 >>
+stream
+BT
+/F1 18 Tf
+50 730 Td
+(Log Replication & Safety Invariants) Tj
+/F1 11 Tf
+0 -30 Td
+(Leader Append-Only property: Leaders never overwrite or truncate their own logs.) Tj
+0 -20 Td
+(Log Matching property: Matching term and index implies identical preceding log entries.) Tj
+0 -20 Td
+(Commit rule: An entry is committed once replicated across majority nodes by current leader.) Tj
+0 -20 Td
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000019 00000 n 
+0000000068 00000 n 
+0000000131 00000 n 
+0000000257 00000 n 
+0000000717 00000 n 
+0000000843 00000 n 
+0000001282 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R >>
+startxref
+1352
+%%EOF
