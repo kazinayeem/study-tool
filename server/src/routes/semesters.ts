@@ -1,8 +1,11 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { prisma } from '../prisma.js';
 import { validate } from '../middleware/validate.js';
 import { AppError } from '../middleware/errorHandler.js';
+import { ownedBy, ownerId } from '../middleware/ownership.js';
+import type { AuthenticatedRequest } from '../middleware/auth.js';
+import { getOrCreateAppSetting } from '../services/userPreferences.js';
 
 const router = Router();
 
@@ -34,10 +37,13 @@ const updateSemesterSchema = z.object({
 });
 
 // List all semesters
-router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { includeArchived } = req.query;
-    const where = includeArchived === 'true' ? {} : { isArchived: false };
+    const where = {
+      ...ownedBy(req),
+      ...(includeArchived === 'true' ? {} : { isArchived: false }),
+    };
 
     const semesters = await prisma.semester.findMany({
       where,
@@ -72,11 +78,11 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Get single semester by ID
-router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/:id', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const semester = await prisma.semester.findUnique({
-      where: { id },
+    const semester = await prisma.semester.findFirst({
+      where: { id, ...ownedBy(req) },
       include: {
         courses: {
           include: {
@@ -122,9 +128,21 @@ router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Create semester
-router.post('/', validate(createSemesterSchema), async (req: Request, res: Response, next: NextFunction) => {
+router.post('/', validate(createSemesterSchema), async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { name, code, startDate, endDate, status, description, academicGoals, color } = req.body;
+
+    // Prevent duplicate semesters (same name or code) within the caller's own workspace.
+    const duplicate = await prisma.semester.findFirst({
+      where: {
+        ...ownedBy(req),
+        OR: [{ name }, ...(code ? [{ code }] : [])],
+      },
+      select: { id: true, name: true },
+    });
+    if (duplicate) {
+      throw new AppError(`A semester named "${name}" already exists.`, 409);
+    }
 
     const semester = await prisma.semester.create({
       data: {
@@ -136,15 +154,16 @@ router.post('/', validate(createSemesterSchema), async (req: Request, res: Respo
         description,
         academicGoals,
         color: color || '#4f46e5',
+        userId: ownerId(req),
       },
     });
 
-    // If status is ACTIVE, update AppSetting currentSemesterId
+    // If status is ACTIVE, update the caller's own AppSetting
     if (status === 'ACTIVE') {
-      await prisma.appSetting.upsert({
-        where: { id: 'default' },
-        create: { id: 'default', currentSemesterId: semester.id },
-        update: { currentSemesterId: semester.id },
+      const setting = await getOrCreateAppSetting(req);
+      await prisma.appSetting.update({
+        where: { id: setting.id },
+        data: { currentSemesterId: semester.id },
       });
     }
 
@@ -155,10 +174,15 @@ router.post('/', validate(createSemesterSchema), async (req: Request, res: Respo
 });
 
 // Update semester
-router.put('/:id', validate(updateSemesterSchema), async (req: Request, res: Response, next: NextFunction) => {
+router.put('/:id', validate(updateSemesterSchema), async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     const { name, code, startDate, endDate, status, description, academicGoals, color, isArchived } = req.body;
+
+    const existing = await prisma.semester.findFirst({ where: { id, ...ownedBy(req) } });
+    if (!existing) {
+      throw new AppError('Semester not found', 404);
+    }
 
     const updateData: any = {};
     if (name !== undefined) updateData.name = name;
@@ -177,10 +201,10 @@ router.put('/:id', validate(updateSemesterSchema), async (req: Request, res: Res
     });
 
     if (status === 'ACTIVE') {
-      await prisma.appSetting.upsert({
-        where: { id: 'default' },
-        create: { id: 'default', currentSemesterId: semester.id },
-        update: { currentSemesterId: semester.id },
+      const setting = await getOrCreateAppSetting(req);
+      await prisma.appSetting.update({
+        where: { id: setting.id },
+        data: { currentSemesterId: semester.id },
       });
     }
 
@@ -191,13 +215,13 @@ router.put('/:id', validate(updateSemesterSchema), async (req: Request, res: Res
 });
 
 // Duplicate semester structure (copies semester & courses WITHOUT copying files/documents)
-router.post('/:id/duplicate', async (req: Request, res: Response, next: NextFunction) => {
+router.post('/:id/duplicate', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     const { newName, newStartDate, newEndDate } = req.body;
 
-    const original = await prisma.semester.findUnique({
-      where: { id },
+    const original = await prisma.semester.findFirst({
+      where: { id, ...ownedBy(req) },
       include: { courses: true },
     });
 
@@ -217,6 +241,7 @@ router.post('/:id/duplicate', async (req: Request, res: Response, next: NextFunc
           academicGoals: original.academicGoals,
           color: original.color,
           isArchived: false,
+          userId: ownerId(req),
         },
       });
 
@@ -239,6 +264,7 @@ router.post('/:id/duplicate', async (req: Request, res: Response, next: NextFunc
             classSchedule: course.classSchedule,
             examSchedule: course.examSchedule,
             progress: 0,
+            userId: ownerId(req),
           },
         });
       }
@@ -262,9 +288,13 @@ router.post('/:id/duplicate', async (req: Request, res: Response, next: NextFunc
 });
 
 // Delete semester
-router.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
+router.delete('/:id', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    const existing = await prisma.semester.findFirst({ where: { id, ...ownedBy(req) } });
+    if (!existing) {
+      throw new AppError('Semester not found', 404);
+    }
     await prisma.semester.delete({
       where: { id },
     });

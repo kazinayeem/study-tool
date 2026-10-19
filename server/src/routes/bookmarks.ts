@@ -1,8 +1,10 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { prisma } from '../prisma.js';
 import { validate } from '../middleware/validate.js';
 import { AppError } from '../middleware/errorHandler.js';
+import { ownedBy } from '../middleware/ownership.js';
+import type { AuthenticatedRequest } from '../middleware/auth.js';
 
 const router = Router({ mergeParams: true });
 
@@ -15,9 +17,13 @@ const createBookmarkSchema = z.object({
 });
 
 // List bookmarks for document
-router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { documentId } = req.params;
+
+    const parent = await prisma.document.findFirst({ where: { id: documentId, ...ownedBy(req) } });
+    if (!parent) throw new AppError('Document not found', 404);
+
     const bookmarks = await prisma.documentBookmark.findMany({
       where: { documentId },
       orderBy: { pageNumber: 'asc' },
@@ -29,12 +35,12 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Create bookmark
-router.post('/', validate(createBookmarkSchema), async (req: Request, res: Response, next: NextFunction) => {
+router.post('/', validate(createBookmarkSchema), async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { documentId } = req.params;
     const { pageNumber, title, color } = req.body;
 
-    const document = await prisma.document.findUnique({ where: { id: documentId } });
+    const document = await prisma.document.findFirst({ where: { id: documentId, ...ownedBy(req) } });
     if (!document) {
       throw new AppError('Document not found', 404);
     }
@@ -55,9 +61,15 @@ router.post('/', validate(createBookmarkSchema), async (req: Request, res: Respo
 });
 
 // Delete bookmark
-router.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
+router.delete('/:id', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    const existing = await prisma.documentBookmark.findUnique({ where: { id } });
+    if (!existing) throw new AppError('Bookmark not found', 404);
+
+    const parent = await prisma.document.findFirst({ where: { id: existing.documentId, ...ownedBy(req) } });
+    if (!parent) throw new AppError('Bookmark not found', 404);
+
     await prisma.documentBookmark.delete({
       where: { id },
     });

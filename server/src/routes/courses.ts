@@ -1,8 +1,10 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { prisma } from '../prisma.js';
 import { validate } from '../middleware/validate.js';
 import { AppError } from '../middleware/errorHandler.js';
+import { ownedBy, ownerId } from '../middleware/ownership.js';
+import type { AuthenticatedRequest } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -51,10 +53,13 @@ const updateCourseSchema = z.object({
 });
 
 // List courses, optionally filtered by semester
-router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { semesterId } = req.query;
-    const where = semesterId ? { semesterId: String(semesterId) } : {};
+    const where = {
+      ...ownedBy(req),
+      ...(semesterId ? { semesterId: String(semesterId) } : {}),
+    };
 
     const courses = await prisma.course.findMany({
       where,
@@ -85,11 +90,11 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Get single course details
-router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/:id', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const course = await prisma.course.findUnique({
-      where: { id },
+    const course = await prisma.course.findFirst({
+      where: { id, ...ownedBy(req) },
       include: {
         semester: true,
         documents: {
@@ -133,10 +138,18 @@ router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Create course
-router.post('/', validate(createCourseSchema), async (req: Request, res: Response, next: NextFunction) => {
+router.post('/', validate(createCourseSchema), async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
+    const semester = await prisma.semester.findFirst({
+      where: { id: req.body.semesterId, ...ownedBy(req) },
+      select: { id: true },
+    });
+    if (!semester) {
+      throw new AppError('Semester not found', 404);
+    }
+
     const course = await prisma.course.create({
-      data: req.body,
+      data: { ...req.body, userId: ownerId(req) },
       include: {
         semester: true,
       },
@@ -149,9 +162,24 @@ router.post('/', validate(createCourseSchema), async (req: Request, res: Respons
 });
 
 // Update course
-router.put('/:id', validate(updateCourseSchema), async (req: Request, res: Response, next: NextFunction) => {
+router.put('/:id', validate(updateCourseSchema), async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    const existing = await prisma.course.findFirst({ where: { id, ...ownedBy(req) } });
+    if (!existing) {
+      throw new AppError('Course not found', 404);
+    }
+
+    if (req.body.semesterId && req.body.semesterId !== existing.semesterId) {
+      const semester = await prisma.semester.findFirst({
+        where: { id: req.body.semesterId, ...ownedBy(req) },
+        select: { id: true },
+      });
+      if (!semester) {
+        throw new AppError('Semester not found', 404);
+      }
+    }
+
     const course = await prisma.course.update({
       where: { id },
       data: req.body,
@@ -167,9 +195,13 @@ router.put('/:id', validate(updateCourseSchema), async (req: Request, res: Respo
 });
 
 // Delete course
-router.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
+router.delete('/:id', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    const existing = await prisma.course.findFirst({ where: { id, ...ownedBy(req) } });
+    if (!existing) {
+      throw new AppError('Course not found', 404);
+    }
     await prisma.course.delete({
       where: { id },
     });

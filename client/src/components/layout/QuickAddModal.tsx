@@ -197,7 +197,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
         semesterId: courseSemesterId,
         credits: Number(courseCredits),
         teacherName: courseTeacher.trim() || null,
-        color: '#4f46e5',
+        color: '#5645d4',
       });
       queryClient.invalidateQueries({ queryKey: ['courses'] });
       queryClient.invalidateQueries({ queryKey: ['semesters'] });
@@ -235,21 +235,21 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="w-full max-w-xl overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-in fade-in duration-150">
+      <div className="w-full max-w-xl overflow-hidden card-notion shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-800">
-          <h3 className="text-base font-semibold text-slate-900 dark:text-white">Quick Create</h3>
+        <div className="flex items-center justify-between border-b border-[#e5e3df] px-6 py-4 dark:border-[#1e293b]">
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">Quick Create</h3>
           <button
             onClick={onClose}
-            className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+            className="rounded-[8px] p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-200"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* Tabs Bar */}
-        <div className="flex border-b border-slate-200 px-6 overflow-x-auto gap-2 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-800/30">
+        <div className="flex border-b border-[#e5e3df] px-6 overflow-x-auto gap-2 bg-[#f7f6f3]/50 dark:border-[#1e293b] dark:bg-slate-800/30">
           {[
             { id: 'document', label: 'PDF / File', icon: Upload },
             { id: 'note', label: 'Note', icon: FileText },
@@ -266,9 +266,9 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                   setTab(item.id);
                   setError(null);
                 }}
-                className={`flex items-center gap-2 border-b-2 py-3 px-2 text-xs font-medium whitespace-nowrap transition-colors ${
+                className={`flex items-center gap-2 border-b-2 py-3 px-2 text-xs font-semibold whitespace-nowrap transition-colors ${
                   tab === item.id
-                    ? 'border-indigo-600 text-indigo-600 dark:border-indigo-400 dark:text-indigo-400'
+                    ? 'border-[#5645d4] text-[#5645d4] dark:border-[#8070f6] dark:text-[#8070f6]'
                     : 'border-transparent text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200'
                 }`}
               >
@@ -282,7 +282,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
         {/* Content Body */}
         <div className="p-6 max-h-[70vh] overflow-y-auto">
           {error && (
-            <div className="mb-4 rounded-xl bg-rose-50 p-3 text-xs font-medium text-rose-700 dark:bg-rose-950/40 dark:text-rose-400 border border-rose-200 dark:border-rose-900/50">
+            <div className="mb-4 rounded-[8px] bg-rose-50 p-3 text-xs font-medium text-rose-700 dark:bg-rose-950/40 dark:text-rose-400 border border-rose-200 dark:border-rose-900/50">
               {error}
             </div>
           )}
@@ -300,7 +300,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                     setDocFile(file);
                     if (file && !docTitle) setDocTitle(file.name.replace(/\.[^/.]+$/, ''));
                   }}
-                  className="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 dark:file:bg-indigo-950 dark:file:text-indigo-400"
+                  className="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-[8px] file:border-0 file:text-xs file:font-semibold file:bg-[#5645d4]/10 file:text-[#5645d4] hover:file:bg-[#5645d4]/20 dark:file:bg-[#5645d4]/20 dark:file:text-[#8070f6]"
                 />
               </div>
               <div>
@@ -310,7 +310,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                   value={docTitle}
                   onChange={(e) => setDocTitle(e.target.value)}
                   placeholder="e.g. Midterm 2026 Sample Questions"
-                  className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -323,7 +323,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                       const course = courses.find((c: any) => c.id === e.target.value);
                       if (course?.semesterId) setDocSemesterId(course.semesterId);
                     }}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                   >
                     <option value="">None (Personal)</option>
                     {courses.map((c: any) => (
@@ -336,7 +336,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                   <select
                     value={docCategory}
                     onChange={(e) => setDocCategory(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                   >
                     {DOCUMENT_CATEGORIES.map((cat) => (
                       <option key={cat} value={cat}>{cat}</option>
@@ -351,12 +351,12 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                   value={docDescription}
                   onChange={(e) => setDocDescription(e.target.value)}
                   placeholder="Summary or study tips for this file..."
-                  className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                 />
               </div>
               <div className="flex justify-end gap-2 pt-2">
-                <button type="button" onClick={onClose} className="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-lg dark:text-slate-300">Cancel</button>
-                <button type="submit" disabled={loading} className="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg disabled:opacity-50">
+                <button type="button" onClick={onClose} className="btn-notion-secondary text-xs">Cancel</button>
+                <button type="submit" disabled={loading} className="btn-notion-primary text-xs disabled:opacity-50">
                   {loading ? 'Uploading...' : 'Upload Document'}
                 </button>
               </div>
@@ -374,7 +374,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                   value={noteTitle}
                   onChange={(e) => setNoteTitle(e.target.value)}
                   placeholder="e.g. Distributed Consensus & Raft Notes"
-                  className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                 />
               </div>
               <div>
@@ -382,7 +382,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                 <select
                   value={noteCourseId}
                   onChange={(e) => setNoteCourseId(e.target.value)}
-                  className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                 >
                   <option value="">Independent Personal Note</option>
                   {courses.map((c: any) => (
@@ -397,12 +397,12 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                   value={noteContent}
                   onChange={(e) => setNoteContent(e.target.value)}
                   placeholder="Start drafting thoughts, definitions, or study items..."
-                  className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white font-mono"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white font-mono"
                 />
               </div>
               <div className="flex justify-end gap-2 pt-2">
-                <button type="button" onClick={onClose} className="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-lg dark:text-slate-300">Cancel</button>
-                <button type="submit" disabled={loading} className="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg disabled:opacity-50">
+                <button type="button" onClick={onClose} className="btn-notion-secondary text-xs">Cancel</button>
+                <button type="submit" disabled={loading} className="btn-notion-primary text-xs disabled:opacity-50">
                   {loading ? 'Creating...' : 'Create Note'}
                 </button>
               </div>
@@ -420,7 +420,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                   value={assignTitle}
                   onChange={(e) => setAssignTitle(e.target.value)}
                   placeholder="e.g. Lab 3: Buffer Overflow Exploit"
-                  className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -430,7 +430,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                     required
                     value={assignCourseId}
                     onChange={(e) => setAssignCourseId(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                   >
                     <option value="">Select course...</option>
                     {courses.map((c: any) => (
@@ -443,7 +443,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                   <select
                     value={assignPriority}
                     onChange={(e) => setAssignPriority(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                   >
                     <option value="LOW">Low</option>
                     <option value="MEDIUM">Medium</option>
@@ -459,12 +459,12 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                   required
                   value={assignDeadline}
                   onChange={(e) => setAssignDeadline(e.target.value)}
-                  className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                 />
               </div>
               <div className="flex justify-end gap-2 pt-2">
-                <button type="button" onClick={onClose} className="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-lg dark:text-slate-300">Cancel</button>
-                <button type="submit" disabled={loading} className="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg disabled:opacity-50">
+                <button type="button" onClick={onClose} className="btn-notion-secondary text-xs">Cancel</button>
+                <button type="submit" disabled={loading} className="btn-notion-primary text-xs disabled:opacity-50">
                   {loading ? 'Adding...' : 'Add Assignment'}
                 </button>
               </div>
@@ -482,7 +482,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                   value={examTitle}
                   onChange={(e) => setExamTitle(e.target.value)}
                   placeholder="e.g. Information Security Midterm Exam"
-                  className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -492,7 +492,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                     required
                     value={examCourseId}
                     onChange={(e) => setExamCourseId(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                   >
                     <option value="">Select course...</option>
                     {courses.map((c: any) => (
@@ -505,7 +505,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                   <select
                     value={examType}
                     onChange={(e) => setExamType(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                   >
                     <option value="Quiz">Quiz</option>
                     <option value="Midterm">Midterm</option>
@@ -523,7 +523,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                     required
                     value={examDate}
                     onChange={(e) => setExamDate(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                   />
                 </div>
                 <div>
@@ -533,13 +533,13 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                     value={examRoom}
                     onChange={(e) => setExamRoom(e.target.value)}
                     placeholder="e.g. Hall B, Seat 42"
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                   />
                 </div>
               </div>
               <div className="flex justify-end gap-2 pt-2">
-                <button type="button" onClick={onClose} className="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-lg dark:text-slate-300">Cancel</button>
-                <button type="submit" disabled={loading} className="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg disabled:opacity-50">
+                <button type="button" onClick={onClose} className="btn-notion-secondary text-xs">Cancel</button>
+                <button type="submit" disabled={loading} className="btn-notion-primary text-xs disabled:opacity-50">
                   {loading ? 'Adding...' : 'Add Exam'}
                 </button>
               </div>
@@ -558,7 +558,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                     value={courseCode}
                     onChange={(e) => setCourseCode(e.target.value)}
                     placeholder="e.g. CSE443"
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                   />
                 </div>
                 <div>
@@ -567,7 +567,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                     required
                     value={courseSemesterId}
                     onChange={(e) => setCourseSemesterId(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                   >
                     <option value="">Select semester...</option>
                     {semesters.map((s: any) => (
@@ -584,7 +584,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                   value={courseTitle}
                   onChange={(e) => setCourseTitle(e.target.value)}
                   placeholder="e.g. Information System Security"
-                  className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -595,7 +595,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                     step="0.5"
                     value={courseCredits}
                     onChange={(e) => setCourseCredits(parseFloat(e.target.value) || 3.0)}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                   />
                 </div>
                 <div>
@@ -605,13 +605,13 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                     value={courseTeacher}
                     onChange={(e) => setCourseTeacher(e.target.value)}
                     placeholder="e.g. Dr. Alan Vance"
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                   />
                 </div>
               </div>
               <div className="flex justify-end gap-2 pt-2">
-                <button type="button" onClick={onClose} className="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-lg dark:text-slate-300">Cancel</button>
-                <button type="submit" disabled={loading} className="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg disabled:opacity-50">
+                <button type="button" onClick={onClose} className="btn-notion-secondary text-xs">Cancel</button>
+                <button type="submit" disabled={loading} className="btn-notion-primary text-xs disabled:opacity-50">
                   {loading ? 'Creating...' : 'Create Course'}
                 </button>
               </div>
@@ -629,7 +629,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                   value={semName}
                   onChange={(e) => setSemName(e.target.value)}
                   placeholder="e.g. Fall 2026 or Spring 2027"
-                  className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -640,7 +640,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                     required
                     value={semStart}
                     onChange={(e) => setSemStart(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                   />
                 </div>
                 <div>
@@ -650,7 +650,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                     required
                     value={semEnd}
                     onChange={(e) => setSemEnd(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                   />
                 </div>
               </div>
@@ -659,7 +659,7 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                 <select
                   value={semStatus}
                   onChange={(e) => setSemStatus(e.target.value)}
-                  className="w-full rounded-lg border border-slate-300 p-2.5 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-xs text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                 >
                   <option value="UPCOMING">Upcoming</option>
                   <option value="ACTIVE">Active (Current)</option>
@@ -667,8 +667,8 @@ export const QuickAddModal: React.FC<QuickAddModalProps> = ({ isOpen, onClose, d
                 </select>
               </div>
               <div className="flex justify-end gap-2 pt-2">
-                <button type="button" onClick={onClose} className="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 rounded-lg dark:text-slate-300">Cancel</button>
-                <button type="submit" disabled={loading} className="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg disabled:opacity-50">
+                <button type="button" onClick={onClose} className="btn-notion-secondary text-xs">Cancel</button>
+                <button type="submit" disabled={loading} className="btn-notion-primary text-xs disabled:opacity-50">
                   {loading ? 'Creating...' : 'Create Semester'}
                 </button>
               </div>

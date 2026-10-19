@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { prisma } from '../prisma.js';
+import { getOptionalAuthUser } from '../middleware/auth.js';
 const router = Router();
 router.get('/', async (req, res, next) => {
     try {
@@ -18,6 +19,8 @@ router.get('/', async (req, res, next) => {
                 },
             });
         }
+        const authUser = getOptionalAuthUser(req);
+        const visibilityFilter = authUser ? {} : { visibility: 'PUBLIC' };
         const [semesters, courses, documents, notes, assignments, exams, events] = await Promise.all([
             prisma.semester.findMany({
                 where: {
@@ -46,6 +49,7 @@ router.get('/', async (req, res, next) => {
             }),
             prisma.document.findMany({
                 where: {
+                    ...visibilityFilter,
                     OR: [
                         { title: { contains: q } },
                         { originalFilename: { contains: q } },
@@ -61,6 +65,7 @@ router.get('/', async (req, res, next) => {
             }),
             prisma.note.findMany({
                 where: {
+                    ...visibilityFilter,
                     OR: [
                         { title: { contains: q } },
                         { content: { contains: q } },

@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
   CalendarDays,
@@ -13,11 +13,22 @@ import {
   Plus,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   BookOpen,
+  Calculator,
+  Clock,
+  Bell,
+  Archive,
+  Shield,
+  Camera,
+  Layers,
+  Sparkles,
 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../../lib/api';
 import { cn } from '../../lib/utils';
+import { useAuth } from '../../context/AuthContext';
+import { useActiveSemester } from '../../hooks/useActiveSemester';
 
 interface SidebarProps {
   collapsed: boolean;
@@ -26,130 +37,354 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpenQuickAdd }) => {
+  const { user } = useAuth();
+  const location = useLocation();
+  const { activeSemester, activeSemesterId, semesters } = useActiveSemester();
+  const [semesterExpanded, setSemesterExpanded] = useState(true);
+
+  // Auto-expand semester tree if on any semester route
+  useEffect(() => {
+    if (location.pathname.startsWith('/semesters/')) {
+      setSemesterExpanded(true);
+    }
+  }, [location.pathname]);
+
   const { data: dashboardData } = useQuery({
-    queryKey: ['dashboard'],
-    queryFn: () => api.getDashboard(),
+    queryKey: ['dashboard', activeSemesterId],
+    queryFn: () => api.getDashboardWithParams({ ...(activeSemesterId && { semesterId: activeSemesterId }) }),
   });
 
-  const activeSemester = dashboardData?.activeSemester;
+  const { data: inAppData } = useQuery({
+    queryKey: ['inAppNotifications'],
+    queryFn: () => api.getInAppNotifications(),
+    refetchInterval: 30000,
+  });
 
-  const navItems = [
-    { label: 'Dashboard', icon: LayoutDashboard, path: '/' },
-    { label: 'Semesters', icon: CalendarDays, path: '/semesters' },
-    { label: 'Courses', icon: GraduationCap, path: '/courses' },
-    { label: 'Documents', icon: FolderOpen, path: '/documents' },
-    { label: 'Notes', icon: FileText, path: '/notes' },
-    { label: 'Calendar', icon: Calendar, path: '/calendar' },
-    { label: 'Assignments', icon: CheckSquare, path: '/assignments', count: dashboardData?.stats?.overdueCount },
-    { label: 'Exams', icon: Award, path: '/exams' },
+  // Top level workspace navigation
+  const workspaceItems = [
+    { label: 'Dashboard', icon: LayoutDashboard, path: '/', altPath: '/dashboard' },
+    { label: 'Semesters', icon: CalendarDays, path: '/semesters', count: semesters.length > 0 ? semesters.length : undefined },
+    {
+      label: 'Degree Progress',
+      icon: GraduationCap,
+      path: '/degree-planner',
+      altPath: '/degree-progress',
+      aliases: activeSemester ? [`/semesters/${activeSemester.id}/degree-planner`, `/semesters/${activeSemester.id}/degree-progress`] : [],
+    },
+  ];
+
+  // Active Semester child navigation links
+  const semesterChildItems = activeSemester
+    ? [
+        { label: 'Overview', icon: BookOpen, path: `/semesters/${activeSemester.id}`, end: true },
+        { label: 'Courses', icon: GraduationCap, path: `/semesters/${activeSemester.id}/courses`, altPath: '/courses' },
+        {
+          label: 'Assignments',
+          icon: CheckSquare,
+          path: `/semesters/${activeSemester.id}/assignments`,
+          altPath: '/assignments',
+          count: dashboardData?.stats?.overdueCount,
+        },
+        { label: 'Exams', icon: Award, path: `/semesters/${activeSemester.id}/exams`, altPath: '/exams' },
+        { label: 'Grades & CGPA', icon: Calculator, path: `/semesters/${activeSemester.id}/grades`, altPath: '/grades' },
+        { label: 'Degree Progress', icon: Layers, path: `/semesters/${activeSemester.id}/degree-planner`, altPath: '/degree-planner', aliases: ['/degree-progress'] },
+        { label: 'Academic Calendar', icon: Calendar, path: `/semesters/${activeSemester.id}/calendar`, altPath: '/calendar' },
+        {
+          label: 'Study Planner',
+          icon: Clock,
+          path: `/semesters/${activeSemester.id}/planner`,
+          altPath: '/planner',
+          aliases: [`/semesters/${activeSemester.id}/study-planner`, '/study-planner'],
+        },
+        {
+          label: 'Class Photo Journal',
+          icon: Camera,
+          path: `/semesters/${activeSemester.id}/journal`,
+          altPath: '/journal',
+          aliases: [`/semesters/${activeSemester.id}/class-photos`, '/class-photos'],
+        },
+        { label: 'Documents', icon: FolderOpen, path: `/semesters/${activeSemester.id}/documents`, altPath: '/documents' },
+        { label: 'Knowledge Base', icon: FileText, path: `/semesters/${activeSemester.id}/notes`, altPath: '/notes' },
+      ]
+    : [];
+
+  // Personal and system items
+  const personalItems = [
+    { label: 'Notifications', icon: Bell, path: '/notifications', count: inAppData?.unreadCount },
+    { label: 'Backup & Restore', icon: Archive, path: '/backup' },
+    ...(user?.role === 'ADMIN' ? [{ label: 'Admin Panel', icon: Shield, path: '/admin' }] : []),
     { label: 'Settings', icon: Settings, path: '/settings' },
   ];
+
+  // Helper to determine if a route is active
+  const isRouteActive = (itemPath: string, altPath?: string, end = false, aliases?: string[]) => {
+    if (end) {
+      return location.pathname === itemPath;
+    }
+    if (location.pathname === itemPath || location.pathname.startsWith(`${itemPath}/`)) {
+      return true;
+    }
+    if (altPath && (location.pathname === altPath || location.pathname.startsWith(`${altPath}/`))) {
+      return true;
+    }
+    if (aliases && aliases.some((a) => location.pathname === a || location.pathname.startsWith(`${a}/`))) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <aside
       className={cn(
-        'relative flex flex-col border-r border-slate-200 bg-white transition-all duration-300 dark:border-slate-800 dark:bg-slate-900 select-none z-20',
+        'relative flex flex-col border-r border-[#e5e3df] bg-[#fbfbfa] transition-all duration-200 dark:border-[#2a2a2e] dark:bg-[#141416] select-none z-20 text-[#37352f] dark:text-[#f0eeec]',
         collapsed ? 'w-20' : 'w-64'
       )}
     >
       {/* Brand Header */}
-      <div className="flex h-16 items-center justify-between px-4 border-b border-slate-100 dark:border-slate-800">
-        <Link to="/" className="flex items-center gap-3 overflow-hidden">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white shadow-md shadow-indigo-500/20">
-            <BookOpen className="h-5 w-5" />
+      <div className="flex h-16 items-center justify-between px-4 border-b border-[#e5e3df] dark:border-[#2a2a2e]">
+        <Link to="/" className="flex items-center gap-2.5 overflow-hidden">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] bg-[#0a1530] text-white font-bold text-base shadow-xs">
+            <span>N</span>
           </div>
           {!collapsed && (
             <div className="flex flex-col truncate">
-              <span className="font-bold tracking-tight text-slate-900 dark:text-white text-base">ScholarFlow</span>
-              <span className="text-[11px] text-slate-500 dark:text-slate-400">Academic Workspace</span>
+              <span className="font-semibold tracking-[-0.3px] text-[#1a1a1a] dark:text-white text-sm">ScholarFlow</span>
+              <span className="text-[11px] text-[#787671] dark:text-[#a4a097]">Academic Workspace</span>
             </div>
           )}
         </Link>
         <button
           onClick={() => setCollapsed((c) => !c)}
-          className="hidden md:flex h-7 w-7 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-300 transition-colors"
+          className="hidden md:flex h-7 w-7 items-center justify-center rounded-[6px] text-[#787671] hover:bg-[#f0eeec] hover:text-[#1a1a1a] dark:hover:bg-[#252528] dark:hover:text-white transition-colors cursor-pointer"
           title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
         </button>
       </div>
 
-      {/* Quick Action Button */}
+      {/* Quick Action Button: Notion Purple (rounded 8px) */}
       <div className="p-3">
         <button
           onClick={onOpenQuickAdd}
           className={cn(
-            'flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-3 py-2.5 font-medium text-white shadow-sm hover:bg-indigo-700 active:scale-[0.98] transition-all',
+            'flex w-full items-center justify-center gap-2 rounded-[8px] bg-[#5645d4] hover:bg-[#4534b3] active:bg-[#3a2a99] px-3 py-2 font-medium text-white shadow-2xs transition-all cursor-pointer text-xs',
             collapsed ? 'px-0' : ''
           )}
           title="Quick Create"
         >
-          <Plus className="h-4 w-4 shrink-0" />
-          {!collapsed && <span className="text-sm">New Item</span>}
+          <Plus className="h-3.5 w-3.5 shrink-0" />
+          {!collapsed && <span>New Item</span>}
         </button>
       </div>
 
-      {/* Active Semester Pill */}
-      {!collapsed && activeSemester && (
-        <div className="mx-3 mb-2 rounded-lg bg-indigo-50/60 p-2.5 border border-indigo-100/80 dark:bg-indigo-950/30 dark:border-indigo-900/40">
-          <div className="flex items-center justify-between text-xs text-indigo-700 dark:text-indigo-400 font-medium mb-1">
-            <span className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Active Semester
-            </span>
-            <span className="text-[11px] px-1.5 py-0.2 rounded bg-indigo-100 dark:bg-indigo-900/60 font-semibold">
-              {activeSemester.code || 'TERM'}
-            </span>
+      {/* Navigation Scroll Area */}
+      <nav className="flex-1 space-y-4 overflow-y-auto px-2.5 py-1 scrollbar-none">
+        {/* 1. WORKSPACE SECTION */}
+        <div>
+          {!collapsed && (
+            <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#a4a097] dark:text-[#787671]">
+              Workspace
+            </div>
+          )}
+          <div className="space-y-0.5">
+            {workspaceItems.map((item) => {
+              const Icon = item.icon;
+              const active = isRouteActive(item.path, item.altPath, item.path === '/');
+              return (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  end={item.path === '/'}
+                  className={cn(
+                    'group flex items-center gap-2.5 rounded-[8px] px-2.5 py-1.5 text-xs font-medium transition-colors cursor-pointer',
+                    active
+                      ? 'bg-[#ede9e4] text-[#1a1a1a] dark:bg-[#252528] dark:text-white font-semibold'
+                      : 'text-[#5d5b54] hover:bg-[#f0eeec] hover:text-[#1a1a1a] dark:text-[#a4a097] dark:hover:bg-[#202024] dark:hover:text-white'
+                  )}
+                  title={collapsed ? item.label : undefined}
+                >
+                  <Icon className="h-4 w-4 shrink-0 transition-transform group-hover:scale-105" />
+                  {!collapsed && <span className="truncate flex-1">{item.label}</span>}
+                  {!collapsed && item.count !== undefined && item.count > 0 && (
+                    <span className="ml-auto rounded-full bg-[#f0eeec] dark:bg-[#252528] px-1.5 py-0.5 text-[10px] font-semibold text-[#5d5b54] dark:text-[#a4a097]">
+                      {item.count}
+                    </span>
+                  )}
+                </NavLink>
+              );
+            })}
           </div>
-          <Link
-            to={`/semesters/${activeSemester.id}`}
-            className="text-xs font-semibold text-slate-800 hover:text-indigo-600 dark:text-slate-200 dark:hover:text-indigo-400 truncate block"
-          >
-            {activeSemester.name}
-          </Link>
         </div>
-      )}
 
-      {/* Navigation List */}
-      <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-2">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          return (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              end={item.path === '/'}
-              className={({ isActive }) =>
-                cn(
-                  'group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
-                  isActive
-                    ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300 font-semibold'
-                    : 'text-slate-600 hover:bg-slate-100/80 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-slate-200'
-                )
-              }
-              title={collapsed ? item.label : undefined}
-            >
-              <Icon className="h-4 w-4 shrink-0 transition-transform group-hover:scale-105" />
-              {!collapsed && <span className="truncate flex-1">{item.label}</span>}
-              {!collapsed && item.count !== undefined && item.count > 0 && (
-                <span className="ml-auto rounded-full bg-rose-500 px-1.5 py-0.5 text-[10px] font-bold text-white">
-                  {item.count}
-                </span>
+        {/* 2. ACTIVE SEMESTER SECTION */}
+        <div>
+          {!collapsed && (
+            <div className="px-2 py-1 flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-[#a4a097] dark:text-[#787671]">
+              <span>Active Semester</span>
+              {activeSemester && (
+                <button
+                  type="button"
+                  onClick={() => setSemesterExpanded((prev) => !prev)}
+                  className="p-0.5 rounded hover:bg-[#f0eeec] dark:hover:bg-[#252528] text-[#787671] transition-colors"
+                  title={semesterExpanded ? 'Collapse semester navigation' : 'Expand semester navigation'}
+                >
+                  {semesterExpanded ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
+                </button>
               )}
-            </NavLink>
-          );
-        })}
+            </div>
+          )}
+
+          {!activeSemester ? (
+            /* Empty State if No Active Semester */
+            !collapsed ? (
+              <div className="mx-1 my-1 p-2.5 rounded-[8px] bg-[#f8f5e8] dark:bg-[#1a2a52]/20 border border-[#ede9e4] dark:border-[#2a3d6e]/50 text-xs text-center space-y-1.5">
+                <p className="text-[11px] font-medium text-[#523410] dark:text-[#f5d75e]">No Active Semester</p>
+                <Link
+                  to="/semesters"
+                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#5645d4] dark:text-[#8070f6] hover:underline"
+                >
+                  <span>+ Select Semester</span>
+                </Link>
+              </div>
+            ) : (
+              <div className="flex justify-center py-2" title="No Active Semester">
+                <span className="h-2 w-2 rounded-full bg-[#dd5b00]" />
+              </div>
+            )
+          ) : (
+            /* Active Semester Header & Nested Links */
+            <div className="space-y-0.5">
+              {!collapsed ? (
+                /* Semester Header Card */
+                <div
+                  className={cn(
+                    'group mx-1 mb-1 rounded-[8px] p-2 transition-colors border',
+                    location.pathname.startsWith(`/semesters/${activeSemester.id}`)
+                      ? 'bg-[#f8f5e8] border-[#ebd06b] dark:bg-[#1a2a52]/30 dark:border-[#2a3d6e]'
+                      : 'bg-white dark:bg-[#1a1a1e] border-[#ede9e4] dark:border-[#252528] hover:border-[#c8c4be]'
+                  )}
+                >
+                  <div className="flex items-center justify-between text-xs mb-1">
+                    <span className="flex items-center gap-1.5 text-[11px] font-medium text-[#1aae39]">
+                      <span className="h-2 w-2 rounded-full bg-[#1aae39] animate-pulse" />
+                      Active Term
+                    </span>
+                    <span className="text-[10px] px-1.5 py-0.2 rounded-[4px] bg-[#fef7d6] dark:bg-[#523410] font-semibold text-[#523410] dark:text-[#f5d75e] border border-[#f5d75e]/40">
+                      {activeSemester.code || 'TERM'}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <Link
+                      to={`/semesters/${activeSemester.id}`}
+                      className="text-xs font-semibold text-[#1a1a1a] hover:text-[#5645d4] dark:text-white dark:hover:text-[#d6b6f6] truncate block flex-1"
+                      title={activeSemester.name}
+                    >
+                      {activeSemester.name}
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => setSemesterExpanded((e) => !e)}
+                      className="p-1 rounded text-[#787671] hover:text-[#1a1a1a] hover:bg-[#ede9e4] dark:hover:bg-[#252528] transition-colors"
+                      title={semesterExpanded ? 'Collapse' : 'Expand'}
+                    >
+                      {semesterExpanded ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                /* Collapsed Icon for Semester */
+                <div className="flex justify-center py-2" title={`Active Semester: ${activeSemester.name}`}>
+                  <span className="relative flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1aae39] opacity-75" />
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-[#1aae39]" />
+                  </span>
+                </div>
+              )}
+
+              {/* Nested Semester Academic Links */}
+              {semesterExpanded && (
+                <div className={cn(!collapsed ? 'ml-3 pl-2.5 border-l border-[#e5e3df] dark:border-[#2a2a2e] space-y-0.5 mt-1' : 'space-y-0.5')}>
+                  {semesterChildItems.map((child: any) => {
+                    const Icon = child.icon;
+                    const active = isRouteActive(child.path, child.altPath, child.end, child.aliases);
+                    return (
+                      <NavLink
+                        key={child.path}
+                        to={child.path}
+                        end={child.end}
+                        className={cn(
+                          'group flex items-center gap-2 rounded-[6px] text-[11.5px] font-medium transition-colors cursor-pointer',
+                          !collapsed ? 'px-2 py-1' : 'justify-center p-2',
+                          active
+                            ? 'bg-[#ede9e4] text-[#1a1a1a] dark:bg-[#252528] dark:text-white font-semibold'
+                            : 'text-[#5d5b54] hover:bg-[#f0eeec] hover:text-[#1a1a1a] dark:text-[#a4a097] dark:hover:bg-[#202024] dark:hover:text-white'
+                        )}
+                        title={collapsed ? child.label : undefined}
+                      >
+                        <Icon className="h-3.5 w-3.5 shrink-0 transition-transform group-hover:scale-105" />
+                        {!collapsed && <span className="truncate flex-1">{child.label}</span>}
+                        {!collapsed && child.count !== undefined && child.count > 0 && (
+                          <span className="ml-auto rounded-full bg-[#ff64c8] px-1.5 py-0.2 text-[9px] font-bold text-white shadow-2xs">
+                            {child.count}
+                          </span>
+                        )}
+                      </NavLink>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* 3. PERSONAL & SYSTEM SECTION */}
+        <div>
+          {!collapsed && (
+            <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#a4a097] dark:text-[#787671]">
+              Personal & System
+            </div>
+          )}
+          <div className="space-y-0.5">
+            {personalItems.map((item) => {
+              const Icon = item.icon;
+              const active = isRouteActive(item.path);
+              return (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  className={cn(
+                    'group flex items-center gap-2.5 rounded-[8px] px-2.5 py-1.5 text-xs font-medium transition-colors cursor-pointer',
+                    active
+                      ? 'bg-[#ede9e4] text-[#1a1a1a] dark:bg-[#252528] dark:text-white font-semibold'
+                      : 'text-[#5d5b54] hover:bg-[#f0eeec] hover:text-[#1a1a1a] dark:text-[#a4a097] dark:hover:bg-[#202024] dark:hover:text-white'
+                  )}
+                  title={collapsed ? item.label : undefined}
+                >
+                  <Icon className="h-4 w-4 shrink-0 transition-transform group-hover:scale-105" />
+                  {!collapsed && <span className="truncate flex-1">{item.label}</span>}
+                  {!collapsed && item.count !== undefined && item.count > 0 && (
+                    <span className="ml-auto rounded-full bg-[#5645d4] px-1.5 py-0.5 text-[9px] font-bold text-white shadow-2xs">
+                      {item.count}
+                    </span>
+                  )}
+                </NavLink>
+              );
+            })}
+          </div>
+        </div>
       </nav>
 
       {/* Footer Info */}
-      <div className="border-t border-slate-100 p-3 dark:border-slate-800 text-xs text-slate-400">
+      <div className="border-t border-[#e5e3df] p-3 dark:border-[#2a2a2e] text-[11px] text-[#787671]">
         {!collapsed ? (
           <div className="flex items-center justify-between">
-            <span className="truncate font-medium">Local SQLite Engine</span>
-            <span className="text-[10px] bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-500">v1.0</span>
+            <span className="truncate">Local SQLite Engine</span>
+            <span className="text-[10px] bg-[#ede9e4] dark:bg-[#252528] px-1.5 py-0.5 rounded-[4px] text-[#5d5b54] dark:text-[#a4a097]">
+              v2.0
+            </span>
           </div>
         ) : (
-          <div className="flex justify-center text-[10px]">v1.0</div>
+          <div className="flex justify-center text-[10px]">v2.0</div>
         )}
       </div>
     </aside>

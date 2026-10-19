@@ -1,8 +1,13 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { prisma } from '../prisma.js';
 import { validate } from '../middleware/validate.js';
 import { AppError } from '../middleware/errorHandler.js';
+import { ownedBy, ownerId } from '../middleware/ownership.js';
+import type { AuthenticatedRequest } from '../middleware/auth.js';
+import { syncExamReminders, cancelRemindersForTarget } from '../services/reminderManager.js';
+import { validateSemesterCourseConsistency } from '../utils/academicValidation.js';
+
 
 const router = Router();
 
@@ -38,12 +43,27 @@ const updateExamSchema = z.object({
   }),
 });
 
+async function assertChecklistItemAccessible(
+  existing: { examId: string | null; assignmentId: string | null },
+  req: AuthenticatedRequest
+) {
+  if (existing.examId) {
+    const owned = await prisma.exam.findFirst({ where: { id: existing.examId, ...ownedBy(req) } });
+    if (!owned) throw new AppError('Checklist item not found', 404);
+  } else if (existing.assignmentId) {
+    const owned = await prisma.assignment.findFirst({ where: { id: existing.assignmentId, ...ownedBy(req) } });
+    if (!owned) throw new AppError('Checklist item not found', 404);
+  } else {
+    throw new AppError('Checklist item not found', 404);
+  }
+}
+
 // List exams
-router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { semesterId, courseId, examType } = req.query;
 
-    const where: any = {};
+    const where: any = { ...ownedBy(req) };
     if (semesterId) where.semesterId = String(semesterId);
     if (courseId) where.courseId = String(courseId);
     if (examType) where.examType = String(examType);
@@ -87,11 +107,11 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Get single exam
-router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/:id', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const exam = await prisma.exam.findUnique({
-      where: { id },
+    const exam = await prisma.exam.findFirst({
+      where: { id, ...ownedBy(req) },
       include: {
         course: true,
         semester: true,
@@ -116,7 +136,7 @@ router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Create exam
-router.post('/', validate(createExamSchema), async (req: Request, res: Response, next: NextFunction) => {
+router.post('/', validate(createExamSchema), async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const {
       semesterId,
@@ -133,19 +153,28 @@ router.post('/', validate(createExamSchema), async (req: Request, res: Response,
       documentIds,
     } = req.body;
 
+    const validated = await validateSemesterCourseConsistency(courseId, semesterId);
+    if (!validated.courseId || !validated.semesterId) {
+      throw new AppError('Exams must belong to both a valid course and semester', 400);
+    }
+    const validSemesterId: string = validated.semesterId;
+    const validCourseId: string = validated.courseId;
+
     const exam = await prisma.$transaction(async (tx) => {
       const created = await tx.exam.create({
         data: {
-          semesterId,
-          courseId,
+          semesterId: validSemesterId,
+          courseId: validCourseId,
           title,
           examType,
           examDate: new Date(examDate),
+
           room,
           syllabus,
           personalNotes,
           preparationStatus,
           prepPercentage,
+          userId: ownerId(req),
         },
       });
 
@@ -189,14 +218,15 @@ router.post('/', validate(createExamSchema), async (req: Request, res: Response,
           priority: 'URGENT',
           location: room,
           reminderMinutesBefore: 120, // 2 hours
+          userId: ownerId(req),
         },
       });
 
       return created;
     });
 
-    const fullExam = await prisma.exam.findUnique({
-      where: { id: exam.id },
+    const fullExam = await prisma.exam.findFirst({
+      where: { id: exam.id, ...ownedBy(req) },
       include: {
         course: true,
         semester: true,
@@ -205,6 +235,9 @@ router.post('/', validate(createExamSchema), async (req: Request, res: Response,
       },
     });
 
+    // Schedule automated exam reminder jobs
+    await syncExamReminders(exam.id);
+
     res.status(201).json({ success: true, data: fullExam });
   } catch (error) {
     next(error);
@@ -212,7 +245,7 @@ router.post('/', validate(createExamSchema), async (req: Request, res: Response,
 });
 
 // Update exam
-router.put('/:id', validate(updateExamSchema), async (req: Request, res: Response, next: NextFunction) => {
+router.put('/:id', validate(updateExamSchema), async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     const {
@@ -228,10 +261,29 @@ router.put('/:id', validate(updateExamSchema), async (req: Request, res: Respons
       prepPercentage,
     } = req.body;
 
+    const existing = await prisma.exam.findFirst({ where: { id, ...ownedBy(req) } });
+    if (!existing) throw new AppError('Exam not found', 404);
+
     const updateData: any = {};
-    if (semesterId !== undefined) updateData.semesterId = semesterId;
-    if (courseId !== undefined) updateData.courseId = courseId;
+
+    if (courseId !== undefined || semesterId !== undefined) {
+      const targetCourseId = courseId !== undefined ? courseId : existing.courseId;
+      const targetSemesterId = semesterId !== undefined ? semesterId : existing.semesterId;
+      const validated = await validateSemesterCourseConsistency(targetCourseId, targetSemesterId);
+      if (!validated.courseId || !validated.semesterId) {
+        throw new AppError('Exams must belong to both a valid course and semester', 400);
+      }
+      const ownedCourse = await prisma.course.findFirst({ where: { id: validated.courseId, ...ownedBy(req) } });
+      const ownedSemester = await prisma.semester.findFirst({ where: { id: validated.semesterId, ...ownedBy(req) } });
+      if (!ownedCourse || !ownedSemester) {
+        throw new AppError('Exam not found', 404);
+      }
+      updateData.courseId = validated.courseId;
+      updateData.semesterId = validated.semesterId;
+    }
+
     if (title !== undefined) updateData.title = title;
+
     if (examType !== undefined) updateData.examType = examType;
     if (examDate !== undefined) updateData.examDate = new Date(examDate);
     if (room !== undefined) updateData.room = room;
@@ -251,18 +303,25 @@ router.put('/:id', validate(updateExamSchema), async (req: Request, res: Respons
       },
     });
 
+    // Recalculate scheduled reminders
+    await syncExamReminders(id);
+
     res.json({ success: true, data: updated });
+
   } catch (error) {
     next(error);
   }
 });
 
 // Checklist toggle for exam revision
-router.post('/:id/checklist', async (req: Request, res: Response, next: NextFunction) => {
+router.post('/:id/checklist', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     const { text } = req.body;
     if (!text || !text.trim()) throw new AppError('Checklist text required', 400);
+
+    const exam = await prisma.exam.findFirst({ where: { id, ...ownedBy(req) } });
+    if (!exam) throw new AppError('Exam not found', 404);
 
     const count = await prisma.taskChecklistItem.count({ where: { examId: id } });
     const item = await prisma.taskChecklistItem.create({
@@ -279,11 +338,12 @@ router.post('/:id/checklist', async (req: Request, res: Response, next: NextFunc
   }
 });
 
-router.patch('/:id/checklist/:itemId/toggle', async (req: Request, res: Response, next: NextFunction) => {
+router.patch('/:id/checklist/:itemId/toggle', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { itemId } = req.params;
     const existing = await prisma.taskChecklistItem.findUnique({ where: { id: itemId } });
     if (!existing) throw new AppError('Checklist item not found', 404);
+    await assertChecklistItemAccessible(existing, req);
 
     const updated = await prisma.taskChecklistItem.update({
       where: { id: itemId },
@@ -296,9 +356,12 @@ router.patch('/:id/checklist/:itemId/toggle', async (req: Request, res: Response
   }
 });
 
-router.delete('/:id/checklist/:itemId', async (req: Request, res: Response, next: NextFunction) => {
+router.delete('/:id/checklist/:itemId', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { itemId } = req.params;
+    const item = await prisma.taskChecklistItem.findUnique({ where: { id: itemId } });
+    if (!item) throw new AppError('Checklist item not found', 404);
+    await assertChecklistItemAccessible(item, req);
     await prisma.taskChecklistItem.delete({ where: { id: itemId } });
     res.json({ success: true, message: 'Checklist item removed' });
   } catch (error) {
@@ -307,10 +370,16 @@ router.delete('/:id/checklist/:itemId', async (req: Request, res: Response, next
 });
 
 // Link document / question paper to exam
-router.post('/:id/documents', async (req: Request, res: Response, next: NextFunction) => {
+router.post('/:id/documents', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     const { documentId, purpose = 'QUESTION_PAPER' } = req.body;
+
+    const exam = await prisma.exam.findFirst({ where: { id, ...ownedBy(req) } });
+    if (!exam) throw new AppError('Exam not found', 404);
+
+    const document = await prisma.document.findFirst({ where: { id: documentId, ...ownedBy(req) } });
+    if (!document) throw new AppError('Document not found', 404);
 
     const link = await prisma.examDocument.upsert({
       where: { examId_documentId: { examId: id, documentId } },
@@ -325,9 +394,11 @@ router.post('/:id/documents', async (req: Request, res: Response, next: NextFunc
 });
 
 // Unlink document from exam
-router.delete('/:id/documents/:documentId', async (req: Request, res: Response, next: NextFunction) => {
+router.delete('/:id/documents/:documentId', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id, documentId } = req.params;
+    const exam = await prisma.exam.findFirst({ where: { id, ...ownedBy(req) } });
+    if (!exam) throw new AppError('Exam not found', 404);
     await prisma.examDocument.deleteMany({
       where: { examId: id, documentId },
     });
@@ -338,14 +409,18 @@ router.delete('/:id/documents/:documentId', async (req: Request, res: Response, 
 });
 
 // Delete exam
-router.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
+router.delete('/:id', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    const existing = await prisma.exam.findFirst({ where: { id, ...ownedBy(req) } });
+    if (!existing) throw new AppError('Exam not found', 404);
+    await cancelRemindersForTarget('EXAM', id);
     await prisma.exam.delete({ where: { id } });
     res.json({ success: true, message: 'Exam deleted successfully' });
   } catch (error) {
     next(error);
   }
 });
+
 
 export default router;

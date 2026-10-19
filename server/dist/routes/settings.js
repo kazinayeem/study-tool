@@ -2,6 +2,9 @@ import { Router } from 'express';
 import { z } from 'zod';
 import { prisma } from '../prisma.js';
 import { validate } from '../middleware/validate.js';
+import { AppError } from '../middleware/errorHandler.js';
+import { ownedBy } from '../middleware/ownership.js';
+import { getOrCreateAppSetting } from '../services/userPreferences.js';
 const router = Router();
 const updateSettingSchema = z.object({
     body: z.object({
@@ -14,17 +17,9 @@ const updateSettingSchema = z.object({
         autoSaveDelayMs: z.number().int().min(500).max(10000).optional(),
     }),
 });
-router.get('/', async (_req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
-        const settings = await prisma.appSetting.upsert({
-            where: { id: 'default' },
-            create: {
-                id: 'default',
-                theme: 'light',
-                studentName: 'Student',
-            },
-            update: {},
-        });
+        const settings = await getOrCreateAppSetting(req);
         res.json({ success: true, data: settings });
     }
     catch (error) {
@@ -33,13 +28,20 @@ router.get('/', async (_req, res, next) => {
 });
 router.put('/', validate(updateSettingSchema), async (req, res, next) => {
     try {
-        const settings = await prisma.appSetting.upsert({
-            where: { id: 'default' },
-            create: {
-                id: 'default',
-                ...req.body,
-            },
-            update: req.body,
+        const body = req.body;
+        if (body.currentSemesterId) {
+            const semester = await prisma.semester.findFirst({
+                where: { id: body.currentSemesterId, ...ownedBy(req) },
+                select: { id: true },
+            });
+            if (!semester) {
+                throw new AppError('Semester not found', 404);
+            }
+        }
+        const existing = await getOrCreateAppSetting(req);
+        const settings = await prisma.appSetting.update({
+            where: { id: existing.id },
+            data: body,
         });
         res.json({ success: true, data: settings });
     }

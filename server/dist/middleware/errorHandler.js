@@ -1,4 +1,5 @@
 import { ZodError } from 'zod';
+import multer from 'multer';
 import { NODE_ENV } from '../config.js';
 export class AppError extends Error {
     statusCode;
@@ -17,6 +18,17 @@ export function errorHandler(err, req, res, _next) {
             success: false,
             message: err.message,
             ...(err.details ? { details: err.details } : {}),
+        });
+    }
+    if (err instanceof multer.MulterError) {
+        const message = err.code === 'LIMIT_FILE_SIZE'
+            ? 'File exceeds the maximum allowed upload size.'
+            : err.code === 'LIMIT_FILE_COUNT'
+                ? 'Too many files were provided in a single upload.'
+                : err.message;
+        return res.status(400).json({
+            success: false,
+            message,
         });
     }
     if (err instanceof ZodError) {

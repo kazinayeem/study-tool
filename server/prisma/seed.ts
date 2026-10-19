@@ -14,27 +14,37 @@ async function main() {
     fs.mkdirSync(uploadDir, { recursive: true });
   }
 
-  // Clear existing records in proper cascade order
-  await prisma.appSetting.deleteMany();
-  await prisma.studySession.deleteMany();
-  await prisma.calendarEvent.deleteMany();
-  await prisma.taskChecklistItem.deleteMany();
-  await prisma.examDocument.deleteMany();
-  await prisma.assignmentDocument.deleteMany();
-  await prisma.exam.deleteMany();
-  await prisma.assignment.deleteMany();
-  await prisma.documentAnnotation.deleteMany();
-  await prisma.documentBookmark.deleteMany();
-  await prisma.documentTag.deleteMany();
-  await prisma.tag.deleteMany();
-  await prisma.note.deleteMany();
-  await prisma.document.deleteMany();
-  await prisma.course.deleteMany();
-  await prisma.semester.deleteMany();
+  // 0. Ensure Admin user exists
+  let admin = await prisma.user.findFirst({ where: { role: 'ADMIN' } });
+  if (!admin) {
+    const existingUser = await prisma.user.findUnique({ where: { email: 'owner@scholarflow.local' } });
+    if (existingUser) {
+      admin = await prisma.user.update({
+        where: { id: existingUser.id },
+        data: { role: 'ADMIN', status: 'ACTIVE' },
+      });
+      console.log('👤 Existing user promoted to ADMIN:', admin.email);
+    } else {
+      const bcrypt = await import('bcrypt');
+      const passwordHash = await bcrypt.hash('Password123!', 10);
+      admin = await prisma.user.create({
+        data: {
+          email: 'owner@scholarflow.local',
+          passwordHash,
+          name: 'Academic Scholar',
+          role: 'ADMIN',
+          accountType: 'REGULAR',
+          status: 'ACTIVE',
+        },
+      });
+      console.log('👤 Admin user initialized: owner@scholarflow.local');
+    }
+  }
 
-  // 1. App Settings
-  await prisma.appSetting.create({
-    data: {
+  // 1. App Settings (upsert)
+  await prisma.appSetting.upsert({
+    where: { id: 'default' },
+    create: {
       id: 'default',
       theme: 'light',
       studentName: 'Mohammad Ali Nayeem',
@@ -43,7 +53,19 @@ async function main() {
       enableBrowserNotifications: false,
       autoSaveDelayMs: 1500,
     },
+    update: {},
   });
+
+  // Seed Demo User and realistic sandboxed records
+  const { seedDemoUser } = await import('../src/utils/seedDemo.js');
+  await seedDemoUser(false);
+
+  // Check if initial workspace semesters already exist
+  const existingSemestersCount = await prisma.semester.count({ where: { userId: null } });
+  if (existingSemestersCount > 0) {
+    console.log('✅ Workspace records and Demo student account are both ready.');
+    return;
+  }
 
   // 2. Semesters
   const fall2026 = await prisma.semester.create({
@@ -148,10 +170,10 @@ async function main() {
   });
 
   // 4. Tags
-  const tagExam = await prisma.tag.create({ data: { name: 'Exam Material', color: '#ef4444' } });
-  const tagCrypto = await prisma.tag.create({ data: { name: 'Cryptography', color: '#8b5cf6' } });
-  const tagHighYield = await prisma.tag.create({ data: { name: 'High Yield', color: '#f59e0b' } });
-  const tagArch = await prisma.tag.create({ data: { name: 'Architecture', color: '#10b981' } });
+  const tagExam = await prisma.tag.upsert({ where: { name: 'Exam Material' }, create: { name: 'Exam Material', color: '#ef4444' }, update: {} });
+  const tagCrypto = await prisma.tag.upsert({ where: { name: 'Cryptography' }, create: { name: 'Cryptography', color: '#8b5cf6' }, update: {} });
+  const tagHighYield = await prisma.tag.upsert({ where: { name: 'High Yield' }, create: { name: 'High Yield', color: '#f59e0b' }, update: {} });
+  const tagArch = await prisma.tag.upsert({ where: { name: 'Architecture' }, create: { name: 'Architecture', color: '#10b981' }, update: {} });
 
   // 5. Sample Documents (with actual valid multi-page PDF files created in uploads)
   const doc1Filename = 'sample_cse443_midterm_2025.pdf';

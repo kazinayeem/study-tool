@@ -1,15 +1,309 @@
 @import "tailwindcss";
 
+/* Drive the `dark:` variant from the `.dark` class applied by ThemeContext,
+   instead of Tailwind v4's default OS-level prefers-color-scheme media query. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-notion-primary: #5645d4;
+  --color-notion-primary-pressed: #4534b3;
+  --color-notion-primary-deep: #3a2a99;
+  --color-notion-brand-navy: #0a1530;
+  --color-notion-brand-navy-deep: #070f24;
+  --color-notion-brand-navy-mid: #1a2a52;
+  --color-notion-link-blue: #0075de;
+  --color-notion-link-blue-pressed: #005bab;
+  --color-notion-orange: #dd5b00;
+  --color-notion-orange-deep: #793400;
+  --color-notion-pink: #ff64c8;
+  --color-notion-pink-deep: #a02e6d;
+  --color-notion-purple: #7b3ff2;
+  --color-notion-purple-300: #d6b6f6;
+  --color-notion-purple-800: #391c57;
+  --color-notion-teal: #2a9d99;
+  --color-notion-green: #1aae39;
+  --color-notion-yellow: #f5d75e;
+  --color-notion-brown: #523410;
+
+  --color-notion-tint-peach: #ffe8d4;
+  --color-notion-tint-rose: #fde0ec;
+  --color-notion-tint-mint: #d9f3e1;
+  --color-notion-tint-lavender: #e6e0f5;
+  --color-notion-tint-sky: #dcecfa;
+  --color-notion-tint-yellow: #fef7d6;
+  --color-notion-tint-yellow-bold: #f9e79f;
+  --color-notion-tint-cream: #f8f5e8;
+  --color-notion-tint-gray: #f0eeec;
+
+  --color-notion-canvas: #ffffff;
+  --color-notion-surface: #f6f5f4;
+  --color-notion-surface-soft: #fafaf9;
+  --color-notion-hairline: #e5e3df;
+  --color-notion-hairline-soft: #ede9e4;
+  --color-notion-hairline-strong: #c8c4be;
+  --color-notion-ink-deep: #000000;
+  --color-notion-ink: #1a1a1a;
+  --color-notion-charcoal: #37352f;
+  --color-notion-slate: #5d5b54;
+  --color-notion-steel: #787671;
+  --color-notion-stone: #a4a097;
+  --color-notion-muted: #bbb8b1;
+}
+
 @layer base {
   :root {
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
+    --app-bg: #ffffff;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  html {
+    background-color: var(--app-bg);
   }
 
   body {
     font-family: var(--font-sans);
+    color: #37352f;
+    background-color: var(--app-bg);
+  }
+
+  html.dark {
+    --app-bg: #0f0f11;
+  }
+
+  html.dark body {
+    color: #f0eeec;
+    background-color: var(--app-bg);
   }
 }
+
+/* Notion Design System Components */
+.btn-notion-primary {
+  background-color: #5645d4;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.30;
+  padding: 10px 18px;
+  border-radius: 8px; /* rounded.md: 8px - NOT pill */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 150ms ease;
+  cursor: pointer;
+}
+.btn-notion-primary:hover {
+  background-color: #4534b3;
+}
+.btn-notion-primary:active {
+  background-color: #3a2a99;
+}
+.btn-notion-primary:disabled {
+  background-color: #e5e3df;
+  color: #bbb8b1;
+  cursor: not-allowed;
+}
+
+.btn-notion-secondary {
+  background-color: transparent;
+  color: #1a1a1a;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.30;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid #c8c4be;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 150ms ease;
+  cursor: pointer;
+}
+.btn-notion-secondary:hover {
+  background-color: #f6f5f4;
+  border-color: #a4a097;
+}
+
+.btn-notion-dark {
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.30;
+  padding: 10px 18px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 150ms ease;
+  cursor: pointer;
+}
+.btn-notion-dark:hover {
+  background-color: #1a1a1a;
+}
+
+.btn-notion-on-dark {
+  background-color: #ffffff;
+  color: #1a1a1a;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.30;
+  padding: 10px 18px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 150ms ease;
+  cursor: pointer;
+}
+.btn-notion-on-dark:hover {
+  background-color: #f6f5f4;
+}
+
+.btn-notion-secondary-on-dark {
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.30;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid #a4a097;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 150ms ease;
+  cursor: pointer;
+}
+.btn-notion-secondary-on-dark:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.btn-notion-link {
+  background-color: transparent;
+  color: #0075de;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.50;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.btn-notion-link:hover {
+  color: #005bab;
+}
+
+/* Notion Cards (12px rounded consistently) */
+.card-notion {
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e5e3df;
+}
+
+/* Pastel Tint Feature Cards */
+.card-notion-peach {
+  background-color: #ffe8d4;
+  color: #37352f;
+  border-radius: 12px;
+}
+.card-notion-rose {
+  background-color: #fde0ec;
+  color: #37352f;
+  border-radius: 12px;
+}
+.card-notion-mint {
+  background-color: #d9f3e1;
+  color: #37352f;
+  border-radius: 12px;
+}
+.card-notion-lavender {
+  background-color: #e6e0f5;
+  color: #37352f;
+  border-radius: 12px;
+}
+.card-notion-sky {
+  background-color: #dcecfa;
+  color: #37352f;
+  border-radius: 12px;
+}
+.card-notion-yellow {
+  background-color: #fef7d6;
+  color: #37352f;
+  border-radius: 12px;
+}
+.card-notion-yellow-bold {
+  background-color: #f9e79f;
+  color: #37352f;
+  border-radius: 12px;
+}
+.card-notion-cream {
+  background-color: #f8f5e8;
+  color: #37352f;
+  border-radius: 12px;
+}
+
+/* Badges */
+.badge-notion-purple {
+  background-color: #5645d4;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.40;
+  border-radius: 9999px;
+  padding: 4px 10px;
+}
+.badge-notion-tag-purple {
+  background-color: #e6e0f5;
+  color: #391c57;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.40;
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+.badge-notion-tag-orange {
+  background-color: #ffe8d4;
+  color: #793400;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.40;
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+.badge-notion-tag-green {
+  background-color: #d9f3e1;
+  color: #1aae39;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.40;
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+
+/* Hero Band & Workspace Mockup */
+.hero-band-navy {
+  background-color: #0a1530;
+  color: #ffffff;
+}
+
+.workspace-mockup-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e5e3df;
+  box-shadow: rgba(15, 15, 15, 0.20) 0px 24px 48px -8px;
+}
+
 
 /* Custom sleek scrollbar */
 ::-webkit-scrollbar {
@@ -121,4 +415,599 @@
 }
 .dark .note-content-editor th {
   background-color: #1f2937;
+}
+
+/* ==========================================================================
+   Lexical Knowledge Base editor
+   Word-like document canvas + ribbon styling. Scoped under `.lex-*` and
+   `.lexical-doc` so it never leaks into the rest of the app.
+   ========================================================================== */
+
+.lex-editor-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  background: #f4f3f0;
+  color: #37352f;
+}
+
+.lex-editor-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: #f4f3f0;
+}
+
+/* ---------------- Toolbar ---------------- */
+.lex-toolbar {
+  flex-shrink: 0;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e3df;
+  user-select: none;
+}
+
+.lex-toolbar-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 8px;
+  overflow-x: auto;
+}
+
+.lex-toolbar-context {
+  border-top: 1px solid #ede9e4;
+  background: #fafaf9;
+  gap: 6px;
+  padding: 5px 8px;
+}
+
+.lex-context-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #787671;
+  padding-right: 4px;
+}
+
+.lex-toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 5px;
+  border-radius: 6px;
+  color: #37352f;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.lex-toolbar-btn:hover:not(:disabled) {
+  background: #f0eeec;
+}
+
+.lex-toolbar-btn:focus-visible {
+  outline: 2px solid rgba(86, 69, 212, 0.45);
+  outline-offset: 1px;
+}
+
+.lex-toolbar-btn[aria-pressed='true'],
+.lex-toolbar-btn-active {
+  background: #ece8fb;
+  color: #5645d4;
+}
+
+.lex-toolbar-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.lex-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.lex-icon-sm {
+  width: 14px;
+  height: 14px;
+}
+
+.lex-toolbar-caret {
+  width: 11px;
+  height: 11px;
+  opacity: 0.6;
+}
+
+.lex-divider {
+  width: 1px;
+  height: 20px;
+  margin: 0 4px;
+  background: #e5e3df;
+  flex-shrink: 0;
+}
+.lex-statusbar .lex-divider {
+  display: inline-block;
+}
+
+.lex-select,
+.lex-input {
+  font-size: 12.5px;
+  color: #37352f;
+  background: #ffffff;
+  border: 1px solid #e5e3df;
+  border-radius: 6px;
+  padding: 5px 8px;
+  outline: none;
+}
+.lex-select:focus-visible,
+.lex-input:focus-visible {
+  border-color: #5645d4;
+  box-shadow: 0 0 0 2px rgba(86, 69, 212, 0.18);
+}
+.lex-input {
+  width: 100%;
+}
+
+.lex-primary-btn {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #ffffff;
+  background: #5645d4;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.lex-primary-btn:hover {
+  background: #4534b3;
+}
+
+.lex-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #37352f;
+  background: #ffffff;
+  border: 1px solid #e5e3df;
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.lex-chip:hover {
+  background: #fafaf9;
+}
+.lex-chip-danger {
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+.lex-save-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  display: inline-block;
+  background: #1aae39;
+}
+.lex-save-dot.lex-save-saving {
+  background: #d97706;
+}
+.lex-save-dot.lex-save-unsaved {
+  background: #787671;
+}
+.lex-save-dot.lex-save-error {
+  background: #dc2626;
+}
+
+/* ---------------- Popovers ---------------- */
+.lex-popover-anchor {
+  position: relative;
+  display: inline-flex;
+}
+
+.lex-popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 60;
+  background: #ffffff;
+  border: 1px solid #e5e3df;
+  border-radius: 8px;
+  box-shadow: 0 12px 32px -12px rgba(17, 24, 39, 0.28);
+  padding: 8px;
+}
+
+.lex-swatches {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  width: 168px;
+}
+
+.lex-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  border: 1px solid #c8c4be;
+  cursor: pointer;
+  transition: transform 100ms ease;
+}
+.lex-swatch:hover {
+  transform: scale(1.12);
+}
+
+.lex-link-form,
+.lex-table-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 220px;
+}
+
+.lex-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #5d5b54;
+}
+.lex-field .lex-input {
+  width: 84px;
+}
+
+/* ---------------- Workspace + page ---------------- */
+.lex-workspace {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 24px 16px 64px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.lex-page {
+  width: 100%;
+  max-width: 816px;
+  min-height: 1056px;
+  background: #ffffff;
+  border: 1px solid #e5e3df;
+  border-radius: 2px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.lex-page-inner {
+  padding: 72px 84px 96px;
+}
+
+.lex-title {
+  width: 100%;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #1a1a1a;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0 0 6px;
+}
+.lex-title::placeholder {
+  color: #bbb8b1;
+}
+
+.lex-subtitle {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #787671;
+  margin: 2px 0 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #ede9e4;
+}
+
+/* ---------------- Document typography ---------------- */
+.lexical-doc {
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #1a1a1a;
+}
+
+.lex-content-editable {
+  outline: none;
+  min-height: 420px;
+}
+
+.lexical-doc .lex-paragraph {
+  margin: 0 0 12px;
+}
+
+.lexical-doc .lex-h1,
+.lexical-doc .lex-h2,
+.lexical-doc .lex-h3,
+.lexical-doc .lex-h4,
+.lexical-doc .lex-h5,
+.lexical-doc .lex-h6 {
+  font-family: Inter, system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #111111;
+  margin: 28px 0 12px;
+}
+.lexical-doc .lex-h1 { font-size: 28px; margin-top: 32px; }
+.lexical-doc .lex-h2 { font-size: 22px; }
+.lexical-doc .lex-h3 { font-size: 18px; }
+.lexical-doc .lex-h4 { font-size: 16px; }
+.lexical-doc .lex-h5 { font-size: 15px; }
+.lexical-doc .lex-h6 { font-size: 14px; color: #5d5b54; }
+
+.lexical-doc .lex-quote {
+  margin: 16px 0;
+  padding: 4px 0 4px 16px;
+  border-left: 3px solid #5645d4;
+  color: #5d5b54;
+  font-style: italic;
+}
+
+.lexical-doc .lex-ul,
+.lexical-doc .lex-ol {
+  margin: 0 0 12px;
+  padding-left: 28px;
+}
+.lexical-doc .lex-ul { list-style: disc; }
+.lexical-doc .lex-ol { list-style: decimal; }
+.lexical-doc .lex-ul .lex-ul { list-style: circle; }
+
+.lexical-doc .lex-li {
+  margin: 4px 0;
+  line-height: 1.7;
+}
+.lexical-doc .lex-li-nested {
+  list-style: none;
+}
+
+.lexical-doc .lex-li-checked,
+.lexical-doc .lex-li-unchecked {
+  list-style: none;
+  position: relative;
+  padding-left: 4px;
+}
+.lexical-doc .lex-li-unchecked::before,
+.lexical-doc .lex-li-checked::before {
+  content: '';
+  position: absolute;
+  left: -22px;
+  top: 4px;
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  border: 1.5px solid #c8c4be;
+  background: #ffffff;
+}
+.lexical-doc .lex-li-checked::before {
+  background: #5645d4;
+  border-color: #5645d4;
+}
+.lexical-doc .lex-li-checked::after {
+  content: '';
+  position: absolute;
+  left: -17px;
+  top: 7px;
+  width: 5px;
+  height: 9px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.lexical-doc .lex-li-checked {
+  color: #787671;
+  text-decoration: line-through;
+}
+
+.lexical-doc .lex-link {
+  color: #5645d4;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.lexical-doc .lex-link:hover {
+  color: #3a2a99;
+}
+
+.lexical-doc .lex-bold { font-weight: 700; }
+.lexical-doc .lex-italic { font-style: italic; }
+.lexical-doc .lex-underline { text-decoration: underline; }
+.lexical-doc .lex-strike { text-decoration: line-through; }
+.lexical-doc .lex-subscript { vertical-align: sub; font-size: 0.78em; }
+.lexical-doc .lex-superscript { vertical-align: super; font-size: 0.78em; }
+
+.lexical-doc .lex-inline-code {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.88em;
+  background: #f0eeec;
+  color: #b91c1c;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.lexical-doc .lex-code-block {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13.5px;
+  line-height: 1.6;
+  background: #f6f5f4;
+  border: 1px solid #e5e3df;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 16px 0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  tab-size: 2;
+}
+
+.lexical-doc .lex-hr {
+  border: none;
+  border-top: 1px solid #e5e3df;
+  margin: 24px 0;
+}
+
+.lexical-doc .lex-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 16px 0;
+  table-layout: auto;
+}
+.lexical-doc .lex-table-cell,
+.lexical-doc .lex-table-cell-header {
+  border: 1px solid #d6d3ce;
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+  min-width: 48px;
+}
+.lexical-doc .lex-table-cell-header {
+  background: #f6f5f4;
+  font-weight: 600;
+}
+.lexical-doc .lex-table-selection {
+  background: #ece8fb;
+}
+
+.lexical-doc .lex-image-wrapper {
+  display: block;
+  margin: 16px 0;
+  text-align: center;
+}
+.lexical-doc .lex-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid #e5e3df;
+}
+
+.lexical-doc .lex-indent {
+  margin-left: 24px;
+}
+
+.lex-placeholder {
+  position: absolute;
+  pointer-events: none;
+  color: #bbb8b1;
+  font-style: italic;
+}
+
+.lex-error {
+  padding: 12px;
+  color: #b91c1c;
+  font-size: 13px;
+}
+
+.lex-uploading {
+  position: absolute;
+  right: 16px;
+  bottom: 52px;
+  background: #37352f;
+  color: #ffffff;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+/* ---------------- Status bar ---------------- */
+.lex-statusbar {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 12px;
+  background: #ffffff;
+  border-top: 1px solid #e5e3df;
+  font-size: 12px;
+  color: #787671;
+}
+.lex-status-left,
+.lex-status-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ---------------- Dark mode ---------------- */
+.dark .lex-editor-root { background: #121212; color: #e5e5e5; }
+.dark .lex-editor-overlay { background: #121212; }
+.dark .lex-toolbar,
+.dark .lex-statusbar {
+  background: #1c1c1f;
+  border-color: #37352f;
+  color: #a4a097;
+}
+.dark .lex-toolbar-context { background: #161618; border-color: #2a2a2d; }
+.dark .lex-toolbar-btn { color: #e5e5e5; }
+.dark .lex-toolbar-btn:hover:not(:disabled) { background: #2a2a2d; }
+.dark .lex-toolbar-btn[aria-pressed='true'],
+.dark .lex-toolbar-btn-active { background: #2c2547; color: #c9bdf7; }
+.dark .lex-divider { background: #37352f; }
+.dark .lex-select,
+.dark .lex-input,
+.dark .lex-chip {
+  background: #1c1c1f;
+  border-color: #37352f;
+  color: #e5e5e5;
+}
+.dark .lex-chip:hover { background: #2a2a2d; }
+.dark .lex-popover { background: #1c1c1f; border-color: #37352f; }
+.dark .lex-page { background: #1e1e1f; border-color: #2a2a2d; }
+.dark .lex-title { color: #f5f5f5; }
+.dark .lex-subtitle { color: #a4a097; border-color: #2a2a2d; }
+.dark .lexical-doc { color: #e5e5e5; }
+.dark .lexical-doc .lex-h1,
+.dark .lexical-doc .lex-h2,
+.dark .lexical-doc .lex-h3,
+.dark .lexical-doc .lex-h4,
+.dark .lexical-doc .lex-h5,
+.dark .lexical-doc .lex-h6 { color: #f5f5f5; }
+.dark .lexical-doc .lex-quote { color: #a4a097; }
+.dark .lexical-doc .lex-inline-code { background: #2a2a2d; color: #f0a6a6; }
+.dark .lexical-doc .lex-code-block { background: #161618; border-color: #37352f; }
+.dark .lexical-doc .lex-table-cell,
+.dark .lexical-doc .lex-table-cell-header { border-color: #37352f; }
+.dark .lexical-doc .lex-table-cell-header { background: #2a2a2d; }
+.dark .lexical-doc .lex-li-unchecked::before { background: #1e1e1f; border-color: #4b4b4b; }
+.dark .lexical-doc .lex-image { border-color: #37352f; }
+.dark .lex-hr { border-color: #37352f; }
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 640px) {
+  .lex-workspace { padding: 12px 8px 48px; }
+  .lex-page { min-height: 0; }
+  .lex-page-inner { padding: 28px 20px 48px; }
+  .lex-title { font-size: 24px; }
+}
+
+/* ---------------- Print ---------------- */
+@media print {
+  .lex-toolbar,
+  .lex-statusbar,
+  .lex-uploading {
+    display: none !important;
+  }
+  .lex-workspace {
+    overflow: visible;
+    padding: 0;
+    background: #ffffff;
+  }
+  .lex-page {
+    max-width: none;
+    min-height: 0;
+    border: none;
+    box-shadow: none;
+  }
+  .lex-page-inner { padding: 0; }
 }

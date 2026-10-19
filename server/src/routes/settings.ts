@@ -1,7 +1,11 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { prisma } from '../prisma.js';
 import { validate } from '../middleware/validate.js';
+import { AppError } from '../middleware/errorHandler.js';
+import { ownedBy } from '../middleware/ownership.js';
+import type { AuthenticatedRequest } from '../middleware/auth.js';
+import { getOrCreateAppSetting } from '../services/userPreferences.js';
 
 const router = Router();
 
@@ -17,33 +21,33 @@ const updateSettingSchema = z.object({
   }),
 });
 
-router.get('/', async (_req: Request, res: Response, next: NextFunction) => {
+router.get('/', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
-    const settings = await prisma.appSetting.upsert({
-      where: { id: 'default' },
-      create: {
-        id: 'default',
-        theme: 'light',
-        studentName: 'Student',
-      },
-      update: {},
-    });
-
+    const settings = await getOrCreateAppSetting(req);
     res.json({ success: true, data: settings });
   } catch (error) {
     next(error);
   }
 });
 
-router.put('/', validate(updateSettingSchema), async (req: Request, res: Response, next: NextFunction) => {
+router.put('/', validate(updateSettingSchema), async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
-    const settings = await prisma.appSetting.upsert({
-      where: { id: 'default' },
-      create: {
-        id: 'default',
-        ...req.body,
-      },
-      update: req.body,
+    const body = req.body;
+
+    if (body.currentSemesterId) {
+      const semester = await prisma.semester.findFirst({
+        where: { id: body.currentSemesterId, ...ownedBy(req) },
+        select: { id: true },
+      });
+      if (!semester) {
+        throw new AppError('Semester not found', 404);
+      }
+    }
+
+    const existing = await getOrCreateAppSetting(req);
+    const settings = await prisma.appSetting.update({
+      where: { id: existing.id },
+      data: body,
     });
 
     res.json({ success: true, data: settings });

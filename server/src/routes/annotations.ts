@@ -1,8 +1,10 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { prisma } from '../prisma.js';
 import { validate } from '../middleware/validate.js';
 import { AppError } from '../middleware/errorHandler.js';
+import { ownedBy } from '../middleware/ownership.js';
+import type { AuthenticatedRequest } from '../middleware/auth.js';
 
 const router = Router({ mergeParams: true });
 
@@ -25,10 +27,13 @@ const updateAnnotationSchema = z.object({
 });
 
 // List annotations for document
-router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { documentId } = req.params;
     const { page } = req.query;
+
+    const parent = await prisma.document.findFirst({ where: { id: documentId, ...ownedBy(req) } });
+    if (!parent) throw new AppError('Document not found', 404);
 
     const where: any = { documentId };
     if (page) {
@@ -47,12 +52,12 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Create annotation
-router.post('/', validate(createAnnotationSchema), async (req: Request, res: Response, next: NextFunction) => {
+router.post('/', validate(createAnnotationSchema), async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { documentId } = req.params;
     const { pageNumber, type, color, selectedText, comment, rectJson } = req.body;
 
-    const document = await prisma.document.findUnique({ where: { id: documentId } });
+    const document = await prisma.document.findFirst({ where: { id: documentId, ...ownedBy(req) } });
     if (!document) {
       throw new AppError('Document not found', 404);
     }
@@ -76,10 +81,16 @@ router.post('/', validate(createAnnotationSchema), async (req: Request, res: Res
 });
 
 // Update annotation
-router.put('/:id', validate(updateAnnotationSchema), async (req: Request, res: Response, next: NextFunction) => {
+router.put('/:id', validate(updateAnnotationSchema), async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     const { comment, color } = req.body;
+
+    const existing = await prisma.documentAnnotation.findUnique({ where: { id } });
+    if (!existing) throw new AppError('Annotation not found', 404);
+
+    const parent = await prisma.document.findFirst({ where: { id: existing.documentId, ...ownedBy(req) } });
+    if (!parent) throw new AppError('Annotation not found', 404);
 
     const annotation = await prisma.documentAnnotation.update({
       where: { id },
@@ -96,9 +107,15 @@ router.put('/:id', validate(updateAnnotationSchema), async (req: Request, res: R
 });
 
 // Delete annotation
-router.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
+router.delete('/:id', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    const existing = await prisma.documentAnnotation.findUnique({ where: { id } });
+    if (!existing) throw new AppError('Annotation not found', 404);
+
+    const parent = await prisma.document.findFirst({ where: { id: existing.documentId, ...ownedBy(req) } });
+    if (!parent) throw new AppError('Annotation not found', 404);
+
     await prisma.documentAnnotation.delete({
       where: { id },
     });

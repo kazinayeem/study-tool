@@ -1,9 +1,11 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router, Response, NextFunction } from 'express';
 import { prisma } from '../prisma.js';
+import { ownedBy } from '../middleware/ownership.js';
+import type { AuthenticatedRequest } from '../middleware/auth.js';
 
 const router = Router();
 
-router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const q = req.query.q ? String(req.query.q).trim() : '';
 
@@ -25,6 +27,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     const [semesters, courses, documents, notes, assignments, exams, events] = await Promise.all([
       prisma.semester.findMany({
         where: {
+          ...ownedBy(req),
           OR: [
             { name: { contains: q } },
             { code: { contains: q } },
@@ -37,6 +40,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
       prisma.course.findMany({
         where: {
+          ...ownedBy(req),
           OR: [
             { code: { contains: q } },
             { title: { contains: q } },
@@ -52,6 +56,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
       prisma.document.findMany({
         where: {
+          ...ownedBy(req),
           OR: [
             { title: { contains: q } },
             { originalFilename: { contains: q } },
@@ -68,6 +73,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
       prisma.note.findMany({
         where: {
+          ...ownedBy(req),
           OR: [
             { title: { contains: q } },
             { content: { contains: q } },
@@ -82,6 +88,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
       prisma.assignment.findMany({
         where: {
+          ...ownedBy(req),
           OR: [
             { title: { contains: q } },
             { description: { contains: q } },
@@ -95,6 +102,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
       prisma.exam.findMany({
         where: {
+          ...ownedBy(req),
           OR: [
             { title: { contains: q } },
             { syllabus: { contains: q } },
@@ -108,6 +116,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
       prisma.calendarEvent.findMany({
         where: {
+          ...ownedBy(req),
           OR: [
             { title: { contains: q } },
             { description: { contains: q } },
