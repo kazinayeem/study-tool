@@ -1,35 +1,23 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router, Response, NextFunction } from 'express';
 import { prisma } from '../prisma.js';
+import { ownedBy } from '../middleware/ownership.js';
+import type { AuthenticatedRequest } from '../middleware/auth.js';
+import { getOrCreateAppSetting, getOrCreateDashboardPreference } from '../services/userPreferences.js';
 
 const router = Router();
 
-// GET /api/dashboard/preferences - Get user dashboard preferences
-router.get('/preferences', async (_req: Request, res: Response, next: NextFunction) => {
-  try {
-    let pref = await prisma.dashboardPreference.findUnique({
-      where: { id: 'default' },
-    });
+/**
+ * Combines an ownership scope with additional filters using AND so that an
+ * admin's `OR` ownership clause is never overwritten by a filter's own `OR`.
+ */
+function scoped(req: AuthenticatedRequest, filter: Record<string, unknown> = {}) {
+  return { AND: [ownedBy(req), filter] };
+}
 
-    if (!pref) {
-      pref = await prisma.dashboardPreference.create({
-        data: {
-          id: 'default',
-          widgetOrder: JSON.stringify([
-            'activeSemester',
-            'statsOverview',
-            'academicProgress',
-            'upcomingDeadlines',
-            'todaySessions',
-            'weeklyProgress',
-            'recentNotes',
-            'recentDocuments',
-            'calendarEvents',
-          ]),
-          hiddenWidgets: JSON.stringify([]),
-          defaultView: 'today',
-        },
-      });
-    }
+// GET /api/dashboard/preferences - Get user dashboard preferences
+router.get('/preferences', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  try {
+    const pref = await getOrCreateDashboardPreference(req);
 
     res.json({
       success: true,
@@ -45,21 +33,15 @@ router.get('/preferences', async (_req: Request, res: Response, next: NextFuncti
 });
 
 // PUT /api/dashboard/preferences - Update user dashboard preferences
-router.put('/preferences', async (req: Request, res: Response, next: NextFunction) => {
+router.put('/preferences', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { widgetOrder, hiddenWidgets, defaultView, selectedSemesterId, selectedCourseId } = req.body;
 
-    const updated = await prisma.dashboardPreference.upsert({
-      where: { id: 'default' },
-      create: {
-        id: 'default',
-        widgetOrder: JSON.stringify(widgetOrder || []),
-        hiddenWidgets: JSON.stringify(hiddenWidgets || []),
-        defaultView: defaultView || 'today',
-        selectedSemesterId: selectedSemesterId || null,
-        selectedCourseId: selectedCourseId || null,
-      },
-      update: {
+    const existing = await getOrCreateDashboardPreference(req);
+
+    const updated = await prisma.dashboardPreference.update({
+      where: { id: existing.id },
+      data: {
         ...(widgetOrder !== undefined && { widgetOrder: JSON.stringify(widgetOrder) }),
         ...(hiddenWidgets !== undefined && { hiddenWidgets: JSON.stringify(hiddenWidgets) }),
         ...(defaultView !== undefined && { defaultView }),
@@ -82,7 +64,7 @@ router.put('/preferences', async (req: Request, res: Response, next: NextFunctio
 });
 
 // GET /api/dashboard - Main dashboard metrics with real data and filtering
-router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { semesterId, courseId, view = 'today' } = req.query as {
       semesterId?: string;
@@ -105,13 +87,13 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     endOfWeek.setDate(startOfWeek.getDate() + 6);
     endOfWeek.setHours(23, 59, 59, 999);
 
-    // 1. App settings & Active semester
-    const settings = await prisma.appSetting.findUnique({ where: { id: 'default' } });
+    // 1. App settings & Active semester (scoped to the caller)
+    const settings = await getOrCreateAppSetting(req);
     let activeSemester = null;
 
     if (semesterId) {
-      activeSemester = await prisma.semester.findUnique({
-        where: { id: semesterId },
+      activeSemester = await prisma.semester.findFirst({
+        where: { id: semesterId, ...ownedBy(req) },
         include: {
           courses: {
             where: courseId ? { id: courseId } : undefined,
@@ -124,8 +106,8 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
         },
       });
     } else if (settings?.currentSemesterId) {
-      activeSemester = await prisma.semester.findUnique({
-        where: { id: settings.currentSemesterId },
+      activeSemester = await prisma.semester.findFirst({
+        where: { id: settings.currentSemesterId, ...ownedBy(req) },
         include: {
           courses: {
             include: {
@@ -140,7 +122,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
     if (!activeSemester) {
       activeSemester = await prisma.semester.findFirst({
-        where: { status: 'ACTIVE', isArchived: false },
+        where: { status: 'ACTIVE', isArchived: false, ...ownedBy(req) },
         include: {
           courses: {
             where: courseId ? { id: courseId } : undefined,
@@ -158,14 +140,20 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
     // 2. High level counts (real calculations)
     const [totalSemesters, totalCourses, totalDocuments, totalNotes] = await Promise.all([
-      prisma.semester.count({ where: { isArchived: false } }),
-      prisma.course.count(effectiveSemesterId ? { where: { semesterId: effectiveSemesterId } } : undefined),
-      prisma.document.count(effectiveSemesterId ? { where: { semesterId: effectiveSemesterId } } : undefined),
-      prisma.note.count(effectiveSemesterId ? { where: { semesterId: effectiveSemesterId } } : undefined),
+      prisma.semester.count({ where: { isArchived: false, ...ownedBy(req) } }),
+      prisma.course.count({
+        where: { ...(effectiveSemesterId ? { semesterId: effectiveSemesterId } : {}), ...ownedBy(req) },
+      }),
+      prisma.document.count({
+        where: { ...(effectiveSemesterId ? { semesterId: effectiveSemesterId } : {}), ...ownedBy(req) },
+      }),
+      prisma.note.count({
+        where: { ...(effectiveSemesterId ? { semesterId: effectiveSemesterId } : {}), ...ownedBy(req) },
+      }),
     ]);
 
     // 3. Upcoming exams (filtered by semester/course and time view)
-    const examFilter: any = {};
+    const examFilter: Record<string, unknown> = {};
     if (effectiveSemesterId) examFilter.semesterId = effectiveSemesterId;
     if (courseId) examFilter.courseId = courseId;
 
@@ -178,7 +166,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     }
 
     const upcomingExams = await prisma.exam.findMany({
-      where: examFilter,
+      where: scoped(req, examFilter) as any,
       orderBy: { examDate: 'asc' },
       take: 8,
       include: {
@@ -189,7 +177,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     });
 
     // 4. Upcoming assignments (not completed, sorted by deadline)
-    const assignmentFilter: any = {
+    const assignmentFilter: Record<string, unknown> = {
       status: { not: 'COMPLETED' },
     };
     if (effectiveSemesterId) assignmentFilter.semesterId = effectiveSemesterId;
@@ -204,7 +192,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     }
 
     const upcomingAssignments = await prisma.assignment.findMany({
-      where: assignmentFilter,
+      where: scoped(req, assignmentFilter) as any,
       orderBy: { deadline: 'asc' },
       take: 8,
       include: {
@@ -214,7 +202,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     });
 
     // 5. Overdue assignments
-    const overdueFilter: any = {
+    const overdueFilter: Record<string, unknown> = {
       status: { not: 'COMPLETED' },
       deadline: { lt: now },
     };
@@ -222,7 +210,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     if (courseId) overdueFilter.courseId = courseId;
 
     const overdueAssignments = await prisma.assignment.findMany({
-      where: overdueFilter,
+      where: scoped(req, overdueFilter) as any,
       orderBy: { deadline: 'asc' },
       take: 6,
       include: {
@@ -231,12 +219,12 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     });
 
     // 6. Recently opened documents
-    const docFilter: any = {};
+    const docFilter: Record<string, unknown> = {};
     if (effectiveSemesterId) docFilter.semesterId = effectiveSemesterId;
     if (courseId) docFilter.courseId = courseId;
 
     const recentDocuments = await prisma.document.findMany({
-      where: docFilter,
+      where: scoped(req, docFilter) as any,
       orderBy: [{ lastOpenedAt: 'desc' }, { updatedAt: 'desc' }],
       take: 6,
       include: {
@@ -246,12 +234,12 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     });
 
     // 7. Recently edited notes
-    const noteFilter: any = {};
+    const noteFilter: Record<string, unknown> = {};
     if (effectiveSemesterId) noteFilter.semesterId = effectiveSemesterId;
     if (courseId) noteFilter.courseId = courseId;
 
     const recentNotes = await prisma.note.findMany({
-      where: noteFilter,
+      where: scoped(req, noteFilter) as any,
       orderBy: { updatedAt: 'desc' },
       take: 6,
       include: {
@@ -265,11 +253,11 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
       : { scheduledDate: { gte: startOfToday, lte: endOfToday } };
 
     const studySessions = await prisma.studySession.findMany({
-      where: {
+      where: scoped(req, {
         ...sessionDateFilter,
         ...(effectiveSemesterId && { semesterId: effectiveSemesterId }),
         ...(courseId && { courseId }),
-      },
+      }) as any,
       orderBy: { scheduledDate: 'asc' },
       include: {
         course: { select: { code: true, color: true, title: true } },
@@ -279,10 +267,10 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
     // Weekly Study Progress
     const weekSessions = await prisma.studySession.findMany({
-      where: {
+      where: scoped(req, {
         scheduledDate: { gte: startOfWeek, lte: endOfWeek },
         ...(effectiveSemesterId && { semesterId: effectiveSemesterId }),
-      },
+      }) as any,
     });
 
     const totalPlannedMinutes = weekSessions.reduce((acc, s) => acc + s.durationMinutes, 0);
@@ -290,7 +278,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     const completedSessionsCount = weekSessions.filter((s) => s.isCompleted || s.status === 'COMPLETED').length;
 
     // 9. Calendar Events
-    const calFilter: any = {};
+    const calFilter: Record<string, unknown> = {};
     if (effectiveSemesterId) calFilter.semesterId = effectiveSemesterId;
     if (courseId) calFilter.courseId = courseId;
 
@@ -309,7 +297,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     }
 
     const calendarEvents = await prisma.calendarEvent.findMany({
-      where: calFilter,
+      where: scoped(req, calFilter) as any,
       orderBy: { startDate: 'asc' },
       take: 6,
       include: {
@@ -319,12 +307,12 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
     // 10. Class photos count for active semester
     const classPhotoCount = await prisma.classPhoto.count({
-      where: effectiveSemesterId ? { session: { semesterId: effectiveSemesterId } } : undefined,
+      where: scoped(req, effectiveSemesterId ? { session: { semesterId: effectiveSemesterId } } : {}) as any,
     });
 
     // 11. Active course progress breakdown
     const activeCourses = await prisma.course.findMany({
-      where: effectiveSemesterId ? { semesterId: effectiveSemesterId } : undefined,
+      where: { ...(effectiveSemesterId ? { semesterId: effectiveSemesterId } : {}), ...ownedBy(req) },
       select: {
         id: true,
         code: true,
@@ -346,30 +334,34 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
       where: {
         status: 'COMPLETED',
         ...(effectiveSemesterId && { semesterId: effectiveSemesterId }),
+        ...ownedBy(req),
       },
     });
 
     const totalAssignmentsCount = await prisma.assignment.count({
-      where: effectiveSemesterId ? { semesterId: effectiveSemesterId } : undefined,
+      where: {
+        ...(effectiveSemesterId ? { semesterId: effectiveSemesterId } : {}),
+        ...ownedBy(req),
+      },
     });
 
     // 12. Today's Focus items
     const [tasksDueToday, todayStudySessions, todayPhotos] = await Promise.all([
       prisma.assignment.findMany({
-        where: {
+        where: scoped(req, {
           deadline: { gte: startOfToday, lte: endOfToday },
           status: { not: 'COMPLETED' },
           ...(effectiveSemesterId && { semesterId: effectiveSemesterId }),
-        },
+        }) as any,
         include: {
           course: { select: { code: true, color: true } },
         },
       }),
       prisma.studySession.findMany({
-        where: {
+        where: scoped(req, {
           scheduledDate: { gte: startOfToday, lte: endOfToday },
           ...(effectiveSemesterId && { semesterId: effectiveSemesterId }),
-        },
+        }) as any,
         orderBy: { scheduledDate: 'asc' },
         include: {
           course: { select: { code: true, color: true, title: true } },
@@ -377,10 +369,10 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
         },
       }),
       prisma.classPhoto.findMany({
-        where: {
+        where: scoped(req, {
           createdAt: { gte: startOfToday, lte: endOfToday },
           ...(effectiveSemesterId && { session: { semesterId: effectiveSemesterId } }),
-        },
+        }) as any,
         take: 4,
         include: {
           session: {
@@ -393,13 +385,13 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     // 13. Recent activities timeline
     const [recentAssignments, recentBoardPhotos] = await Promise.all([
       prisma.assignment.findMany({
-        where: effectiveSemesterId ? { semesterId: effectiveSemesterId } : undefined,
+        where: { ...(effectiveSemesterId ? { semesterId: effectiveSemesterId } : {}), ...ownedBy(req) },
         orderBy: { updatedAt: 'desc' },
         take: 4,
         include: { course: { select: { code: true, color: true } } },
       }),
       prisma.classPhoto.findMany({
-        where: effectiveSemesterId ? { session: { semesterId: effectiveSemesterId } } : undefined,
+        where: scoped(req, effectiveSemesterId ? { session: { semesterId: effectiveSemesterId } } : {}) as any,
         orderBy: { createdAt: 'desc' },
         take: 4,
         include: {
@@ -481,12 +473,12 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (effectiveSemesterId) {
         const assessments = await prisma.assessment.findMany({
-          where: { semesterId: effectiveSemesterId },
+          where: { semesterId: effectiveSemesterId, ...ownedBy(req) },
           include: { course: true },
         });
 
         if (assessments.length > 0) {
-          let scale = await prisma.gradeScale.findUnique({ where: { id: 'default' } });
+          const scale = await prisma.gradeScale.findUnique({ where: { id: 'default' } });
           const scaleData = scale ? JSON.parse(scale.scaleData) : [];
           // Group by course
           const byCourse: Record<string, { totalEarned: number; totalWeight: number; credits: number }> = {};
@@ -495,7 +487,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
               byCourse[ass.courseId] = { totalEarned: 0, totalWeight: 0, credits: ass.course.credits || 3 };
             }
             if (ass.obtainedMarks !== null && ass.maxMarks > 0) {
-              const weight = ass.weight || 10;
+              const weight = ass.weightPercentage || 10;
               const pct = (ass.obtainedMarks / ass.maxMarks) * weight;
               byCourse[ass.courseId].totalEarned += pct;
               byCourse[ass.courseId].totalWeight += weight;
@@ -588,4 +580,3 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
 });
 
 export default router;
-

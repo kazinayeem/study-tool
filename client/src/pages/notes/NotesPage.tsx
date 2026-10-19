@@ -45,6 +45,35 @@ type NoteLoadStatus =
   | { kind: 'network'; message: string }
   | { kind: 'invalid_relationship'; note: Note };
 
+interface LocalDraft {
+  html: string;
+  json: string | null;
+}
+
+const draftKey = (noteId: string) => `scholarflow_unsaved_note_${noteId}`;
+
+function readLocalDraft(noteId: string): LocalDraft | null {
+  const raw = localStorage.getItem(draftKey(noteId));
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === 'object' && typeof parsed.html === 'string') {
+      return { html: parsed.html, json: typeof parsed.json === 'string' ? parsed.json : null };
+    }
+  } catch {
+    // Legacy drafts stored raw HTML strings.
+  }
+  return { html: raw, json: null };
+}
+
+function writeLocalDraft(noteId: string, draft: LocalDraft): void {
+  try {
+    localStorage.setItem(draftKey(noteId), JSON.stringify(draft));
+  } catch {
+    localStorage.setItem(draftKey(noteId), draft.html);
+  }
+}
+
 export const NotesPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const routeParams = useParams<{ id?: string; noteId?: string; semesterId?: string }>();
@@ -77,6 +106,7 @@ export const NotesPage: React.FC = () => {
   const [noteStatus, setNoteStatus] = useState<NoteLoadStatus>({ kind: 'idle' });
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [contentJson, setContentJson] = useState<string>('');
   const [noteSemesterId, setNoteSemesterId] = useState<string>('');
   const [noteCourseId, setNoteCourseId] = useState<string>('');
   const [noteFolderId, setNoteFolderId] = useState<string>('');
@@ -92,7 +122,7 @@ export const NotesPage: React.FC = () => {
   }, [routeSemesterId]);
 
   // Local draft recovery state
-  const [localDraft, setLocalDraft] = useState<string | null>(null);
+  const [localDraft, setLocalDraft] = useState<{ html: string; json: string | null } | null>(null);
 
   // Modals & Panels
   const [shareModalOpen, setShareModalOpen] = useState(false);
@@ -206,6 +236,7 @@ export const NotesPage: React.FC = () => {
     setActiveNote(note);
     setTitle(note.title || '');
     setContent(note.content || '');
+    setContentJson(note.contentJson || '');
     setNoteSemesterId(note.semesterId || '');
     setNoteCourseId(note.courseId || '');
     setNoteFolderId(note.folderId || '');
@@ -218,8 +249,11 @@ export const NotesPage: React.FC = () => {
     setErrorMessage(null);
 
     // Check for unsaved local draft recovery
-    const savedDraft = localStorage.getItem(`scholarflow_unsaved_note_${note.id}`);
-    setLocalDraft(savedDraft && savedDraft !== note.content ? savedDraft : null);
+    const savedDraft = readLocalDraft(note.id);
+    const draftIsNewer =
+      !!savedDraft &&
+      (savedDraft.html !== (note.content || '') || (savedDraft.json ?? '') !== (note.contentJson || ''));
+    setLocalDraft(draftIsNewer ? savedDraft : null);
   }, []);
 
   // Resolve the note referenced by the URL (or fall back to the first note).
@@ -456,6 +490,7 @@ export const NotesPage: React.FC = () => {
       noteToSave: Note,
       newTitle: string,
       newContent: string,
+      newContentJson: string,
       sId: string,
       cId: string,
       fId: string,
@@ -463,15 +498,19 @@ export const NotesPage: React.FC = () => {
     ) => {
       setSaveStatus('saving');
       setErrorMessage(null);
+      // Capture the note version we are basing this write on, so a slow response
+      // from an older edit can never overwrite a newer one.
+      const baseVersion = noteToSave.version;
       try {
         const updated = await api.updateNote(noteToSave.id, {
           title: newTitle.trim() || 'Untitled Academic Note',
           content: newContent,
+          contentJson: newContentJson || null,
           semesterId: sId || null,
           courseId: cId || null,
           folderId: fId || null,
           tags: tagList,
-          expectedVersion: noteToSave.version,
+          expectedVersion: baseVersion,
         });
 
         queryClient.setQueryData(['note', updated.id], updated);
@@ -483,14 +522,15 @@ export const NotesPage: React.FC = () => {
           setLocalDraft(null);
         }
         // Clear local unsaved draft upon successful cloud persistence
-        localStorage.removeItem(`scholarflow_unsaved_note_${noteToSave.id}`);
+        localStorage.removeItem(draftKey(noteToSave.id));
         queryClient.invalidateQueries({ queryKey: ['notes'] });
         queryClient.invalidateQueries({ queryKey: ['dashboard'] });
       } catch (err: any) {
         console.error('Autosave failed:', err);
         setSaveStatus('error');
         setErrorMessage(err.message || 'Autosave failed. Check your network connection.');
-        localStorage.setItem(`scholarflow_unsaved_note_${noteToSave.id}`, newContent);
+        // Keep the latest content safe locally so nothing is lost on failure.
+        writeLocalDraft(noteToSave.id, { html: newContent, json: newContentJson || null });
       }
     },
     [queryClient]
@@ -500,6 +540,7 @@ export const NotesPage: React.FC = () => {
   const triggerDebouncedSave = (
     newTitle: string,
     newContent: string,
+    newContentJson: string,
     sId: string,
     cId: string,
     fId: string,
@@ -510,19 +551,21 @@ export const NotesPage: React.FC = () => {
     if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
 
     debounceTimerRef.current = setTimeout(() => {
-      performSave(activeNote, newTitle, newContent, sId, cId, fId, tagList);
+      performSave(activeNote, newTitle, newContent, newContentJson, sId, cId, fId, tagList);
     }, 1200);
   };
 
   // Handlers
   const handleTitleChange = (newTitle: string) => {
     setTitle(newTitle);
-    triggerDebouncedSave(newTitle, content, noteSemesterId, noteCourseId, noteFolderId, tags);
+    triggerDebouncedSave(newTitle, content, contentJson, noteSemesterId, noteCourseId, noteFolderId, tags);
   };
 
-  const handleContentChange = (newHtml: string) => {
+  const handleContentChange = (newHtml: string, newContentJson?: string) => {
     setContent(newHtml);
-    triggerDebouncedSave(title, newHtml, noteSemesterId, noteCourseId, noteFolderId, tags);
+    const nextJson = newContentJson ?? contentJson;
+    if (newContentJson !== undefined) setContentJson(newContentJson);
+    triggerDebouncedSave(title, newHtml, nextJson, noteSemesterId, noteCourseId, noteFolderId, tags);
   };
 
   const handleSemesterChange = (newSemesterId: string) => {
@@ -535,7 +578,7 @@ export const NotesPage: React.FC = () => {
         setNoteCourseId('');
       }
     }
-    triggerDebouncedSave(title, content, newSemesterId, updatedCourseId, noteFolderId, tags);
+    triggerDebouncedSave(title, content, contentJson, newSemesterId, updatedCourseId, noteFolderId, tags);
   };
 
   const handleCourseChange = (newCourseId: string) => {
@@ -545,33 +588,42 @@ export const NotesPage: React.FC = () => {
       const targetCourse = courses.find((c) => c.id === newCourseId);
       if (targetCourse?.semesterId && targetCourse.semesterId !== noteSemesterId) {
         setNoteSemesterId(targetCourse.semesterId);
-        triggerDebouncedSave(title, content, targetCourse.semesterId, newCourseId, noteFolderId, tags);
+        triggerDebouncedSave(title, content, contentJson, targetCourse.semesterId, newCourseId, noteFolderId, tags);
         return;
       }
     }
-    triggerDebouncedSave(title, content, noteSemesterId, newCourseId, noteFolderId, tags);
+    triggerDebouncedSave(title, content, contentJson, noteSemesterId, newCourseId, noteFolderId, tags);
   };
 
   const handleFolderChange = (newFolderId: string) => {
     setNoteFolderId(newFolderId);
-    triggerDebouncedSave(title, content, noteSemesterId, noteCourseId, newFolderId, tags);
+    triggerDebouncedSave(title, content, contentJson, noteSemesterId, noteCourseId, newFolderId, tags);
   };
 
   const handleTagsChange = (newTags: string[]) => {
     setTags(newTags);
-    triggerDebouncedSave(title, content, noteSemesterId, noteCourseId, noteFolderId, newTags);
+    triggerDebouncedSave(title, content, contentJson, noteSemesterId, noteCourseId, noteFolderId, newTags);
   };
 
   const handleManualSave = () => {
     if (!activeNote) return;
-    performSave(activeNote, title, content, noteSemesterId, noteCourseId, noteFolderId, tags);
+    performSave(activeNote, title, content, contentJson, noteSemesterId, noteCourseId, noteFolderId, tags);
   };
 
   // Recover local draft
   const handleRecoverDraft = () => {
     if (localDraft && activeNote) {
-      setContent(localDraft);
-      triggerDebouncedSave(title, localDraft, noteSemesterId, noteCourseId, noteFolderId, tags);
+      setContent(localDraft.html);
+      if (localDraft.json) setContentJson(localDraft.json);
+      triggerDebouncedSave(
+        title,
+        localDraft.html,
+        localDraft.json || '',
+        noteSemesterId,
+        noteCourseId,
+        noteFolderId,
+        tags
+      );
       setLocalDraft(null);
     }
   };
@@ -1189,12 +1241,15 @@ export const NotesPage: React.FC = () => {
             {/* Word Document Editor Core */}
             <div className="flex-1 overflow-hidden">
               <WordEditor
+                key={activeNote.id}
                 noteId={activeNote.id}
                 initialTitle={title}
                 initialContent={content}
+                initialContentState={contentJson || null}
                 academicSubtitle={academicSubtitle}
                 onTitleChange={handleTitleChange}
                 onContentChange={handleContentChange}
+                onSerializedStateChange={setContentJson}
                 onSave={handleManualSave}
                 saveStatus={saveStatus}
                 isFullScreen={isFullScreen}

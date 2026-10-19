@@ -22,7 +22,7 @@ interface NoteExportData {
 /**
  * Parses inline HTML tags (strong, b, em, i, u, s, code, a) into docx TextRuns.
  */
-function parseInlineHtml(text: string): TextRun[] {
+function parseInlineHtml(text: string, forceBold = false): TextRun[] {
   // Decode common HTML entities
   const decoded = text
     .replace(/&nbsp;/g, ' ')
@@ -73,7 +73,7 @@ function parseInlineHtml(text: string): TextRun[] {
       runs.push(
         new TextRun({
           text: part,
-          bold: isBold,
+          bold: isBold || forceBold,
           italics: isItalic,
           underline: isUnderline ? {} : undefined,
           strike: isStrike,
@@ -229,21 +229,12 @@ export function buildNoteDocxDocument(note: NoteExportData): Document {
             for (const cell of cellMatches) {
               const isHeader = cell.toLowerCase().startsWith('<th');
               const cellInner = cell.replace(/<\/?(?:td|th)[^>]*>/gi, '');
-              const cellRuns = parseInlineHtml(cellInner);
+              const cellRuns = parseInlineHtml(cellInner, isHeader);
               cells.push(
                 new TableCell({
                   children: [
                     new Paragraph({
-                      children: cellRuns.map((r) => {
-                        if (isHeader) {
-                          return new TextRun({
-                            text: r.text,
-                            bold: true,
-                            size: 22,
-                          });
-                        }
-                        return r;
-                      }),
+                      children: cellRuns,
                     }),
                   ],
                 })

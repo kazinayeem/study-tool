@@ -840,7 +840,7 @@ degreeRouter.get('/progress', async (req: AuthenticatedRequest, res: Response, n
           if (gp !== null && gp !== undefined) {
             semPointsWeighted += gp * c.credits;
           }
-        } else if (sem.status === 'COMPLETED' || gl === 'F' || (gp !== null && gp < 2.0)) {
+        } else if (sem.status === 'COMPLETED' || gl === 'F' || (gp !== null && gp !== undefined && gp < 2.0)) {
           uncompletedCredits += c.credits;
           failedList.push(`${c.code} (${gl || 'Fail'})`);
         } else {
@@ -1171,7 +1171,7 @@ degreeRouter.get('/planner/next-semester', async (req: AuthenticatedRequest, res
         passedCodes.add(code);
       } else if (c.semester.status === 'ACTIVE' || c.semester.status === 'UPCOMING') {
         enrolledCodes.add(code);
-      } else if (gl === 'F' || (gp !== null && gp < 2.0)) {
+      } else if (gl === 'F' || (gp !== null && gp !== undefined && gp < 2.0)) {
         failedCodes.add(code);
       }
     }

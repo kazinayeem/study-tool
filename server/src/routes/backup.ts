@@ -1,4 +1,4 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router, Response, NextFunction } from 'express';
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
@@ -8,6 +8,8 @@ import multer from 'multer';
 import { prisma } from '../prisma.js';
 import { UPLOAD_DIR } from '../config.js';
 import { AppError } from '../middleware/errorHandler.js';
+import { ownedBy, ownerId } from '../middleware/ownership.js';
+import type { AuthenticatedRequest } from '../middleware/auth.js';
 
 const execFileAsync = promisify(execFile);
 const router = Router();
@@ -29,9 +31,10 @@ function computeFileSha256(filePath: string): string {
 }
 
 // 1. GET /api/backup/records - List backup records
-router.get('/records', async (_req: Request, res: Response, next: NextFunction) => {
+router.get('/records', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const records = await prisma.backupRecord.findMany({
+      where: { ...ownedBy(req) },
       orderBy: { createdAt: 'desc' },
       take: 25,
     });
@@ -42,7 +45,7 @@ router.get('/records', async (_req: Request, res: Response, next: NextFunction) 
 });
 
 // 2. POST /api/backup/create - Create verified backup snapshot (DB + uploads + SHA-256 manifest)
-router.post('/create', async (_req: Request, res: Response, next: NextFunction) => {
+router.post('/create', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   const tempDir = path.join(BACKUP_DIR, `temp-${timestamp}`);
   const archiveFilename = `scholarflow-backup-${timestamp}.tar.gz`;
@@ -117,6 +120,7 @@ router.post('/create', async (_req: Request, res: Response, next: NextFunction) 
 
     const record = await prisma.backupRecord.create({
       data: {
+        userId: ownerId(req),
         filename: archiveFilename,
         filePath: archivePath,
         sizeBytes: archiveSize,
@@ -144,10 +148,10 @@ router.post('/create', async (_req: Request, res: Response, next: NextFunction) 
 });
 
 // 3. GET /api/backup/download/:id - Download backup archive
-router.get('/download/:id', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/download/:id', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const record = await prisma.backupRecord.findUnique({ where: { id } });
+    const record = await prisma.backupRecord.findFirst({ where: { id, ...ownedBy(req) } });
     if (!record || !fs.existsSync(record.filePath)) {
       return res.status(404).json({ success: false, error: 'Backup archive file not found' });
     }
@@ -236,10 +240,10 @@ async function performSafeRestore(archivePath: string): Promise<{ success: boole
 }
 
 // 4. POST /api/backup/restore/:id - Restore from existing backup record
-router.post('/restore/:id', async (req: Request, res: Response, next: NextFunction) => {
+router.post('/restore/:id', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const record = await prisma.backupRecord.findUnique({ where: { id } });
+    const record = await prisma.backupRecord.findFirst({ where: { id, ...ownedBy(req) } });
     if (!record || !fs.existsSync(record.filePath)) {
       return res.status(404).json({ success: false, error: 'Backup file not found on disk' });
     }
@@ -256,7 +260,7 @@ router.post('/restore/:id', async (req: Request, res: Response, next: NextFuncti
 });
 
 // 5. POST /api/backup/restore-upload - Upload external backup archive and restore safely
-router.post('/restore-upload', upload.single('backupFile'), async (req: Request, res: Response, next: NextFunction) => {
+router.post('/restore-upload', upload.single('backupFile'), async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   if (!req.file) {
     return res.status(400).json({ success: false, error: 'No backup file provided' });
   }
@@ -277,7 +281,7 @@ router.post('/restore-upload', upload.single('backupFile'), async (req: Request,
 });
 
 // 6. GET /api/backup/export - Export complete database JSON
-router.get('/export', async (_req: Request, res: Response, next: NextFunction) => {
+router.get('/export', async (_req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const [
       settings,
@@ -351,7 +355,7 @@ router.get('/export', async (_req: Request, res: Response, next: NextFunction) =
 });
 
 // 7. Check database and filesystem consistency
-router.get('/integrity', async (_req: Request, res: Response, next: NextFunction) => {
+router.get('/integrity', async (_req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const documents = await prisma.document.findMany({
       select: { id: true, title: true, storedFilename: true, fileSize: true },
@@ -393,7 +397,7 @@ router.get('/integrity', async (_req: Request, res: Response, next: NextFunction
 });
 
 // 8. Clean orphaned files
-router.post('/clean-orphans', async (_req: Request, res: Response, next: NextFunction) => {
+router.post('/clean-orphans', async (_req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const documents = await prisma.document.findMany({ select: { storedFilename: true } });
     const dbFileSet = new Set(documents.map((d) => d.storedFilename));

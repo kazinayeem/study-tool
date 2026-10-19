@@ -116,14 +116,14 @@ export async function reconcileAcademicRelationships() {
   for (const ass of assessments) {
     if (ass.courseId && ass.course) {
       if (ass.semesterId !== ass.course.semesterId) {
-        console.log(`Reconciling Assessment "${ass.name}" (${ass.id}): updating semester to ${ass.course.semesterId}`);
+        console.log(`Reconciling Assessment "${ass.title}" (${ass.id}): updating semester to ${ass.course.semesterId}`);
         await prisma.assessment.update({
           where: { id: ass.id },
           data: { semesterId: ass.course.semesterId },
         });
         report.assessmentsFixed.push({
           id: ass.id,
-          name: ass.name,
+          name: ass.title,
           oldSemesterId: ass.semesterId,
           newSemesterId: ass.course.semesterId,
           courseCode: ass.course.code,

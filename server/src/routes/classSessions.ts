@@ -589,39 +589,24 @@ classSessionsRouter.post(
     try {
       const { id } = req.params;
 
-      const session = await prisma.classSession.findUnique({
-        where: { id },
+      const session = await prisma.classSession.findFirst({
+        where: { id, ...ownedBy(req) },
         include: { photos: true },
       });
 
       if (!session) {
-        // Clean up newly uploaded files before throwing
+        // Clean up newly uploaded files before responding/throwing
         for (const f of uploadedFiles) {
           if (fs.existsSync(f.path)) fs.unlinkSync(f.path);
         }
-        throw new AppError('Class session not found', 404);
-      }
-
-      // STRICT PRIVACY: Verify ownership
-      if (session.userId) {
-        if (!req.user) {
-          for (const f of uploadedFiles) {
-            if (fs.existsSync(f.path)) fs.unlinkSync(f.path);
-          }
-          return res.status(401).json({
-            success: false,
-            error: 'Authentication required.',
-          });
-        }
-        if (session.userId !== req.user.id) {
-          for (const f of uploadedFiles) {
-            if (fs.existsSync(f.path)) fs.unlinkSync(f.path);
-          }
+        const exists = await prisma.classSession.findUnique({ where: { id }, select: { id: true } });
+        if (exists) {
           return res.status(403).json({
             success: false,
             error: "Access denied. You do not have permission to upload photos to another user's class session.",
           });
         }
+        throw new AppError('Class session not found', 404);
       }
 
       if (uploadedFiles.length === 0) {
@@ -676,7 +661,7 @@ classSessionsRouter.post(
         const photo = await prisma.classPhoto.create({
           data: {
             sessionId: session.id,
-            userId: session.userId || req.user?.id || null,
+            userId: ownerId(req),
             originalFilename: file.originalname,
             storedFilename: file.filename,
             filePath: file.path,
@@ -719,8 +704,8 @@ classPhotosRouter.get('/:id', optionalAuthenticateOwner, async (req: Authenticat
   try {
     const { id } = req.params;
 
-    const photo = await prisma.classPhoto.findUnique({
-      where: { id },
+    const photo = await prisma.classPhoto.findFirst({
+      where: { id, ...ownedBy(req) },
       include: {
         session: {
           include: {
@@ -732,24 +717,14 @@ classPhotosRouter.get('/:id', optionalAuthenticateOwner, async (req: Authenticat
     });
 
     if (!photo) {
-      throw new AppError('Board photo not found', 404);
-    }
-
-    // STRICT PRIVACY: Verify ownership
-    const ownerId = photo.userId || photo.session.userId;
-    if (ownerId) {
-      if (!req.user) {
-        return res.status(401).json({
-          success: false,
-          error: 'Authentication required.',
-        });
-      }
-      if (ownerId !== req.user.id) {
+      const exists = await prisma.classPhoto.findUnique({ where: { id }, select: { id: true } });
+      if (exists) {
         return res.status(403).json({
           success: false,
           error: "Access denied. You do not have permission to view another user's private class photo.",
         });
       }
+      throw new AppError('Board photo not found', 404);
     }
 
     res.json({ success: true, data: photo });
@@ -764,30 +739,20 @@ classPhotosRouter.get('/:id/file', optionalAuthenticateOwner, async (req: Authen
     const { id } = req.params;
     const { download } = req.query;
 
-    const photo = await prisma.classPhoto.findUnique({
-      where: { id },
+    const photo = await prisma.classPhoto.findFirst({
+      where: { id, ...ownedBy(req) },
       include: { session: true },
     });
 
     if (!photo) {
-      throw new AppError('Board photo not found', 404);
-    }
-
-    // STRICT PRIVACY: Verify ownership
-    const ownerId = photo.userId || photo.session.userId;
-    if (ownerId) {
-      if (!req.user) {
-        return res.status(401).json({
-          success: false,
-          error: 'Authentication required.',
-        });
-      }
-      if (ownerId !== req.user.id) {
+      const exists = await prisma.classPhoto.findUnique({ where: { id }, select: { id: true } });
+      if (exists) {
         return res.status(403).json({
           success: false,
           error: "Access denied. You do not have permission to view another user's private class photo.",
         });
       }
+      throw new AppError('Board photo not found', 404);
     }
 
     const safePath = getSafeClassPhotoPath(photo.storedFilename);
@@ -824,30 +789,20 @@ classPhotosRouter.patch('/:id', optionalAuthenticateOwner, async (req: Authentic
       });
     }
 
-    const photo = await prisma.classPhoto.findUnique({
-      where: { id },
+    const photo = await prisma.classPhoto.findFirst({
+      where: { id, ...ownedBy(req) },
       include: { session: true },
     });
 
     if (!photo) {
-      throw new AppError('Board photo not found', 404);
-    }
-
-    // STRICT PRIVACY: Verify ownership
-    const ownerId = photo.userId || photo.session.userId;
-    if (ownerId) {
-      if (!req.user) {
-        return res.status(401).json({
-          success: false,
-          error: 'Authentication required.',
-        });
-      }
-      if (ownerId !== req.user.id) {
+      const exists = await prisma.classPhoto.findUnique({ where: { id }, select: { id: true } });
+      if (exists) {
         return res.status(403).json({
           success: false,
           error: "Access denied. You do not have permission to update another user's class photo.",
         });
       }
+      throw new AppError('Board photo not found', 404);
     }
 
     const updateData: any = {};
@@ -874,30 +829,20 @@ classPhotosRouter.delete('/:id', optionalAuthenticateOwner, async (req: Authenti
   try {
     const { id } = req.params;
 
-    const photo = await prisma.classPhoto.findUnique({
-      where: { id },
+    const photo = await prisma.classPhoto.findFirst({
+      where: { id, ...ownedBy(req) },
       include: { session: true },
     });
 
     if (!photo) {
-      throw new AppError('Board photo not found', 404);
-    }
-
-    // STRICT PRIVACY: Verify ownership
-    const ownerId = photo.userId || photo.session.userId;
-    if (ownerId) {
-      if (!req.user) {
-        return res.status(401).json({
-          success: false,
-          error: 'Authentication required.',
-        });
-      }
-      if (ownerId !== req.user.id) {
+      const exists = await prisma.classPhoto.findUnique({ where: { id }, select: { id: true } });
+      if (exists) {
         return res.status(403).json({
           success: false,
           error: "Access denied. You do not have permission to delete another user's class photo.",
         });
       }
+      throw new AppError('Board photo not found', 404);
     }
 
     // Delete image file from disk

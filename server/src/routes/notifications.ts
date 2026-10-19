@@ -1,6 +1,9 @@
-import { Router } from 'express';
+import { Router, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { prisma } from '../prisma.js';
+import { AppError } from '../middleware/errorHandler.js';
+import { ownedBy, ownerId } from '../middleware/ownership.js';
+import type { AuthenticatedRequest } from '../middleware/auth.js';
 import {
   getNotificationPreferences,
   syncAssignmentReminders,
@@ -42,7 +45,7 @@ const preferencesSchema = z.object({
  * GET /api/notifications/preferences
  * Fetch notification preferences.
  */
-router.get('/preferences', async (_req, res, next) => {
+router.get('/preferences', async (_req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const prefs = await getNotificationPreferences();
     res.json({
@@ -67,7 +70,7 @@ router.get('/preferences', async (_req, res, next) => {
  * PUT /api/notifications/preferences
  * Update notification preferences and re-sync active pending jobs.
  */
-router.put('/preferences', async (req, res, next) => {
+router.put('/preferences', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const parsed = preferencesSchema.parse(req.body);
 
@@ -163,7 +166,7 @@ router.put('/preferences', async (req, res, next) => {
  * Validates SMTP and transmits a real test email to verify credentials.
  * Suppresses external emails for demo users to protect external inboxes.
  */
-router.post('/test', optionalAuthenticateOwner, async (req: any, res) => {
+router.post('/test', optionalAuthenticateOwner, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const prefs = await getNotificationPreferences();
     const recipient = req.body.recipientEmail || prefs.recipientEmail;
@@ -251,7 +254,7 @@ router.post('/test', optionalAuthenticateOwner, async (req: any, res) => {
  * Notification Center Endpoints
  * Supports GET /, GET /in-app, PATCH /:id/read, POST /read-all, DELETE /:id
  */
-const handleGetNotifications = async (req: any, res: any, next: any) => {
+const handleGetNotifications = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const unreadOnly = req.query.unreadOnly === 'true';
     const category = req.query.category as string | undefined;
@@ -259,7 +262,7 @@ const handleGetNotifications = async (req: any, res: any, next: any) => {
     const limit = parseInt(req.query.limit as string || '50', 10);
     const skip = (page - 1) * limit;
 
-    const where: any = {};
+    const where: any = { ...ownedBy(req) };
     if (unreadOnly) where.isRead = false;
     if (category && category !== 'ALL') where.category = category;
 
@@ -271,7 +274,7 @@ const handleGetNotifications = async (req: any, res: any, next: any) => {
         take: limit,
       }),
       prisma.inAppNotification.count({ where }),
-      prisma.inAppNotification.count({ where: { isRead: false } }),
+      prisma.inAppNotification.count({ where: { isRead: false, ...ownedBy(req) } }),
     ]);
 
     res.json({
@@ -293,8 +296,15 @@ const handleGetNotifications = async (req: any, res: any, next: any) => {
 router.get('/', handleGetNotifications);
 router.get('/in-app', handleGetNotifications);
 
-const handleMarkRead = async (req: any, res: any, next: any) => {
+const handleMarkRead = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
+    const existing = await prisma.inAppNotification.findFirst({
+      where: { id: req.params.id, ...ownedBy(req) },
+    });
+    if (!existing) {
+      throw new AppError('Notification not found', 404);
+    }
+
     const updated = await prisma.inAppNotification.update({
       where: { id: req.params.id },
       data: { isRead: true },
@@ -308,10 +318,10 @@ const handleMarkRead = async (req: any, res: any, next: any) => {
 router.patch('/:id/read', handleMarkRead);
 router.patch('/in-app/:id/read', handleMarkRead);
 
-const handleMarkAllRead = async (_req: any, res: any, next: any) => {
+const handleMarkAllRead = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     await prisma.inAppNotification.updateMany({
-      where: { isRead: false },
+      where: { isRead: false, ...ownedBy(req) },
       data: { isRead: true },
     });
     res.json({ success: true, message: 'All notifications marked as read.' });
@@ -323,8 +333,15 @@ const handleMarkAllRead = async (_req: any, res: any, next: any) => {
 router.post('/read-all', handleMarkAllRead);
 router.post('/in-app/mark-all-read', handleMarkAllRead);
 
-const handleDeleteNotification = async (req: any, res: any, next: any) => {
+const handleDeleteNotification = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
+    const existing = await prisma.inAppNotification.findFirst({
+      where: { id: req.params.id, ...ownedBy(req) },
+    });
+    if (!existing) {
+      throw new AppError('Notification not found', 404);
+    }
+
     await prisma.inAppNotification.delete({
       where: { id: req.params.id },
     });
@@ -341,7 +358,7 @@ router.delete('/in-app/:id', handleDeleteNotification);
  * GET /api/notifications/history
  * Notification audit log with filtering by status, notificationType, date.
  */
-router.get('/history', async (req, res, next) => {
+router.get('/history', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { status, type, startDate, endDate } = req.query;
     const page = parseInt(req.query.page as string || '1', 10);
@@ -389,7 +406,7 @@ router.get('/history', async (req, res, next) => {
  * POST /api/notifications/trigger-scheduler
  * Manually executes due reminder jobs (for immediate testing or admin trigger).
  */
-router.post('/trigger-scheduler', async (_req, res, next) => {
+router.post('/trigger-scheduler', async (_req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const processed = await processNotificationJobs();
     res.json({

@@ -12,6 +12,7 @@ import { logActivity } from '../services/activityLogger.js';
 import { upload } from '../middleware/upload.js';
 import { UPLOAD_DIR } from '../config.js';
 import { validateSemesterCourseConsistency } from '../utils/academicValidation.js';
+import { sanitizeNoteHtml, validateNoteContentJson } from '../utils/noteContent.js';
 import { Packer } from 'docx';
 import { buildNoteDocxDocument } from '../utils/docxExport.js';
 import mammoth from 'mammoth';
@@ -234,6 +235,7 @@ const createNoteSchema = z.object({
   body: z.object({
     title: z.string().min(1, 'Title is required'),
     content: z.string().default(''),
+    contentJson: z.string().nullable().optional(),
     semesterId: z.string().nullable().optional(),
     courseId: z.string().nullable().optional(),
     documentId: z.string().nullable().optional(),
@@ -251,6 +253,7 @@ const updateNoteSchema = z.object({
   body: z.object({
     title: z.string().min(1).optional(),
     content: z.string().optional(),
+    contentJson: z.string().nullable().optional(),
     semesterId: z.string().nullable().optional(),
     courseId: z.string().nullable().optional(),
     documentId: z.string().nullable().optional(),
@@ -369,6 +372,7 @@ router.post('/', optionalAuthenticateOwner, validate(createNoteSchema), async (r
     const {
       title,
       content,
+      contentJson,
       semesterId,
       courseId,
       documentId,
@@ -381,13 +385,21 @@ router.post('/', optionalAuthenticateOwner, validate(createNoteSchema), async (r
       reminderDate,
     } = req.body;
 
+    // Validate the canonical Lexical editor state and sanitize derived HTML.
+    const contentCheck = validateNoteContentJson(contentJson);
+    if (!contentCheck.ok) {
+      throw new AppError(contentCheck.error || 'Invalid note content', 400);
+    }
+    const safeContent = sanitizeNoteHtml(content || '');
+
     // Strict Academic Integrity Validation: Semester -> Course
     const validated = await validateSemesterCourseConsistency(courseId, semesterId);
 
     const note = await prisma.note.create({
       data: {
         title,
-        content: content || '',
+        content: safeContent,
+        contentJson: contentCheck.value ?? null,
         semesterId: validated.semesterId,
         courseId: validated.courseId,
         documentId: documentId || null,
@@ -416,6 +428,7 @@ router.post('/', optionalAuthenticateOwner, validate(createNoteSchema), async (r
         version: 1,
         title: note.title,
         content: note.content,
+        contentJson: note.contentJson,
         createdReason: 'INITIAL_VERSION',
       },
     });
@@ -449,6 +462,7 @@ router.put('/:id', optionalAuthenticateOwner, validate(updateNoteSchema), async 
     const {
       title,
       content,
+      contentJson,
       semesterId,
       courseId,
       documentId,
@@ -499,7 +513,14 @@ router.put('/:id', optionalAuthenticateOwner, validate(updateNoteSchema), async 
     }
 
     if (title !== undefined) updateData.title = title;
-    if (content !== undefined) updateData.content = content;
+    if (content !== undefined) updateData.content = sanitizeNoteHtml(content);
+    if (contentJson !== undefined) {
+      const contentCheck = validateNoteContentJson(contentJson);
+      if (!contentCheck.ok) {
+        throw new AppError(contentCheck.error || 'Invalid note content', 400);
+      }
+      updateData.contentJson = contentCheck.value ?? null;
+    }
     if (documentId !== undefined) updateData.documentId = documentId;
     if (assignmentId !== undefined) updateData.assignmentId = assignmentId;
     if (examId !== undefined) updateData.examId = examId;
@@ -529,14 +550,15 @@ router.put('/:id', optionalAuthenticateOwner, validate(updateNoteSchema), async 
           version: nextVersion,
           title: updated.title,
           content: updated.content,
+          contentJson: updated.contentJson,
           createdReason: 'AUTOSAVE',
         },
       });
     }
 
     // Sync links if content changed
-    if (content !== undefined && content !== existingNote.content) {
-      await syncNoteLinks(id, content, req);
+    if (content !== undefined && updateData.content !== existingNote.content) {
+      await syncNoteLinks(id, updateData.content, req);
     }
 
     res.json({
@@ -603,6 +625,7 @@ router.post('/:id/revisions/:revId/restore', async (req: AuthenticatedRequest, r
       data: {
         title: revision.title,
         content: revision.content,
+        contentJson: revision.contentJson,
         version: newVersion,
       },
     });
@@ -614,6 +637,7 @@ router.post('/:id/revisions/:revId/restore', async (req: AuthenticatedRequest, r
         version: newVersion,
         title: revision.title,
         content: revision.content,
+        contentJson: revision.contentJson,
         createdReason: `RESTORED_FROM_V${revision.version}`,
       },
     });

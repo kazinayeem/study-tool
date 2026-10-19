@@ -1,10 +1,13 @@
-import { Router } from 'express';
+import { Router, Response, NextFunction } from 'express';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import fs from 'fs';
 import path from 'path';
 import { z } from 'zod';
 import { prisma } from '../prisma.js';
+import { AppError } from '../middleware/errorHandler.js';
+import { ownedBy, ownerId } from '../middleware/ownership.js';
+import type { AuthenticatedRequest } from '../middleware/auth.js';
 import {
   authenticateOwner,
   optionalAuthenticateOwner,
@@ -38,7 +41,7 @@ function generateSecureToken(): string {
  * POST /api/share/links
  * Creates a new share link for a specific resource (Owner only).
  */
-router.post('/links', authenticateOwner, async (req: any, res, next) => {
+router.post('/links', authenticateOwner, async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const data = createShareLinkSchema.parse(req.body);
 
@@ -95,6 +98,7 @@ router.post('/links', authenticateOwner, async (req: any, res, next) => {
 
     const link = await prisma.shareLink.create({
       data: {
+        userId: ownerId(req),
         token,
         resourceType: data.resourceType,
         resourceId: data.resourceId,
@@ -136,11 +140,12 @@ router.post('/links', authenticateOwner, async (req: any, res, next) => {
  * GET /api/share/links/resource/:resourceType/:resourceId
  * List all share links for a particular resource (Owner only).
  */
-router.get('/links/resource/:resourceType/:resourceId', authenticateOwner, async (req, res, next) => {
+router.get('/links/resource/:resourceType/:resourceId', authenticateOwner, async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { resourceType, resourceId } = req.params;
     const links = await prisma.shareLink.findMany({
       where: {
+        ...ownedBy(req),
         resourceType: resourceType.toUpperCase(),
         resourceId,
       },
@@ -174,8 +179,16 @@ router.get('/links/resource/:resourceType/:resourceId', authenticateOwner, async
  * PATCH /api/share/links/:id/revoke
  * Revokes a share link immediately (Owner only).
  */
-router.patch('/links/:id/revoke', authenticateOwner, async (req, res, next) => {
+router.patch('/links/:id/revoke', authenticateOwner, async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
+    const existing = await prisma.shareLink.findFirst({
+      where: { id: req.params.id, ...ownedBy(req) },
+      select: { id: true },
+    });
+    if (!existing) {
+      throw new AppError('Share link not found', 404);
+    }
+
     const link = await prisma.shareLink.update({
       where: { id: req.params.id },
       data: { isRevoked: true },
@@ -195,13 +208,14 @@ router.patch('/links/:id/revoke', authenticateOwner, async (req, res, next) => {
  * POST /api/share/resource/:resourceType/:resourceId/set-private
  * Switches a resource back to PRIVATE and immediately invalidates all active public/unlisted share links.
  */
-router.post('/resource/:resourceType/:resourceId/set-private', authenticateOwner, async (req, res, next) => {
+router.post('/resource/:resourceType/:resourceId/set-private', authenticateOwner, async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { resourceType, resourceId } = req.params;
 
-    // Invalidate all active share links for this resource
+    // Invalidate all active share links for this resource owned by the caller
     await prisma.shareLink.updateMany({
       where: {
+        ...ownedBy(req),
         resourceType: resourceType.toUpperCase(),
         resourceId,
         isRevoked: false,
@@ -209,15 +223,19 @@ router.post('/resource/:resourceType/:resourceId/set-private', authenticateOwner
       data: { isRevoked: true },
     });
 
-    // Update resource visibility in DB
+    // Update resource visibility in DB (only when owned by the caller)
     if (resourceType.toUpperCase() === 'DOCUMENT') {
-      await prisma.document.update({ where: { id: resourceId }, data: { visibility: 'PRIVATE' } });
+      const owned = await prisma.document.findFirst({ where: { id: resourceId, ...ownedBy(req) }, select: { id: true } });
+      if (owned) await prisma.document.update({ where: { id: resourceId }, data: { visibility: 'PRIVATE' } });
     } else if (resourceType.toUpperCase() === 'NOTE') {
-      await prisma.note.update({ where: { id: resourceId }, data: { visibility: 'PRIVATE' } });
+      const owned = await prisma.note.findFirst({ where: { id: resourceId, ...ownedBy(req) }, select: { id: true } });
+      if (owned) await prisma.note.update({ where: { id: resourceId }, data: { visibility: 'PRIVATE' } });
     } else if (resourceType.toUpperCase() === 'ASSIGNMENT') {
-      await prisma.assignment.update({ where: { id: resourceId }, data: { visibility: 'PRIVATE' } });
+      const owned = await prisma.assignment.findFirst({ where: { id: resourceId, ...ownedBy(req) }, select: { id: true } });
+      if (owned) await prisma.assignment.update({ where: { id: resourceId }, data: { visibility: 'PRIVATE' } });
     } else if (resourceType.toUpperCase() === 'EXAM') {
-      await prisma.exam.update({ where: { id: resourceId }, data: { visibility: 'PRIVATE' } });
+      const owned = await prisma.exam.findFirst({ where: { id: resourceId, ...ownedBy(req) }, select: { id: true } });
+      if (owned) await prisma.exam.update({ where: { id: resourceId }, data: { visibility: 'PRIVATE' } });
     }
 
     res.json({
@@ -234,7 +252,7 @@ router.post('/resource/:resourceType/:resourceId/set-private', authenticateOwner
  * Public endpoint to resolve shared resource metadata and preview content.
  * Enforces rate limiting, token validity, expiration, revocation, and password protection check.
  */
-router.get('/:token', publicShareRateLimiter, optionalAuthenticateOwner, async (req: any, res, next) => {
+router.get('/:token', publicShareRateLimiter, optionalAuthenticateOwner, async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { token } = req.params;
 
@@ -451,7 +469,7 @@ router.get('/:token', publicShareRateLimiter, optionalAuthenticateOwner, async (
  * POST /api/share/:token/verify-password
  * Rate-limited password verification endpoint.
  */
-router.post('/:token/verify-password', passwordVerifyRateLimiter, async (req, res, next) => {
+router.post('/:token/verify-password', passwordVerifyRateLimiter, async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { token } = req.params;
     const { password } = req.body;
@@ -492,7 +510,7 @@ router.post('/:token/verify-password', passwordVerifyRateLimiter, async (req, re
  * Dedicated secure public file streaming endpoint.
  * Enforces download permission, password check, and streams file safely.
  */
-router.get('/:token/file', publicShareRateLimiter, optionalAuthenticateOwner, async (req: any, res, next) => {
+router.get('/:token/file', publicShareRateLimiter, optionalAuthenticateOwner, async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { token } = req.params;
     const download = req.query.download === 'true';

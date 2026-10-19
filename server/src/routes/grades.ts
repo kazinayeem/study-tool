@@ -157,7 +157,7 @@ router.post('/assessments', async (req: AuthenticatedRequest, res: Response, nex
       data: {
         userId: ownerId(req),
         courseId: academicValid.courseId!,
-        semesterId: academicValid.semesterId,
+        semesterId: academicValid.semesterId!,
         title: validated.title,
         category: validated.category,
         maxMarks: validated.maxMarks,

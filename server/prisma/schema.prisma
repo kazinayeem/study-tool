@@ -193,7 +193,8 @@ model Note {
   folderId     String?
   folder       NoteFolder? @relation(fields: [folderId], references: [id], onDelete: SetNull)
   title        String
-  content      String      @default("") // Rich text HTML / markdown
+  content      String      @default("") // Derived rich-text HTML (export/search/share)
+  contentJson  String? // Canonical versioned Lexical editor state (validated JSON)
   isPinned     Boolean     @default(false)
   isArchived   Boolean     @default(false)
   visibility   String      @default("PRIVATE") // PRIVATE, PUBLIC, UNLISTED
@@ -786,6 +787,7 @@ model NoteRevision {
   version       Int
   title         String
   content       String
+  contentJson   String? // Canonical versioned Lexical editor state at this revision
   createdReason String   @default("AUTOSAVE") // AUTOSAVE, MANUAL_SAVE, RESTORE
   createdAt     DateTime @default(now())
 

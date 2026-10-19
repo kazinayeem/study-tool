@@ -70,9 +70,9 @@ async function audit() {
   // Check assessments
   for (const ass of assessments) {
     if (ass.courseId && !ass.semesterId) {
-      inconsistencies.push({ type: 'ASSESSMENT_MISSING_SEMESTER', id: ass.id, name: ass.name, courseSemesterId: ass.course?.semesterId });
+      inconsistencies.push({ type: 'ASSESSMENT_MISSING_SEMESTER', id: ass.id, name: ass.title, courseSemesterId: ass.course?.semesterId });
     } else if (ass.courseId && ass.semesterId && ass.course && ass.course.semesterId !== ass.semesterId) {
-      inconsistencies.push({ type: 'ASSESSMENT_SEMESTER_MISMATCH', id: ass.id, name: ass.name, assSemesterId: ass.semesterId, courseSemesterId: ass.course.semesterId });
+      inconsistencies.push({ type: 'ASSESSMENT_SEMESTER_MISMATCH', id: ass.id, name: ass.title, assSemesterId: ass.semesterId, courseSemesterId: ass.course.semesterId });
     }
   }
 

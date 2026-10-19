@@ -109,9 +109,9 @@ export interface LexicalEditorProps {
   initialContentState?: string | null;
   academicSubtitle?: string;
   onTitleChange: (newTitle: string) => void;
-  /** Emits the derived HTML (Word/PDF/Markdown export + legacy consumers). */
-  onContentChange: (html: string) => void;
-  /** Emits the canonical versioned Lexical state JSON. */
+  /** Emits the derived HTML plus the canonical versioned Lexical state JSON. */
+  onContentChange: (html: string, json: string) => void;
+  /** Optional extra listener for the canonical versioned Lexical state JSON. */
   onSerializedStateChange?: (json: string) => void;
   onSave?: () => void;
   saveStatus?: SaveStatus;
@@ -461,7 +461,7 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
         return;
       }
 
-      onContentChange(html);
+      onContentChange(html, json);
       onSerializedStateChange?.(json);
     },
     [onContentChange, onSerializedStateChange]
@@ -537,7 +537,7 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
       $patchStyleText(selection, { color: null, 'background-color': null });
       selection.getNodes().forEach((node) => {
         if ($isTextNode(node)) node.setFormat(0);
-        else if (node.getChildren) {
+        else if ($isElementNode(node)) {
           node.getChildren().forEach((child) => {
             if ($isTextNode(child)) child.setFormat(0);
           });
@@ -925,11 +925,16 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
 /* Error boundary                                                     */
 /* ------------------------------------------------------------------ */
 
+interface LexicalErrorBoundaryProps {
+  children: React.ReactElement;
+  onError: (error: Error) => void;
+}
+
 class LexicalErrorBoundary extends React.Component<
-  { children: React.ReactNode },
+  LexicalErrorBoundaryProps,
   { hasError: boolean }
 > {
-  constructor(props: { children: React.ReactNode }) {
+  constructor(props: LexicalErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
   }
