@@ -4,6 +4,8 @@ import { ChevronRight, Home } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../../lib/api';
 import { Semester } from '../../types';
+import { useI18n } from '../../i18n/I18nContext';
+import type { TranslationKey } from '../../i18n/translations';
 
 interface BreadcrumbItem {
   label: string;
@@ -13,6 +15,28 @@ interface BreadcrumbItem {
 interface BreadcrumbsProps {
   customItems?: BreadcrumbItem[];
 }
+
+const FRIENDLY_KEYS: Record<string, TranslationKey> = {
+  dashboard: 'nav.dashboard',
+  semesters: 'nav.semesters',
+  courses: 'nav.courses',
+  assignments: 'nav.assignments',
+  exams: 'nav.exams',
+  grades: 'nav.grades',
+  calendar: 'nav.calendar',
+  planner: 'nav.planner',
+  'study-planner': 'nav.planner',
+  journal: 'nav.journal',
+  'class-photos': 'nav.journal',
+  documents: 'nav.documents',
+  notes: 'nav.notes',
+  notifications: 'nav.notifications',
+  backup: 'nav.backup',
+  settings: 'nav.settings',
+  admin: 'nav.admin',
+  overview: 'nav.overview',
+  fees: 'nav.fees',
+};
 
 const FRIENDLY_NAMES: Record<string, string> = {
   dashboard: 'Dashboard',
@@ -38,6 +62,7 @@ const FRIENDLY_NAMES: Record<string, string> = {
 
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ customItems }) => {
   const location = useLocation();
+  const { t } = useI18n();
 
   const { data: semesters = [] } = useQuery<Semester[]>({
     queryKey: ['semesters'],
@@ -86,7 +111,8 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ customItems }) => {
         const href = `/${pathSegments.slice(0, idx + 1).join('/')}`;
 
         // Format label
-        let label = FRIENDLY_NAMES[segment.toLowerCase()];
+        const key = FRIENDLY_KEYS[segment.toLowerCase()];
+        let label = key ? t(key) : FRIENDLY_NAMES[segment.toLowerCase()];
         if (!label) {
           // Check if it's a semester ID
           const matchedSemester = semesters.find((s) => s.id === segment);
@@ -96,12 +122,12 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ customItems }) => {
             // It's a UUID or hash ID
             const prevSegment = idx > 0 ? pathSegments[idx - 1].toLowerCase() : '';
             if (prevSegment === 'courses') label = 'Course Details';
-            else if (prevSegment === 'notes') label = 'Document';
+            else if (prevSegment === 'notes') label = t('bc.document');
             else if (prevSegment === 'assignments') label = 'Assignment';
             else if (prevSegment === 'exams') label = 'Exam';
             else if (prevSegment === 'documents') label = 'Document';
             else if (prevSegment === 'class-photos' || prevSegment === 'journal') label = 'Photo Session';
-            else label = 'Record';
+            else label = t('bc.record');
           } else {
             label = segment.charAt(0).toUpperCase() + segment.slice(1);
           }

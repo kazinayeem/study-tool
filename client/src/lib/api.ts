@@ -1,3 +1,4 @@
+import type { FeeSummary, FeeOverview, FeeItem } from '../types';
 import type {
   ClassSession,
   ClassPhoto,
@@ -399,6 +400,27 @@ export const api = {
     request<any>(`/exams/${examId}/documents/${documentId}`, { method: 'DELETE' }),
   deleteExam: (id: string) =>
     request<{ success: boolean }>(`/exams/${id}`, { method: 'DELETE' }),
+
+  // Semester fees & costs
+  getFeeSummary: (semesterId: string) =>
+    request<FeeSummary>(`/fees/summary?semesterId=${encodeURIComponent(semesterId)}`),
+  getFeeOverview: () => request<FeeOverview>('/fees/overview'),
+  saveFeePlan: (data: {
+    semesterId: string;
+    currency: string;
+    perCreditFee: number;
+    waiverPercent: number;
+    notes?: string | null;
+  }) => request<FeeSummary>('/fees/plan', { method: 'PUT', body: JSON.stringify(data) }),
+  addTuitionPayment: (semesterId: string, amount: number) =>
+    request<FeeSummary>('/fees/tuition-payment', { method: 'POST', body: JSON.stringify({ semesterId, amount }) }),
+  createFeeItem: (data: Record<string, unknown>) =>
+    request<FeeItem>('/fees/items', { method: 'POST', body: JSON.stringify(data) }),
+  updateFeeItem: (id: string, data: Record<string, unknown>) =>
+    request<FeeItem>(`/fees/items/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  payFeeItem: (id: string, amount: number) =>
+    request<FeeItem>(`/fees/items/${id}/pay`, { method: 'POST', body: JSON.stringify({ amount }) }),
+  deleteFeeItem: (id: string) => request<{ success: boolean }>(`/fees/items/${id}`, { method: 'DELETE' }),
 
   // Calendar
   getCalendarEvents: (params: Record<string, string> = {}) => {

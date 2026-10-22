@@ -28,6 +28,7 @@ import { api } from '../../lib/api';
 import { formatDate, formatRelativeDeadline, formatBytes } from '../../lib/utils';
 import { DashboardData } from '../../types';
 import { useActiveSemester } from '../../hooks/useActiveSemester';
+import { useI18n } from '../../i18n/I18nContext';
 
 type StatTone = 'green' | 'red' | 'amber';
 const STAT_TONES: Record<StatTone, string> = {
@@ -69,6 +70,7 @@ const StatCard: React.FC<{
 );
 
 export const DashboardPage: React.FC = () => {
+  const { t } = useI18n();
   const navigate = useNavigate();
   const {
     activeSemester,
@@ -307,16 +309,16 @@ export const DashboardPage: React.FC = () => {
         <div className="h-16 w-16 rounded-[12px] bg-[#dcf0e8] text-[#0f6b57] flex items-center justify-center mb-4 shadow-2xs border border-[#a8dcc9]">
           <BookOpen className="h-8 w-8" />
         </div>
-        <h2 className="text-xl font-semibold text-[#1a1a1a] dark:text-white">Welcome to ScholarFlow</h2>
+        <h2 className="text-xl font-semibold text-[#1a1a1a] dark:text-white">{t('dash.welcome')}</h2>
         <p className="text-sm text-[#787671] dark:text-[#a4a097] max-w-md mt-2 mb-6">
-          Your semester-centric academic workspace. Create your first semester to organize your courses, board photos, notes, and study plans.
+          {t('dash.welcomeBody')}
         </p>
         <Link
           to="/semesters"
           className="btn-notion-primary text-sm shadow-2xs"
         >
           <Plus className="h-4 w-4" />
-          Create First Semester
+          {t('dash.createFirst')}
         </Link>
       </div>
     );
@@ -344,7 +346,7 @@ export const DashboardPage: React.FC = () => {
             <span>{todayFormatted}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-[#14201c] dark:text-white flex flex-wrap items-center gap-x-3 gap-y-1.5">
-            Academic Overview
+            {t('dash.title')}
             {resolvedSemester && (
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#dcf0e8] text-[#0d3b30] dark:bg-[#0d3b30]/50 dark:text-[#a8dcc9] border border-[#a8dcc9]/50">
                 <span className="h-2 w-2 rounded-full bg-[#1aae39] animate-pulse" />
@@ -353,14 +355,14 @@ export const DashboardPage: React.FC = () => {
             )}
           </h1>
           <p className="text-xs text-[#787671] dark:text-[#a4a097] mt-1">
-            {resolvedSemester?.academicGoals || resolvedSemester?.description || 'Your active academic workspace telemetry & upcoming priorities.'}
+            {resolvedSemester?.academicGoals || resolvedSemester?.description || t('dash.fallbackSubtitle')}
           </p>
 
           {/* Semester Progress Bar (when dates are configured) */}
           {semesterProgress && (
             <div className="mt-3 max-w-md">
               <div className="flex items-center justify-between text-[11px] font-medium text-[#787671] dark:text-[#a4a097] mb-1">
-                <span>Term Progress ({semesterProgress.percentage}%)</span>
+                <span>{t('dash.termProgress', { pct: semesterProgress.percentage })}</span>
                 <span>
                   {formatDate(semesterProgress.startDate, 'MMM d')} – {formatDate(semesterProgress.endDate, 'MMM d, yyyy')}
                 </span>
@@ -385,7 +387,7 @@ export const DashboardPage: React.FC = () => {
                 selectSemester(e.target.value);
               }
             }}
-            aria-label="Select Active Semester"
+            aria-label={t('dash.selectSemester')}
             className="rounded-[8px] border border-[#c8c4be] bg-white px-3 h-10 sm:h-[34px] text-sm sm:text-xs font-medium text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white cursor-pointer focus:outline-none focus:border-2 focus:border-[#0f6b57]"
           >
             {semesters.map((s: any) => (
@@ -403,7 +405,7 @@ export const DashboardPage: React.FC = () => {
               title="Add Assignment"
             >
               <Plus className="h-3.5 w-3.5" />
-              <span>Assignment</span>
+              <span>{t('dash.addAssignment')}</span>
             </Link>
 
             <Link
@@ -412,7 +414,7 @@ export const DashboardPage: React.FC = () => {
               title="Add Exam"
             >
               <Plus className="h-3 w-3 text-[#0f6b57]" />
-              <span>Exam</span>
+              <span>{t('dash.addExam')}</span>
             </Link>
 
             <Link
@@ -421,7 +423,7 @@ export const DashboardPage: React.FC = () => {
               title="Upload Document"
             >
               <Plus className="h-3 w-3 text-[#0f6b57]" />
-              <span>Document</span>
+              <span>{t('dash.addDocument')}</span>
             </Link>
 
             <Link
@@ -430,13 +432,13 @@ export const DashboardPage: React.FC = () => {
               title="Capture Board Photo"
             >
               <Camera className="h-3.5 w-3.5 text-[#0f6b57]" />
-              <span>Photo</span>
+              <span>{t('dash.addPhoto')}</span>
             </Link>
 
             <button
               onClick={() => refetch()}
               disabled={isRefetching}
-              aria-label="Refresh Dashboard"
+              aria-label={t('dash.refresh')}
               className="btn-notion-secondary text-xs h-10 sm:h-[34px] px-2"
               title="Refresh statistics"
             >
@@ -452,42 +454,42 @@ export const DashboardPage: React.FC = () => {
       <div className="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-6 gap-3">
         <StatCard
           to={semId ? `/semesters/${semId}/courses` : '/courses'}
-          label="Courses"
+          label={t('dash.stat.courses')}
           icon={GraduationCap}
           tone="green"
           value={activeCourses.length || stats.totalCourses || 0}
-          hint={resolvedSemester?.name || 'Active term'}
+          hint={resolvedSemester?.name || t('dash.stat.activeTerm')}
         />
         <StatCard
           to={semId ? `/semesters/${semId}/assignments` : '/assignments'}
-          label="Assignments left"
+          label={t('dash.stat.assignmentsLeft')}
           icon={CheckSquare}
           tone={stats.overdueCount > 0 ? 'red' : 'green'}
           value={stats.pendingAssignmentsCount ?? (stats.totalAssignmentsCount - stats.completedAssignmentsCount)}
-          unit={`of ${stats.totalAssignmentsCount || 0}`}
-          hint={stats.overdueCount > 0 ? `${stats.overdueCount} overdue` : 'Nothing overdue'}
+          unit={t('dash.stat.of', { n: stats.totalAssignmentsCount || 0 })}
+          hint={stats.overdueCount > 0 ? t('dash.stat.overdue', { n: stats.overdueCount }) : t('dash.stat.nothingOverdue')}
           hintTone={stats.overdueCount > 0 ? 'red' : undefined}
         />
         <StatCard
           to={semId ? `/semesters/${semId}/exams` : '/exams'}
-          label="Upcoming exams"
+          label={t('dash.stat.exams')}
           icon={Award}
           tone="green"
           value={stats.upcomingExamsCount ?? dashboard.upcomingExams?.length ?? 0}
-          hint={`${todayFocus.examsUpcoming?.length || 0} within 14 days`}
+          hint={t('dash.stat.within14', { n: todayFocus.examsUpcoming?.length || 0 })}
         />
         <StatCard
           to={semId ? `/semesters/${semId}/planner` : '/planner'}
-          label="Study sessions"
+          label={t('dash.stat.sessions')}
           icon={Clock}
           tone="amber"
           value={stats.completedSessionsCount || 0}
-          unit={`of ${stats.totalSessionsCount || stats.completedSessionsCount || 0}`}
-          hint={`${Math.round((stats.weeklyStudyMinutes || 0) / 60)} hrs this week`}
+          unit={t('dash.stat.of', { n: stats.totalSessionsCount || stats.completedSessionsCount || 0 })}
+          hint={t('dash.stat.hoursWeek', { n: Math.round((stats.weeklyStudyMinutes || 0) / 60) })}
         />
         <StatCard
           to={semId ? `/semesters/${semId}/grades` : '/grades'}
-          label="Semester GPA"
+          label={t('dash.stat.gpa')}
           icon={CheckCircle2}
           tone="green"
           value={
@@ -495,16 +497,16 @@ export const DashboardPage: React.FC = () => {
               ? stats.semesterGpa.toFixed(2)
               : `${stats.avgProgress || 0}%`
           }
-          hint={stats.semesterGpa !== null && stats.semesterGpa !== undefined ? 'Calculated GPA' : 'Average mastery'}
+          hint={stats.semesterGpa !== null && stats.semesterGpa !== undefined ? t('dash.stat.calcGpa') : t('dash.stat.mastery')}
         />
         <StatCard
           to={semId ? `/semesters/${semId}/documents` : '/documents'}
-          label="Documents"
+          label={t('dash.stat.documents')}
           icon={FolderOpen}
           tone="green"
           value={stats.totalDocuments || 0}
-          unit="files"
-          hint={`${stats.classPhotoCount || 0} board photos`}
+          unit={t('dash.stat.files')}
+          hint={t('dash.stat.photos', { n: stats.classPhotoCount || 0 })}
         />
       </div>
 
@@ -521,10 +523,10 @@ export const DashboardPage: React.FC = () => {
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="text-sm font-semibold text-[#14201c] dark:text-white">
-                    Degree Progress: {degreeProgress.program.programName}
+                    {t('dash.degree.title', { name: degreeProgress.program.programName })}
                   </h3>
                   <span className="text-[10px] px-2 py-0.2 rounded-[4px] bg-[#dcf0e8] text-[#0f6b57] dark:bg-[#0a2a22] dark:text-[#4ccba5] font-bold">
-                    {degreeProgress.credits.completionPercentage}% Complete
+                    {t('dash.degree.complete', { n: degreeProgress.credits.completionPercentage })}
                   </span>
                 </div>
                 <p className="text-[11px] text-[#787671] dark:text-[#a4a097] mt-0.5">

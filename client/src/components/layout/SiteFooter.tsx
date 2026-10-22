@@ -1,41 +1,140 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { GraduationCap } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { useI18n } from '../../i18n/I18nContext';
+import { LEGAL_PAGES } from '../../i18n/legalContent';
+import { LanguageSwitcher } from '../common/LanguageSwitcher';
+import { openCookieSettings } from '../common/CookieConsent';
 
 const BORNOSOFT_URL = 'https://bornosoft.bd/';
 
+const linkClass =
+  'rounded text-sm text-[#5d5b54] transition-colors hover:text-[#0f6b57] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30';
+
 interface SiteFooterProps {
-  /** Render a subtle top hairline above the branding line (used on the landing page). */
+  /** Render a subtle top hairline above the footer (used on the landing page). */
   withTopBorder?: boolean;
+  /** `compact` is the branding line plus legal links; `full` adds the link columns. */
+  variant?: 'compact' | 'full';
   className?: string;
 }
 
 /**
- * Shared, minimal product-branding footer used on public surfaces
- * (landing and login). Centered, small, muted typography on white.
+ * Public-surface footer: legal links, language, cookie settings and product branding.
+ * The `full` variant adds Product / Account columns for the landing page.
  */
-export const SiteFooter: React.FC<SiteFooterProps> = ({ withTopBorder = false, className }) => (
-  <footer
-    className={cn(
-      'w-full bg-white',
-      withTopBorder && 'border-t border-[#e5e3df]',
-      className
-    )}
-  >
-    <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
-      <p className="text-center text-xs leading-relaxed text-[#787671] sm:text-[13px]">
-        ScholarFlow is a product of{' '}
-        <a
-          href={BORNOSOFT_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rounded font-medium text-[#5d5b54] underline-offset-2 transition-colors hover:text-[#0f6b57] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
+export const SiteFooter: React.FC<SiteFooterProps> = ({
+  withTopBorder = false,
+  variant = 'compact',
+  className,
+}) => {
+  const { t } = useI18n();
+
+  const productLinks = [
+    { id: 'features', label: t('landing.nav.features') },
+    { id: 'how-it-works', label: t('landing.nav.how') },
+    { id: 'benefits', label: t('landing.nav.benefits') },
+    { id: 'faq', label: t('landing.nav.faq') },
+  ];
+
+  return (
+    <footer
+      className={cn('w-full bg-white', withTopBorder && 'border-t border-[#e5e3df]', className)}
+    >
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+        {variant === 'full' && (
+          <div className="grid grid-cols-2 gap-8 pb-8 md:grid-cols-4">
+            <div className="col-span-2">
+              <Link to="/" className="inline-flex items-center gap-2.5" aria-label="ScholarFlow">
+                <span className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-[#0f6b57] text-white">
+                  <GraduationCap className="h-5 w-5" strokeWidth={2.2} />
+                </span>
+                <span className="font-[family-name:var(--font-display)] text-base font-bold text-[#0d2a22]">
+                  ScholarFlow
+                </span>
+              </Link>
+              <p className="mt-4 max-w-sm text-sm leading-relaxed text-[#5d5b54]">{t('footer.tagline')}</p>
+            </div>
+
+            <nav aria-label={t('footer.product')}>
+              <h3 className="text-sm font-semibold text-[#14201c]">{t('footer.product')}</h3>
+              <ul className="mt-3 space-y-2.5">
+                {productLinks.map((l) => (
+                  <li key={l.id}>
+                    <a href={`/#${l.id}`} className={linkClass}>
+                      {l.label}
+                    </a>
+                  </li>
+                ))}
+                <li>
+                  <Link to="/login" className={linkClass}>
+                    {t('footer.signIn')}
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+
+            <nav aria-label={t('footer.legal')}>
+              <h3 className="text-sm font-semibold text-[#14201c]">{t('footer.legal')}</h3>
+              <ul className="mt-3 space-y-2.5">
+                {LEGAL_PAGES.map((p) => (
+                  <li key={p.slug}>
+                    <Link to={p.path} className={linkClass}>
+                      {t(p.titleKey)}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        )}
+
+        {variant === 'compact' && (
+          <nav aria-label={t('footer.legal')} className="pb-5">
+            <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2">
+              {LEGAL_PAGES.slice(0, 4).map((p) => (
+                <li key={p.slug}>
+                  <Link to={p.path} className={linkClass}>
+                    {t(p.titleKey)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+
+        <div
+          className={cn(
+            'flex flex-col items-center gap-4 sm:flex-row sm:justify-between',
+            variant === 'full' && 'border-t border-[#e5e3df] pt-6'
+          )}
         >
-          Bornosoft
-        </a>
-        .
-      </p>
-    </div>
-  </footer>
-);
+          <div className="space-y-1 text-center sm:text-start">
+            <p className="text-xs text-[#787671]">{t('footer.rights', { year: new Date().getFullYear() })}</p>
+            <p className="text-xs text-[#787671]">
+              {t('footer.productOf')}{' '}
+              <a
+                href={BORNOSOFT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded font-medium text-[#5d5b54] underline-offset-2 transition-colors hover:text-[#0f6b57] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
+              >
+                Bornosoft
+              </a>
+              .
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <button type="button" onClick={openCookieSettings} className={cn(linkClass, 'underline underline-offset-2')}>
+              {t('footer.cookieSettings')}
+            </button>
+            <LanguageSwitcher />
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
 
 export default SiteFooter;

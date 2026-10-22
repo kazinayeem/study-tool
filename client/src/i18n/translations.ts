@@ -110,6 +110,8 @@ const en = {
   'legal.reviewNote':
     'This document describes how ScholarFlow works today. Have it reviewed by a qualified legal professional before relying on it as a binding legal agreement.',
   'legal.backHome': 'Back to home',
+  'legal.englishOnly':
+    'Policies are currently available in English and Bengali. The English version is shown and is the one that applies.',
 
   // ---- cookie banner ----
   'cookie.title': 'Your privacy choices',
@@ -495,6 +497,8 @@ const bn: Record<TranslationKey, string> = {
   'legal.reviewNote':
     'এই নথিতে ScholarFlow বর্তমানে যেভাবে কাজ করে তা বর্ণিত হয়েছে। বাধ্যতামূলক আইনি চুক্তি হিসেবে ব্যবহারের আগে একজন যোগ্য আইনজীবীকে দিয়ে পর্যালোচনা করিয়ে নিন।',
   'legal.backHome': 'হোমে ফিরে যান',
+  'legal.englishOnly':
+    'নীতিগুলো এখন ইংরেজি ও বাংলায় পাওয়া যায়। ইংরেজি সংস্করণটি দেখানো হচ্ছে এবং সেটিই প্রযোজ্য।',
 
   'cookie.title': 'আপনার গোপনীয়তার পছন্দ',
   'cookie.body':

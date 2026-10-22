@@ -16,18 +16,20 @@ import { useAuth } from '../../context/AuthContext';
 import { api } from '../../lib/api';
 import { cn } from '../../lib/utils';
 import { SiteFooter } from '../../components/layout/SiteFooter';
+import { useI18n } from '../../i18n/I18nContext';
+import type { TranslationKey } from '../../i18n/translations';
+import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
 
-const getInitialError = (): string | null => {
+/** Maps the `?error=` query value from the OAuth redirect to a translation key. */
+const getInitialErrorKey = (): TranslationKey | null => {
   const errParam = new URLSearchParams(window.location.search).get('error');
   if (!errParam) return null;
-  const knownErrors: Record<string, string> = {
-    account_disabled:
-      'Your account has been disabled by an administrator. Please contact your school support team.',
-    oauth_not_configured:
-      'Google sign-in is not available right now. Please sign in with your email instead.',
-    email_not_verified: 'Your Google email could not be verified, so we could not sign you in.',
+  const known: Record<string, TranslationKey> = {
+    account_disabled: 'login.err.disabled',
+    oauth_not_configured: 'login.err.oauth',
+    email_not_verified: 'login.err.unverified',
   };
-  return knownErrors[errParam] || 'We could not complete sign-in. Please try again.';
+  return known[errParam] ?? 'login.err.generic';
 };
 
 const CARD_CLASS =
@@ -88,7 +90,9 @@ const timeline = [
   { label: 'Dec', done: false },
 ];
 
-const AcademicVisualPanel: React.FC = () => (
+const AcademicVisualPanel: React.FC = () => {
+  const { t } = useI18n();
+  return (
   <aside
     aria-hidden="true"
     className="relative hidden w-1/2 items-center justify-center overflow-hidden bg-[#f1f8f5] p-10 lg:flex xl:p-16"
@@ -96,13 +100,13 @@ const AcademicVisualPanel: React.FC = () => (
     <div className="w-full max-w-[560px]">
       <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E5E7EB] bg-white px-3 py-1 text-[11px] font-medium text-[#0f6b57]">
         <Sparkles className="h-3 w-3" />
-        Stay ahead this semester
+        {t('login.eyebrow')}
       </span>
       <h2 className="mt-4 text-[28px] font-semibold leading-tight tracking-[-0.02em] text-[#111827] xl:text-[32px]">
-        Everything you need to stay ahead.
+        {t('login.panel.title')}
       </h2>
       <p className="mt-3 max-w-md text-[15px] leading-relaxed text-[#64748B]">
-        Manage your courses, organize your notes, and make every semester count.
+        {t('login.panel.body')}
       </p>
 
       <div className="mt-10 flex gap-5">
@@ -113,7 +117,7 @@ const AcademicVisualPanel: React.FC = () => (
                 <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#EEF0FE] text-[#0f6b57]">
                   <Calendar className="h-4 w-4" />
                 </span>
-                <span className="text-sm font-semibold text-[#111827]">This week</span>
+                <span className="text-sm font-semibold text-[#111827]">{t('login.panel.week')}</span>
               </div>
               <span className="rounded-full bg-[#f1f8f5] px-2 py-0.5 text-[11px] font-medium text-[#0f6b57]">
                 Week 8
@@ -141,7 +145,7 @@ const AcademicVisualPanel: React.FC = () => (
           </div>
 
           <div className={CARD_CLASS}>
-            <span className="text-sm font-semibold text-[#111827]">Course progress</span>
+            <span className="text-sm font-semibold text-[#111827]">{t('login.panel.progress')}</span>
             <div className="mt-3.5 space-y-3">
               {courseProgress.map((course) => (
                 <div key={course.name} className="space-y-1.5">
@@ -188,14 +192,14 @@ const AcademicVisualPanel: React.FC = () => (
                 <span className="text-base font-semibold text-[#111827]">3.82</span>
               </div>
             </div>
-            <span className="mt-2 text-[12px] font-medium text-[#111827]">Current GPA</span>
+            <span className="mt-2 text-[12px] font-medium text-[#111827]">{t('login.panel.gpa')}</span>
             <span className="mt-1 rounded-full bg-[#ECFDF5] px-2 py-0.5 text-[10px] font-medium text-[#059669]">
               On track
             </span>
           </div>
 
           <div className={CARD_CLASS}>
-            <span className="text-sm font-semibold text-[#111827]">Tasks</span>
+            <span className="text-sm font-semibold text-[#111827]">{t('login.panel.tasks')}</span>
             <div className="mt-3 space-y-2.5">
               {checklist.map((task) => (
                 <div key={task.label} className="flex items-center gap-2.5">
@@ -221,7 +225,7 @@ const AcademicVisualPanel: React.FC = () => (
 
       <div className={cn(CARD_CLASS, 'mt-5')}>
         <div className="mb-4 flex items-center justify-between">
-          <span className="text-sm font-semibold text-[#111827]">Semester timeline</span>
+          <span className="text-sm font-semibold text-[#111827]">{t('login.panel.timeline')}</span>
           <span className="text-[11px] text-[#64748B]">Fall 2026</span>
         </div>
         <div className="relative">
@@ -247,17 +251,22 @@ const AcademicVisualPanel: React.FC = () => (
       </div>
     </div>
   </aside>
-);
+  );
+};
 
 export const LoginPage: React.FC = () => {
   const { user, loginDemo, loginPassword, isLoading } = useAuth();
+  const { t } = useI18n();
   const navigate = useNavigate();
   const location = useLocation();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState<string | null>(getInitialError);
+  const [error, setError] = useState<string | null>(() => {
+    const key = getInitialErrorKey();
+    return key ? t(key) : null;
+  });
   const [notice, setNotice] = useState<string | null>(null);
   const [pending, setPending] = useState<'password' | 'demo' | null>(null);
   const [googleAuthEnabled, setGoogleAuthEnabled] = useState(false);
@@ -284,7 +293,7 @@ export const LoginPage: React.FC = () => {
     setNotice(null);
     if (!googleAuthEnabled) {
       setError(
-        'Google sign-in is not available for this workspace right now. Please sign in with your email or explore the demo account.'
+        t('login.err.googleOff')
       );
       return;
     }
@@ -301,7 +310,7 @@ export const LoginPage: React.FC = () => {
         (location.state as any)?.from?.pathname || (location.state as any)?.from || '/dashboard';
       navigate(from, { replace: true });
     } catch (err: any) {
-      setError(err?.message || 'We could not open the demo account. Please try again.');
+      setError(err?.message || t('login.err.demo'));
     } finally {
       setPending(null);
     }
@@ -313,7 +322,7 @@ export const LoginPage: React.FC = () => {
     setNotice(null);
 
     if (!email.trim() || !password) {
-      setError('Please enter both your email and password.');
+      setError(t('login.err.missing'));
       return;
     }
 
@@ -324,7 +333,7 @@ export const LoginPage: React.FC = () => {
         (location.state as any)?.from?.pathname || (location.state as any)?.from || '/dashboard';
       navigate(from, { replace: true });
     } catch (err: any) {
-      setError(err?.message || 'Invalid email or password. Please try again.');
+      setError(err?.message || t('login.err.invalid'));
     } finally {
       setPending(null);
     }
@@ -333,7 +342,7 @@ export const LoginPage: React.FC = () => {
   const handleForgotPassword = () => {
     setError(null);
     setNotice(
-      'Password recovery is managed by your workspace administrator. Please contact them to reset your credentials, or continue with Google.'
+      t('login.notice.forgot')
     );
   };
 
@@ -343,7 +352,7 @@ export const LoginPage: React.FC = () => {
     <div className="flex min-h-screen w-full bg-white font-sans text-[#111827] selection:bg-[#0f6b57] selection:text-white">
       <main className="flex w-full flex-col lg:h-screen lg:w-1/2 lg:overflow-y-auto">
         <div className="flex flex-1 flex-col px-6 py-8 sm:px-10 lg:px-14">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2.5">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0f6b57] text-white shadow-[0_8px_20px_-8px_rgba(15,107,87,0.9)]">
                 <GraduationCap className="h-5 w-5" strokeWidth={2.2} />
@@ -352,25 +361,28 @@ export const LoginPage: React.FC = () => {
                 ScholarFlow
               </span>
             </div>
+            <div className="flex items-center gap-1">
+            <LanguageSwitcher variant="compact" />
             <Link
               to="/"
               className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-[13px] font-medium text-[#64748B] transition-colors hover:text-[#111827] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
             >
-              <ArrowLeft className="h-3.5 w-3.5" />
-              Home
+              <ArrowLeft className="h-3.5 w-3.5 rtl:rotate-180" />
+              {t('login.home')}
             </Link>
+            </div>
           </div>
 
           <div className="flex flex-1 flex-col justify-center py-10 sm:py-12">
             <div className="mx-auto w-full max-w-[400px]">
               <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0f6b57]">
-                Your academic space
+                {t('login.eyebrow')}
               </span>
               <h1 className="mt-3 text-[30px] font-semibold leading-tight tracking-[-0.02em] text-[#111827]">
-                Welcome back.
+                {t('login.title')}
               </h1>
               <p className="mt-2 text-sm leading-relaxed text-[#64748B]">
-                Your semester, organized. Your goals, within reach.
+                {t('login.subtitle')}
               </p>
 
               {error && (
@@ -381,7 +393,7 @@ export const LoginPage: React.FC = () => {
                   <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-[#DC2626]" />
                   <div className="flex-1">
                     <p className="text-[13px] font-semibold text-[#7F1D1D]">
-                      We couldn&apos;t sign you in
+                      {t('login.errorTitle')}
                     </p>
                     <p className="mt-0.5 text-[12px] leading-relaxed text-[#991B1B]">{error}</p>
                     <button
@@ -389,7 +401,7 @@ export const LoginPage: React.FC = () => {
                       onClick={() => setError(null)}
                       className="mt-1.5 text-[12px] font-medium text-[#B91C1C] underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#DC2626]/30"
                     >
-                      Dismiss
+                      {t('common.dismiss')}
                     </button>
                   </div>
                 </div>
@@ -408,7 +420,7 @@ export const LoginPage: React.FC = () => {
                       onClick={() => setNotice(null)}
                       className="mt-1.5 text-[12px] font-medium text-[#0f6b57] underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
                     >
-                      Dismiss
+                      {t('common.dismiss')}
                     </button>
                   </div>
                 </div>
@@ -422,13 +434,13 @@ export const LoginPage: React.FC = () => {
                 className="mt-6 flex h-11 w-full items-center justify-center gap-3 rounded-xl border border-[#E5E7EB] bg-white text-sm font-medium text-[#111827] transition-colors hover:border-[#CBD5E1] hover:bg-[#F8FAFC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <GoogleMark className="h-4 w-4 shrink-0" />
-                Continue with Google
+                {t('login.google')}
               </button>
 
               <div className="my-5 flex items-center gap-3">
                 <span className="h-px flex-1 bg-[#E5E7EB]" />
                 <span className="text-[11px] font-medium uppercase tracking-wider text-[#94A3B8]">
-                  or continue with email
+                  {t('login.orEmail')}
                 </span>
                 <span className="h-px flex-1 bg-[#E5E7EB]" />
               </div>
@@ -439,7 +451,7 @@ export const LoginPage: React.FC = () => {
                     htmlFor="email"
                     className="block text-[13px] font-medium text-[#374151]"
                   >
-                    Email address
+                    {t('login.email')}
                   </label>
                   <div className="relative mt-1.5">
                     <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8]" />
@@ -451,7 +463,7 @@ export const LoginPage: React.FC = () => {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="you@university.edu"
+                      placeholder={t('login.emailPlaceholder')}
                       className="h-11 w-full rounded-xl border border-[#E5E7EB] bg-white pl-10 pr-3 text-sm text-[#111827] transition-colors placeholder:text-[#9CA3AF] focus:border-[#0f6b57] focus:outline-none focus:ring-2 focus:ring-[#0f6b57]/20"
                     />
                   </div>
@@ -463,14 +475,14 @@ export const LoginPage: React.FC = () => {
                       htmlFor="password"
                       className="block text-[13px] font-medium text-[#374151]"
                     >
-                      Password
+                      {t('login.password')}
                     </label>
                     <button
                       type="button"
                       onClick={handleForgotPassword}
                       className="rounded text-[12px] font-medium text-[#0f6b57] underline-offset-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
                     >
-                      Forgot password?
+                      {t('login.forgot')}
                     </button>
                   </div>
                   <div className="relative mt-1.5">
@@ -483,13 +495,13 @@ export const LoginPage: React.FC = () => {
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Enter your password"
+                      placeholder={t('login.passwordPlaceholder')}
                       className="h-11 w-full rounded-xl border border-[#E5E7EB] bg-white pl-10 pr-11 text-sm text-[#111827] transition-colors placeholder:text-[#9CA3AF] focus:border-[#0f6b57] focus:outline-none focus:ring-2 focus:ring-[#0f6b57]/20"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword((v) => !v)}
-                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                      aria-label={showPassword ? t('login.hidePassword') : t('login.showPassword')}
                       aria-pressed={showPassword}
                       className="absolute right-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-[#94A3B8] transition-colors hover:bg-[#F1F5F9] hover:text-[#0f6b57] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
                     >
@@ -510,10 +522,10 @@ export const LoginPage: React.FC = () => {
                   {pending === 'password' ? (
                     <>
                       <Spinner />
-                      Signing in…
+                      {t('login.signingIn')}
                     </>
                   ) : (
-                    'Sign in'
+                    t('login.signIn')
                   )}
                 </button>
               </form>
@@ -521,7 +533,7 @@ export const LoginPage: React.FC = () => {
               <div className="mt-5 flex items-center gap-3">
                 <span className="h-px flex-1 bg-[#E5E7EB]" />
                 <span className="text-[11px] font-medium uppercase tracking-wider text-[#94A3B8]">
-                  or
+                  {t('login.or')}
                 </span>
                 <span className="h-px flex-1 bg-[#E5E7EB]" />
               </div>
@@ -539,24 +551,36 @@ export const LoginPage: React.FC = () => {
                       className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-[#0f6b57]/30 border-t-[#0f6b57]"
                       aria-hidden="true"
                     />
-                    Opening demo…
+                    {t('login.openingDemo')}
                   </>
                 ) : (
                   <>
                     <Sparkles className="h-4 w-4 text-[#0f6b57]" />
-                    Explore demo student account
+                    {t('login.demo')}
                   </>
                 )}
               </button>
 
-              <p className="mt-8 text-center text-sm text-[#64748B]">
-                New to ScholarFlow?{' '}
+              <p className="mt-6 text-center text-xs leading-relaxed text-[#787671]">
+                {t('login.consent')}{' '}
+                <Link to="/terms" className="font-medium underline underline-offset-2 hover:text-[#0f6b57]">
+                  {t('legal.terms')}
+                </Link>{' '}
+                {t('login.and')}{' '}
+                <Link to="/privacy" className="font-medium underline underline-offset-2 hover:text-[#0f6b57]">
+                  {t('legal.privacy')}
+                </Link>
+                .
+              </p>
+
+              <p className="mt-4 text-center text-sm text-[#64748B]">
+                {t('login.newHere')}{' '}
                 <button
                   type="button"
                   onClick={handleGoogleLogin}
                   className="rounded font-medium text-[#0f6b57] underline-offset-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
                 >
-                  Create an account
+                  {t('login.createAccount')}
                 </button>
               </p>
             </div>

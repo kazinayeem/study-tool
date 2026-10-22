@@ -1,3 +1,4 @@
+import { CookieConsent } from './components/common/CookieConsent';
 import React, { Suspense } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AppLayout } from './components/layout/AppLayout';
@@ -71,6 +72,12 @@ const DegreePlannerPage = React.lazy(() =>
 );
 const LandingPage = React.lazy(() =>
   import('./pages/landing/LandingPage').then((m) => ({ default: m.LandingPage }))
+);
+const FeesPage = React.lazy(() =>
+  import('./pages/fees/FeesPage').then((m) => ({ default: m.FeesPage }))
+);
+const LegalPage = React.lazy(() =>
+  import('./pages/legal/LegalPage').then((m) => ({ default: m.LegalPage }))
 );
 const NotFoundPage = React.lazy(() =>
   import('./pages/common/NotFoundPage').then((m) => ({ default: m.NotFoundPage }))
@@ -147,6 +154,7 @@ const AdminGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 export const App: React.FC = () => {
   return (
     <Suspense fallback={<PageSkeleton />}>
+      <CookieConsent />
       <Routes>
         {/* Root Route: ALWAYS shows Landing Page. Logged-in users see a "Go to Dashboard" bar inside. */}
         <Route path="/" element={<LandingPage />} />
@@ -154,6 +162,15 @@ export const App: React.FC = () => {
         {/* /landing alias — same landing page */}
         <Route path="/landing" element={<LandingPage />} />
 
+
+        {/* Legal / policy pages (public) */}
+        <Route path="/privacy" element={<LegalPage slug="privacy" />} />
+        <Route path="/terms" element={<LegalPage slug="terms" />} />
+        <Route path="/cookies" element={<LegalPage slug="cookies" />} />
+        <Route path="/acceptable-use" element={<LegalPage slug="acceptable-use" />} />
+        <Route path="/data-rights" element={<LegalPage slug="data-rights" />} />
+        <Route path="/accessibility" element={<LegalPage slug="accessibility" />} />
+        <Route path="/disclaimer" element={<LegalPage slug="disclaimer" />} />
 
         {/* Public Shared Resource Viewer (Independent Layout) */}
         <Route path="/share/:token" element={<PublicShareViewer />} />
@@ -194,6 +211,7 @@ export const App: React.FC = () => {
           <Route path="/semesters/:id/exams" element={<ExamsPage />} />
           <Route path="/semesters/:id/exams/:examId" element={<ExamsPage />} />
           <Route path="/semesters/:id/grades" element={<GradesPage />} />
+          <Route path="/semesters/:id/fees" element={<FeesPage />} />
           <Route path="/semesters/:id/calendar" element={<CalendarPage />} />
           <Route path="/semesters/:id/planner" element={<PlannerPage />} />
           <Route path="/semesters/:id/study-planner" element={<PlannerPage />} />
@@ -220,6 +238,7 @@ export const App: React.FC = () => {
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/notes/:id" element={<NotesPage />} />
           <Route path="/grades" element={<GradesPage />} />
+          <Route path="/fees" element={<FeesPage />} />
           <Route path="/planner" element={<PlannerPage />} />
           <Route path="/study-planner" element={<PlannerPage />} />
           <Route path="/calendar" element={<CalendarPage />} />

@@ -1,9 +1,11 @@
 import React from 'react';
+import { useI18n } from '../../i18n/I18nContext';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FileQuestion, Home, ArrowLeft, CalendarDays, FileText, GraduationCap } from 'lucide-react';
 
 export const NotFoundPage: React.FC = () => {
   const location = useLocation();
+  const { t } = useI18n();
   const navigate = useNavigate();
 
   return (
@@ -15,14 +17,14 @@ export const NotFoundPage: React.FC = () => {
         </div>
 
         <div>
-          <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-[4px] bg-[#f0eeec] dark:bg-[#252528] text-[#787671] dark:text-[#a4a097]">
-            404 Error • Page Not Found
+          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-[4px] bg-[#f0eeec] dark:bg-[#252528] text-[#787671] dark:text-[#a4a097]">
+            {t('nf.badge')}
           </span>
           <h1 className="text-2xl font-bold tracking-tight text-[#1a1a1a] dark:text-white mt-3">
-            Lost in Academic Cyberspace
+            {t('nf.title')}
           </h1>
           <p className="text-xs text-[#787671] dark:text-[#a4a097] mt-2 max-w-sm mx-auto leading-relaxed">
-            The path <code className="px-1.5 py-0.5 rounded bg-[#f6f5f4] dark:bg-[#202024] font-mono text-[#0f6b57] dark:text-[#a8dcc9]">{location.pathname}</code> does not match any active ScholarFlow workspace, module, or document record.
+            {t('nf.body', { path: location.pathname })}
           </p>
         </div>
 
@@ -33,15 +35,15 @@ export const NotFoundPage: React.FC = () => {
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-[8px] bg-[#f0eeec] hover:bg-[#e5e3df] dark:bg-[#252528] dark:hover:bg-[#2f2f34] text-xs font-semibold text-[#1a1a1a] dark:text-white transition-colors cursor-pointer"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
-            <span>Go Back</span>
+            <span>{t('nf.back')}</span>
           </button>
 
           <Link
-            to="/"
+            to="/dashboard"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-[8px] bg-[#0f6b57] hover:bg-[#0b5645] text-xs font-semibold text-white shadow-2xs transition-colors cursor-pointer"
           >
             <Home className="h-3.5 w-3.5" />
-            <span>Workspace Dashboard</span>
+            <span>{t('nf.home')}</span>
           </Link>
         </div>
 

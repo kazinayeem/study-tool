@@ -23,12 +23,14 @@ import {
   Camera,
   Layers,
   Sparkles,
+  Wallet,
 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../../lib/api';
 import { cn } from '../../lib/utils';
 import { useAuth } from '../../context/AuthContext';
 import { useActiveSemester } from '../../hooks/useActiveSemester';
+import { useI18n } from '../../i18n/I18nContext';
 
 interface SidebarProps {
   collapsed: boolean;
@@ -38,6 +40,7 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpenQuickAdd }) => {
   const { user } = useAuth();
+  const { t } = useI18n();
   const location = useLocation();
   const { activeSemester, activeSemesterId, semesters } = useActiveSemester();
   const [semesterExpanded, setSemesterExpanded] = useState(true);
@@ -62,10 +65,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
 
   // Top level workspace navigation
   const workspaceItems = [
-    { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
-    { label: 'Semesters', icon: CalendarDays, path: '/semesters', count: semesters.length > 0 ? semesters.length : undefined },
+    { label: t('nav.dashboard'), icon: LayoutDashboard, path: '/dashboard' },
+    { label: t('nav.semesters'), icon: CalendarDays, path: '/semesters', count: semesters.length > 0 ? semesters.length : undefined },
     {
-      label: 'Degree Progress',
+      label: t('nav.degreeProgress'),
       icon: GraduationCap,
       path: '/degree-planner',
       altPath: '/degree-progress',
@@ -76,44 +79,45 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
   // Active Semester child navigation links
   const semesterChildItems = activeSemester
     ? [
-        { label: 'Overview', icon: BookOpen, path: `/semesters/${activeSemester.id}`, end: true },
-        { label: 'Courses', icon: GraduationCap, path: `/semesters/${activeSemester.id}/courses`, altPath: '/courses' },
+        { label: t('nav.overview'), icon: BookOpen, path: `/semesters/${activeSemester.id}`, end: true },
+        { label: t('nav.courses'), icon: GraduationCap, path: `/semesters/${activeSemester.id}/courses`, altPath: '/courses' },
         {
-          label: 'Assignments',
+          label: t('nav.assignments'),
           icon: CheckSquare,
           path: `/semesters/${activeSemester.id}/assignments`,
           altPath: '/assignments',
           count: dashboardData?.stats?.overdueCount,
         },
-        { label: 'Exams', icon: Award, path: `/semesters/${activeSemester.id}/exams`, altPath: '/exams' },
-        { label: 'Grades & CGPA', icon: Calculator, path: `/semesters/${activeSemester.id}/grades`, altPath: '/grades' },
-        { label: 'Degree Progress', icon: Layers, path: `/semesters/${activeSemester.id}/degree-planner`, altPath: '/degree-planner', aliases: ['/degree-progress'] },
-        { label: 'Academic Calendar', icon: Calendar, path: `/semesters/${activeSemester.id}/calendar`, altPath: '/calendar' },
+        { label: t('nav.exams'), icon: Award, path: `/semesters/${activeSemester.id}/exams`, altPath: '/exams' },
+        { label: t('nav.grades'), icon: Calculator, path: `/semesters/${activeSemester.id}/grades`, altPath: '/grades' },
+        { label: t('nav.fees'), icon: Wallet, path: `/semesters/${activeSemester.id}/fees`, altPath: '/fees' },
+        { label: t('nav.degreeProgress'), icon: Layers, path: `/semesters/${activeSemester.id}/degree-planner`, altPath: '/degree-planner', aliases: ['/degree-progress'] },
+        { label: t('nav.calendar'), icon: Calendar, path: `/semesters/${activeSemester.id}/calendar`, altPath: '/calendar' },
         {
-          label: 'Study Planner',
+          label: t('nav.planner'),
           icon: Clock,
           path: `/semesters/${activeSemester.id}/planner`,
           altPath: '/planner',
           aliases: [`/semesters/${activeSemester.id}/study-planner`, '/study-planner'],
         },
         {
-          label: 'Class Photo Journal',
+          label: t('nav.journal'),
           icon: Camera,
           path: `/semesters/${activeSemester.id}/journal`,
           altPath: '/journal',
           aliases: [`/semesters/${activeSemester.id}/class-photos`, '/class-photos'],
         },
-        { label: 'Documents', icon: FolderOpen, path: `/semesters/${activeSemester.id}/documents`, altPath: '/documents' },
-        { label: 'Knowledge Base', icon: FileText, path: `/semesters/${activeSemester.id}/notes`, altPath: '/notes' },
+        { label: t('nav.documents'), icon: FolderOpen, path: `/semesters/${activeSemester.id}/documents`, altPath: '/documents' },
+        { label: t('nav.notes'), icon: FileText, path: `/semesters/${activeSemester.id}/notes`, altPath: '/notes' },
       ]
     : [];
 
   // Personal and system items
   const personalItems = [
-    { label: 'Notifications', icon: Bell, path: '/notifications', count: inAppData?.unreadCount },
-    { label: 'Backup & Restore', icon: Archive, path: '/backup' },
-    ...(user?.role === 'ADMIN' ? [{ label: 'Admin Panel', icon: Shield, path: '/admin' }] : []),
-    { label: 'Settings', icon: Settings, path: '/settings' },
+    { label: t('nav.notifications'), icon: Bell, path: '/notifications', count: inAppData?.unreadCount },
+    { label: t('nav.backup'), icon: Archive, path: '/backup' },
+    ...(user?.role === 'ADMIN' ? [{ label: t('nav.admin'), icon: Shield, path: '/admin' }] : []),
+    { label: t('nav.settings'), icon: Settings, path: '/settings' },
   ];
 
   // Helper to determine if a route is active
@@ -173,7 +177,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
           title="Quick Create"
         >
           <Plus className="h-3.5 w-3.5 shrink-0" />
-          {!collapsed && <span>New Item</span>}
+          {!collapsed && <span>{t('nav.newItem')}</span>}
         </button>
       </div>
 
@@ -183,7 +187,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
         <div>
           {!collapsed && (
             <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#a4a097] dark:text-[#787671]">
-              Workspace
+              {t('nav.workspace')}
             </div>
           )}
           <div className="space-y-0.5">
@@ -220,7 +224,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
         <div>
           {!collapsed && (
             <div className="px-2 py-1 flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-[#a4a097] dark:text-[#787671]">
-              <span>Active Semester</span>
+              <span>{t('nav.activeSemester')}</span>
               {activeSemester && (
                 <button
                   type="button"
@@ -238,7 +242,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
             /* Empty State if No Active Semester */
             !collapsed ? (
               <div className="mx-1 my-1 p-2.5 rounded-[8px] bg-[#f8f5e8] dark:bg-[#1a2a52]/20 border border-[#ede9e4] dark:border-[#2a3d6e]/50 text-xs text-center space-y-1.5">
-                <p className="text-[11px] font-medium text-[#523410] dark:text-[#f5d75e]">No Active Semester</p>
+                <p className="text-[11px] font-medium text-[#523410] dark:text-[#f5d75e]">{t('nav.noActiveSemester')}</p>
                 <Link
                   to="/semesters"
                   className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#0f6b57] dark:text-[#4ccba5] hover:underline"
@@ -247,7 +251,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
                 </Link>
               </div>
             ) : (
-              <div className="flex justify-center py-2" title="No Active Semester">
+              <div className="flex justify-center py-2" title={t('nav.noActiveSemester')}>
                 <span className="h-2 w-2 rounded-full bg-[#dd5b00]" />
               </div>
             )
@@ -267,7 +271,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
                   <div className="flex items-center justify-between text-xs mb-1">
                     <span className="flex items-center gap-1.5 text-[11px] font-medium text-[#1aae39]">
                       <span className="h-2 w-2 rounded-full bg-[#1aae39] animate-pulse" />
-                      Active Term
+                      {t('nav.activeTerm')}
                     </span>
                     <span className="text-[10px] px-1.5 py-0.2 rounded-[4px] bg-[#fef7d6] dark:bg-[#523410] font-semibold text-[#523410] dark:text-[#f5d75e] border border-[#f5d75e]/40">
                       {activeSemester.code || 'TERM'}
@@ -341,7 +345,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
         <div>
           {!collapsed && (
             <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#a4a097] dark:text-[#787671]">
-              Personal & System
+              {t('nav.personalSystem')}
             </div>
           )}
           <div className="space-y-0.5">

@@ -1,3 +1,4 @@
+import { setPreference } from '../i18n/consent';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 type Theme = 'light' | 'dark';
@@ -28,7 +29,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     } else {
       root.classList.remove('dark');
     }
-    localStorage.setItem('scholarflow_theme', theme);
+    setPreference('scholarflow_theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {

@@ -818,3 +818,48 @@ export interface NextSemesterPlannerData {
     recommendedMax: number;
   };
 }
+
+// ---- Semester fees & costs ----
+export type FeeCategory =
+  | 'REGISTRATION'
+  | 'MID_EXAM'
+  | 'FINAL_EXAM'
+  | 'LAB'
+  | 'LIBRARY'
+  | 'ACTIVITY'
+  | 'TRANSPORT'
+  | 'HOSTEL'
+  | 'OTHER';
+
+export type FeeStatus = 'UNPAID' | 'PARTIAL' | 'PAID' | 'OVERDUE';
+
+export interface FeeItem {
+  id: string;
+  semesterId: string;
+  courseId: string | null;
+  category: FeeCategory;
+  label: string;
+  amount: number;
+  paidAmount: number;
+  dueAmount?: number;
+  dueDate: string | null;
+  paidAt: string | null;
+  notes: string | null;
+  status?: FeeStatus;
+}
+
+export interface FeeSummary {
+  semester: { id: string; name: string; code: string | null };
+  plan: { currency: string; perCreditFee: number; waiverPercent: number; tuitionPaid: number; notes: string | null; configured: boolean };
+  credits: { total: number; courses: number };
+  tuition: { gross: number; waiver: number; net: number; paid: number; due: number };
+  byCategory: Record<string, { amount: number; paid: number }>;
+  items: FeeItem[];
+  perCourse: { id: string; code: string; title: string; credits: number; color?: string | null; tuition: number; courseFees: number; total: number }[];
+  totals: { total: number; paid: number; due: number; percentPaid: number; overdueCount: number };
+}
+
+export interface FeeOverview {
+  rows: { semesterId: string; name: string; currency: string; credits: number; total: number; paid: number; due: number }[];
+  grand: { total: number; paid: number; due: number };
+}
