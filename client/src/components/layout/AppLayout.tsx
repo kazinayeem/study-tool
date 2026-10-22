@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, NavLink, useLocation } from 'react-router-dom';
+import { Outlet, NavLink, Navigate, useLocation } from 'react-router-dom';
 import {
   Search,
   Bell,
@@ -12,9 +12,14 @@ import {
   CalendarDays,
   CheckSquare,
   FileText,
+  Users,
+  CreditCard,
+  Tags,
+  Settings,
 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { Sidebar } from './Sidebar';
+import { OwnerSidebar } from './OwnerSidebar';
 import { Breadcrumbs } from './Breadcrumbs';
 import { CommandPalette } from './CommandPalette';
 import { NotificationDrawer } from './NotificationDrawer';
@@ -61,8 +66,14 @@ export const AppLayout: React.FC = () => {
   });
 
 
-  const { user, isDemo, logout } = useAuth();
+  const { user, isDemo, isAdmin, logout } = useAuth();
   const navigate = useNavigate();
+
+  // The SaaS owner has no study workspace; keep them on the owner console, admin panel and settings.
+  const OWNER_PATHS = ['/owner', '/admin', '/settings', '/notifications'];
+  if (isAdmin && !OWNER_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`))) {
+    return <Navigate to="/owner" replace />;
+  }
 
   const handleOpenQuickAdd = (type = 'document') => {
     setQuickAddType(type);
@@ -73,25 +84,33 @@ export const AppLayout: React.FC = () => {
     <div className="app-shell flex h-dvh w-full overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       {/* Desktop Sidebar */}
       <div className="app-chrome hidden md:flex">
-        <Sidebar
-          collapsed={collapsed}
-          setCollapsed={setCollapsed}
-          onOpenQuickAdd={() => handleOpenQuickAdd('document')}
-        />
+        {isAdmin ? (
+          <OwnerSidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+        ) : (
+          <Sidebar
+            collapsed={collapsed}
+            setCollapsed={setCollapsed}
+            onOpenQuickAdd={() => handleOpenQuickAdd('document')}
+          />
+        )}
       </div>
 
       {/* Mobile Sidebar overlay */}
       {mobileMenuOpen && (
         <div className="app-chrome fixed inset-0 z-40 flex md:hidden bg-slate-900/60 backdrop-blur-xs">
           <div className="relative flex w-72 flex-col bg-white dark:bg-slate-900 shadow-xl">
-            <Sidebar
-              collapsed={false}
-              setCollapsed={() => setMobileMenuOpen(false)}
-              onOpenQuickAdd={() => {
-                setMobileMenuOpen(false);
-                handleOpenQuickAdd('document');
-              }}
-            />
+            {isAdmin ? (
+              <OwnerSidebar collapsed={false} setCollapsed={() => setMobileMenuOpen(false)} />
+            ) : (
+              <Sidebar
+                collapsed={false}
+                setCollapsed={() => setMobileMenuOpen(false)}
+                onOpenQuickAdd={() => {
+                  setMobileMenuOpen(false);
+                  handleOpenQuickAdd('document');
+                }}
+              />
+            )}
           </div>
           <div className="flex-1" onClick={() => setMobileMenuOpen(false)} />
         </div>
@@ -134,6 +153,8 @@ export const AppLayout: React.FC = () => {
           </div>
 
           <div className="flex shrink-0 items-center gap-0.5 sm:gap-2">
+            {!isAdmin && (
+              <>
             {/* Global Search Bar trigger (Notion search-pill: 8px rounded rectangle) */}
             <button
               onClick={() => setIsCommandOpen(true)}
@@ -146,6 +167,9 @@ export const AppLayout: React.FC = () => {
                 ⌘K
               </kbd>
             </button>
+
+              </>
+            )}
 
             {/* Notifications Trigger */}
             <button
@@ -203,12 +227,20 @@ export const AppLayout: React.FC = () => {
           aria-label="Primary"
           className="app-chrome fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-[#e5e3df] bg-white pb-[env(safe-area-inset-bottom)] dark:border-[#2a2a2e] dark:bg-[#141416] md:hidden"
         >
-          {[
-            { to: '/dashboard', label: t('nav.tabHome'), icon: LayoutDashboard },
-            { to: '/semesters', label: t('nav.tabSemesters'), icon: CalendarDays },
-            { to: '/assignments', label: t('nav.tabTasks'), icon: CheckSquare },
-            { to: '/notes', label: t('nav.tabNotes'), icon: FileText },
-          ].map(({ to, label, icon: Icon }) => (
+          {(isAdmin
+            ? [
+                { to: '/owner', label: t('nav.ownerStudents'), icon: Users },
+                { to: '/owner?tab=requests', label: t('nav.ownerRequests'), icon: CreditCard },
+                { to: '/owner?tab=plans', label: t('nav.ownerPlans'), icon: Tags },
+                { to: '/settings', label: t('nav.settings'), icon: Settings },
+              ]
+            : [
+                { to: '/dashboard', label: t('nav.tabHome'), icon: LayoutDashboard },
+                { to: '/semesters', label: t('nav.tabSemesters'), icon: CalendarDays },
+                { to: '/assignments', label: t('nav.tabTasks'), icon: CheckSquare },
+                { to: '/notes', label: t('nav.tabNotes'), icon: FileText },
+              ]
+          ).map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}

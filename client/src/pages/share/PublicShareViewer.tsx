@@ -68,7 +68,7 @@ export const PublicShareViewer: React.FC = () => {
           <p className="text-xs text-[#787671] dark:text-[#a4a097]">{errorMsg}</p>
           <div className="pt-2">
             <Link to="/" className="btn-notion-primary text-xs shadow-2xs">
-              Open ScholarFlow
+              Open BornoFlow
             </Link>
           </div>
         </div>
@@ -136,7 +136,7 @@ export const PublicShareViewer: React.FC = () => {
           </div>
           <div>
             <h1 className="font-semibold text-xs sm:text-sm text-[#1a1a1a] dark:text-white flex items-center gap-2">
-              ScholarFlow
+              BornoFlow
               <span className="badge-notion-tag-purple">
                 Shared {resourceType}
               </span>
@@ -206,7 +206,7 @@ export const PublicShareViewer: React.FC = () => {
                 <BookOpen className="h-4 w-4" /> {resource.pageCount} Pages
               </span>
             )}
-            {resource.createdAt && <span>Shared via ScholarFlow Academic Workspace</span>}
+            {resource.createdAt && <span>Shared via BornoFlow Academic Workspace</span>}
           </div>
         </div>
 
@@ -288,7 +288,7 @@ export const PublicShareViewer: React.FC = () => {
         {/* Footer */}
         <div className="text-center py-6 text-xs text-[#787671]">
           <p>
-            Shared securely via <strong>ScholarFlow Academic Workspace</strong>.
+            Shared securely via <strong>BornoFlow Academic Workspace</strong>.
           </p>
         </div>
       </main>

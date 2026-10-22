@@ -99,7 +99,7 @@ export const BackupPage: React.FC = () => {
     if (!file) return;
 
     if (!file.name.endsWith('.tar.gz') && !file.name.endsWith('.tgz')) {
-      alert('Please upload a valid ScholarFlow .tar.gz backup archive');
+      alert('Please upload a valid BornoFlow .tar.gz backup archive');
       return;
     }
 

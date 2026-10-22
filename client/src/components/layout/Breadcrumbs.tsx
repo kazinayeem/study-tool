@@ -36,6 +36,8 @@ const FRIENDLY_KEYS: Record<string, TranslationKey> = {
   admin: 'nav.admin',
   overview: 'nav.overview',
   fees: 'nav.fees',
+  billing: 'nav.billing',
+  owner: 'nav.owner',
 };
 
 const FRIENDLY_NAMES: Record<string, string> = {

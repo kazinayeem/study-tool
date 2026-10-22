@@ -24,6 +24,8 @@ import {
   Layers,
   Sparkles,
   Wallet,
+  CreditCard,
+  Crown,
 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../../lib/api';
@@ -55,6 +57,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
   const { data: dashboardData } = useQuery({
     queryKey: ['dashboard', activeSemesterId],
     queryFn: () => api.getDashboardWithParams({ ...(activeSemesterId && { semesterId: activeSemesterId }) }),
+  });
+
+  const { data: ownerStats } = useQuery({
+    queryKey: ['owner-stats'],
+    queryFn: () => api.getOwnerStats(),
+    enabled: user?.role === 'ADMIN',
+    refetchInterval: 30000,
   });
 
   const { data: inAppData } = useQuery({
@@ -115,8 +124,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
   // Personal and system items
   const personalItems = [
     { label: t('nav.notifications'), icon: Bell, path: '/notifications', count: inAppData?.unreadCount },
+    { label: t('nav.billing'), icon: CreditCard, path: '/billing' },
     { label: t('nav.backup'), icon: Archive, path: '/backup' },
-    ...(user?.role === 'ADMIN' ? [{ label: t('nav.admin'), icon: Shield, path: '/admin' }] : []),
+    ...(user?.role === 'ADMIN'
+      ? [
+          { label: t('nav.owner'), icon: Crown, path: '/owner', count: ownerStats?.pending },
+          { label: t('nav.admin'), icon: Shield, path: '/admin' },
+        ]
+      : []),
     { label: t('nav.settings'), icon: Settings, path: '/settings' },
   ];
 
@@ -152,7 +167,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
           </div>
           {!collapsed && (
             <div className="flex flex-col truncate">
-              <span className="font-[family-name:var(--font-display)] font-bold tracking-[-0.01em] text-[#14201c] dark:text-white text-base">ScholarFlow</span>
+              <span className="font-[family-name:var(--font-display)] font-bold tracking-[-0.01em] text-[#14201c] dark:text-white text-base">BornoFlow</span>
               <span className="text-[11px] text-[#787671] dark:text-[#a4a097]">Academic Workspace</span>
             </div>
           )}

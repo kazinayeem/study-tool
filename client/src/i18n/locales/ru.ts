@@ -44,6 +44,7 @@ export const ru: Dictionary = {
   'header.signIn': 'Войти',
   'header.exitDemo': 'Выйти из демо',
 
+  'brand.byline': 'продукт Bornosoft',
   'footer.tagline':
     'Личное учебное пространство, где семестры, курсы, заметки, документы, сроки и план обучения собраны в одном месте.',
   'footer.product': 'Продукт',
@@ -52,8 +53,8 @@ export const ru: Dictionary = {
   'footer.signIn': 'Войти',
   'footer.createAccount': 'Создать аккаунт',
   'footer.cookieSettings': 'Настройки cookie',
-  'footer.rights': '© {year} ScholarFlow. Создан для личного управления учёбой.',
-  'footer.productOf': 'ScholarFlow — продукт компании',
+  'footer.rights': '© {year} BornoFlow. Создан для личного управления учёбой.',
+  'footer.productOf': 'BornoFlow — продукт компании',
   'footer.languageLabel': 'Язык',
 
   'legal.privacy': 'Политика конфиденциальности',
@@ -69,7 +70,7 @@ export const ru: Dictionary = {
 
   'cookie.title': 'Ваш выбор по конфиденциальности',
   'cookie.body':
-    'ScholarFlow использует только то хранилище браузера, которое нужно, чтобы вы оставались в системе. С вашего согласия он также запоминает тему и язык. Мы не используем рекламные и отслеживающие cookie.',
+    'BornoFlow использует только то хранилище браузера, которое нужно, чтобы вы оставались в системе. С вашего согласия он также запоминает тему и язык. Мы не используем рекламные и отслеживающие cookie.',
   'cookie.acceptAll': 'Принять все',
   'cookie.essentialOnly': 'Только необходимые',
   'cookie.customize': 'Настроить',
@@ -99,7 +100,7 @@ export const ru: Dictionary = {
   'landing.features.title': 'Всё, что нужно, чтобы опережать в учёбе.',
   'landing.faq.title': 'Частые вопросы',
   'landing.cta.title': 'Сделайте следующий семестр самым организованным.',
-  'landing.cta.body': 'Соберите курсы, заметки, сроки и успеваемость вместе с ScholarFlow.',
+  'landing.cta.body': 'Соберите курсы, заметки, сроки и успеваемость вместе с BornoFlow.',
 
   'login.title': 'С возвращением.',
   'login.subtitle': 'Ваш семестр в порядке. Ваши цели рядом.',
@@ -113,7 +114,7 @@ export const ru: Dictionary = {
   'login.signingIn': 'Вход…',
   'login.or': 'или',
   'login.demo': 'Посмотреть демо-аккаунт студента',
-  'login.newHere': 'Впервые в ScholarFlow?',
+  'login.newHere': 'Впервые в BornoFlow?',
   'login.createAccount': 'Создать аккаунт',
   'login.consent': 'Продолжая, вы принимаете наши',
   'login.and': 'и',

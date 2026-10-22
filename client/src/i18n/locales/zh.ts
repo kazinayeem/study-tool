@@ -44,6 +44,7 @@ export const zh: Dictionary = {
   'header.signIn': '登录',
   'header.exitDemo': '退出演示',
 
+  'brand.byline': 'Bornosoft 旗下产品',
   'footer.tagline':
     '一个个人学业工作区，将学期、课程、笔记、文档、截止日期和学位规划集中在一处。',
   'footer.product': '产品',
@@ -52,8 +53,8 @@ export const zh: Dictionary = {
   'footer.signIn': '登录',
   'footer.createAccount': '创建账户',
   'footer.cookieSettings': 'Cookie 设置',
-  'footer.rights': '© {year} ScholarFlow。为个人学业管理而设计。',
-  'footer.productOf': 'ScholarFlow 是以下公司的产品：',
+  'footer.rights': '© {year} BornoFlow。为个人学业管理而设计。',
+  'footer.productOf': 'BornoFlow 是以下公司的产品：',
   'footer.languageLabel': '语言',
 
   'legal.privacy': '隐私政策',
@@ -69,7 +70,7 @@ export const zh: Dictionary = {
 
   'cookie.title': '您的隐私选择',
   'cookie.body':
-    'ScholarFlow 仅使用保持您登录状态所必需的浏览器存储。经您许可，它还会记住您的主题和语言。我们不使用广告或跟踪类 Cookie。',
+    'BornoFlow 仅使用保持您登录状态所必需的浏览器存储。经您许可，它还会记住您的主题和语言。我们不使用广告或跟踪类 Cookie。',
   'cookie.acceptAll': '全部接受',
   'cookie.essentialOnly': '仅必要项',
   'cookie.customize': '自定义',
@@ -98,7 +99,7 @@ export const zh: Dictionary = {
   'landing.features.title': '保持学业领先所需的一切。',
   'landing.faq.title': '常见问题',
   'landing.cta.title': '让下个学期成为您最有条理的一个学期。',
-  'landing.cta.body': '用 ScholarFlow 把课程、笔记、截止日期和学业进度汇集在一起。',
+  'landing.cta.body': '用 BornoFlow 把课程、笔记、截止日期和学业进度汇集在一起。',
 
   'login.title': '欢迎回来。',
   'login.subtitle': '学期井然有序，目标触手可及。',
@@ -112,7 +113,7 @@ export const zh: Dictionary = {
   'login.signingIn': '正在登录…',
   'login.or': '或',
   'login.demo': '体验演示学生账户',
-  'login.newHere': '初次使用 ScholarFlow？',
+  'login.newHere': '初次使用 BornoFlow？',
   'login.createAccount': '创建账户',
   'login.consent': '继续即表示您同意我们的',
   'login.and': '和',

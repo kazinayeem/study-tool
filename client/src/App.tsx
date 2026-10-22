@@ -74,6 +74,12 @@ const DegreePlannerPage = React.lazy(() =>
 const LandingPage = React.lazy(() =>
   import('./pages/landing/LandingPage').then((m) => ({ default: m.LandingPage }))
 );
+const BillingPage = React.lazy(() =>
+  import('./pages/billing/BillingPage').then((m) => ({ default: m.BillingPage }))
+);
+const OwnerConsolePage = React.lazy(() =>
+  import('./pages/owner/OwnerConsolePage').then((m) => ({ default: m.OwnerConsolePage }))
+);
 const FeesPage = React.lazy(() =>
   import('./pages/fees/FeesPage').then((m) => ({ default: m.FeesPage }))
 );
@@ -261,6 +267,17 @@ export const App: React.FC = () => {
           <Route path="/notes/:id" element={<NotesPage />} />
           <Route path="/grades" element={<GradesPage />} />
           <Route path="/fees" element={<FeesPage />} />
+          <Route path="/billing" element={<BillingPage />} />
+
+          {/* SaaS owner console (admin only) */}
+          <Route
+            path="/owner"
+            element={
+              <AdminGuard>
+                <OwnerConsolePage />
+              </AdminGuard>
+            }
+          />
           <Route path="/planner" element={<PlannerPage />} />
           <Route path="/study-planner" element={<PlannerPage />} />
           <Route path="/calendar" element={<CalendarPage />} />

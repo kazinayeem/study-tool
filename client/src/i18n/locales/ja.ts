@@ -44,6 +44,7 @@ export const ja: Dictionary = {
   'header.signIn': 'ログイン',
   'header.exitDemo': 'デモを終了',
 
+  'brand.byline': 'Bornosoft の製品',
   'footer.tagline':
     '学期、科目、ノート、書類、締め切り、学位の計画をひとつにまとめる、個人向けの学習ワークスペース。',
   'footer.product': '製品',
@@ -52,8 +53,8 @@ export const ja: Dictionary = {
   'footer.signIn': 'ログイン',
   'footer.createAccount': 'アカウント作成',
   'footer.cookieSettings': 'Cookie設定',
-  'footer.rights': '© {year} ScholarFlow。個人の学生管理のために作られました。',
-  'footer.productOf': 'ScholarFlow は次の製品です：',
+  'footer.rights': '© {year} BornoFlow。個人の学生管理のために作られました。',
+  'footer.productOf': 'BornoFlow は次の製品です：',
   'footer.languageLabel': '言語',
 
   'legal.privacy': 'プライバシーポリシー',
@@ -69,7 +70,7 @@ export const ja: Dictionary = {
 
   'cookie.title': 'プライバシーの選択',
   'cookie.body':
-    'ScholarFlow は、ログイン状態を保つために必要なブラウザストレージのみを使用します。許可いただいた場合は、テーマと言語も記憶します。広告やトラッキング用のCookieは使用しません。',
+    'BornoFlow は、ログイン状態を保つために必要なブラウザストレージのみを使用します。許可いただいた場合は、テーマと言語も記憶します。広告やトラッキング用のCookieは使用しません。',
   'cookie.acceptAll': 'すべて同意',
   'cookie.essentialOnly': '必須のみ',
   'cookie.customize': 'カスタマイズ',
@@ -99,7 +100,7 @@ export const ja: Dictionary = {
   'landing.features.title': '学業で先を行くために必要なものがすべて揃います。',
   'landing.faq.title': 'よくある質問',
   'landing.cta.title': '次の学期を、最も整った学期に。',
-  'landing.cta.body': '科目、ノート、締め切り、学習の進捗を ScholarFlow にまとめましょう。',
+  'landing.cta.body': '科目、ノート、締め切り、学習の進捗を BornoFlow にまとめましょう。',
 
   'login.title': 'おかえりなさい。',
   'login.subtitle': '学期はすっきり、目標はすぐ手の届くところに。',
@@ -113,7 +114,7 @@ export const ja: Dictionary = {
   'login.signingIn': 'ログイン中…',
   'login.or': 'または',
   'login.demo': 'デモ用の学生アカウントを試す',
-  'login.newHere': 'ScholarFlow は初めてですか？',
+  'login.newHere': 'BornoFlow は初めてですか？',
   'login.createAccount': 'アカウントを作成',
   'login.consent': '続行すると、次に同意したものとみなされます：',
   'login.and': 'および',

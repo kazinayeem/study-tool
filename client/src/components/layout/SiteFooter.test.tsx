@@ -17,7 +17,8 @@ afterEach(cleanup);
 describe('SiteFooter', () => {
   it('renders the branding wording', () => {
     const { container } = renderFooter(<SiteFooter />);
-    expect(container.textContent).toContain('ScholarFlow is a product of Bornosoft.');
+    expect(container.textContent).toContain('BornoFlow is a product of Bornosoft');
+    expect(container.textContent).toContain('bornosoft.bd');
   });
 
   it('links to every policy page', () => {

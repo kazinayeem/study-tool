@@ -44,6 +44,7 @@ export const hi: Dictionary = {
   'header.signIn': 'साइन इन',
   'header.exitDemo': 'डेमो से बाहर निकलें',
 
+  'brand.byline': 'Bornosoft का उत्पाद',
   'footer.tagline':
     'एक व्यक्तिगत शैक्षणिक वर्कस्पेस जो सेमेस्टर, कोर्स, नोट्स, दस्तावेज़, समय-सीमाएँ और डिग्री योजना को एक व्यवस्थित जगह लाता है।',
   'footer.product': 'उत्पाद',
@@ -52,8 +53,8 @@ export const hi: Dictionary = {
   'footer.signIn': 'साइन इन',
   'footer.createAccount': 'खाता बनाएँ',
   'footer.cookieSettings': 'कुकी सेटिंग्स',
-  'footer.rights': '© {year} ScholarFlow. व्यक्तिगत विद्यार्थी प्रबंधन के लिए बनाया गया।',
-  'footer.productOf': 'ScholarFlow इसका उत्पाद है:',
+  'footer.rights': '© {year} BornoFlow. व्यक्तिगत विद्यार्थी प्रबंधन के लिए बनाया गया।',
+  'footer.productOf': 'BornoFlow इसका उत्पाद है:',
   'footer.languageLabel': 'भाषा',
 
   'legal.privacy': 'गोपनीयता नीति',
@@ -69,7 +70,7 @@ export const hi: Dictionary = {
 
   'cookie.title': 'आपके गोपनीयता विकल्प',
   'cookie.body':
-    'ScholarFlow आपको साइन-इन रखने के लिए केवल आवश्यक ब्राउज़र स्टोरेज का उपयोग करता है। आपकी अनुमति से यह आपकी थीम और भाषा भी याद रखता है। हम विज्ञापन या ट्रैकिंग कुकी का उपयोग नहीं करते।',
+    'BornoFlow आपको साइन-इन रखने के लिए केवल आवश्यक ब्राउज़र स्टोरेज का उपयोग करता है। आपकी अनुमति से यह आपकी थीम और भाषा भी याद रखता है। हम विज्ञापन या ट्रैकिंग कुकी का उपयोग नहीं करते।',
   'cookie.acceptAll': 'सभी स्वीकार करें',
   'cookie.essentialOnly': 'केवल आवश्यक',
   'cookie.customize': 'अनुकूलित करें',
@@ -99,7 +100,7 @@ export const hi: Dictionary = {
   'landing.features.title': 'पढ़ाई में आगे रहने के लिए जो कुछ चाहिए, सब यहीं।',
   'landing.faq.title': 'अक्सर पूछे जाने वाले प्रश्न',
   'landing.cta.title': 'अपने अगले सेमेस्टर को सबसे व्यवस्थित बनाएँ।',
-  'landing.cta.body': 'ScholarFlow के साथ अपने कोर्स, नोट्स, समय-सीमाएँ और प्रगति एक जगह लाएँ।',
+  'landing.cta.body': 'BornoFlow के साथ अपने कोर्स, नोट्स, समय-सीमाएँ और प्रगति एक जगह लाएँ।',
 
   'login.title': 'वापसी पर स्वागत है।',
   'login.subtitle': 'आपका सेमेस्टर व्यवस्थित, आपके लक्ष्य पहुँच में।',
@@ -113,7 +114,7 @@ export const hi: Dictionary = {
   'login.signingIn': 'साइन इन हो रहा है…',
   'login.or': 'या',
   'login.demo': 'डेमो विद्यार्थी खाता देखें',
-  'login.newHere': 'ScholarFlow पर नए हैं?',
+  'login.newHere': 'BornoFlow पर नए हैं?',
   'login.createAccount': 'खाता बनाएँ',
   'login.consent': 'जारी रखकर आप हमारी',
   'login.and': 'और',

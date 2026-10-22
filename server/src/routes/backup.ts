@@ -48,7 +48,7 @@ router.get('/records', async (req: AuthenticatedRequest, res: Response, next: Ne
 router.post('/create', async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   const tempDir = path.join(BACKUP_DIR, `temp-${timestamp}`);
-  const archiveFilename = `scholarflow-backup-${timestamp}.tar.gz`;
+  const archiveFilename = `bornoflow-backup-${timestamp}.tar.gz`;
   const archivePath = path.join(BACKUP_DIR, archiveFilename);
 
   try {
@@ -105,7 +105,7 @@ router.post('/create', async (req: AuthenticatedRequest, res: Response, next: Ne
     const manifest = {
       version: '1.0',
       createdAt: new Date().toISOString(),
-      appVersion: 'ScholarFlow v1.0',
+      appVersion: 'BornoFlow v1.0',
       fileCount,
       files: manifestFiles,
     };
@@ -347,7 +347,7 @@ router.get('/export', async (_req: AuthenticatedRequest, res: Response, next: Ne
 
     const dateStr = new Date().toISOString().slice(0, 10);
     res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Content-Disposition', `attachment; filename="scholarflow-db-export-${dateStr}.json"`);
+    res.setHeader('Content-Disposition', `attachment; filename="bornoflow-db-export-${dateStr}.json"`);
     res.send(JSON.stringify(backupPayload, null, 2));
   } catch (error) {
     next(error);

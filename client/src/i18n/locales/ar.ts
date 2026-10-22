@@ -44,6 +44,7 @@ export const ar: Dictionary = {
   'header.signIn': 'تسجيل الدخول',
   'header.exitDemo': 'الخروج من العرض التجريبي',
 
+  'brand.byline': 'منتج من Bornosoft',
   'footer.tagline':
     'مساحة عمل أكاديمية شخصية تجمع الفصول والمقررات والملاحظات والمستندات والمواعيد وخطة الدرجة في مكان واحد منظم.',
   'footer.product': 'المنتج',
@@ -52,8 +53,8 @@ export const ar: Dictionary = {
   'footer.signIn': 'تسجيل الدخول',
   'footer.createAccount': 'إنشاء حساب',
   'footer.cookieSettings': 'إعدادات ملفات تعريف الارتباط',
-  'footer.rights': '© {year} ScholarFlow. صُمم لإدارة شؤون الطالب الشخصية.',
-  'footer.productOf': 'ScholarFlow منتج من',
+  'footer.rights': '© {year} BornoFlow. صُمم لإدارة شؤون الطالب الشخصية.',
+  'footer.productOf': 'BornoFlow منتج من',
   'footer.languageLabel': 'اللغة',
 
   'legal.privacy': 'سياسة الخصوصية',
@@ -69,7 +70,7 @@ export const ar: Dictionary = {
 
   'cookie.title': 'خيارات الخصوصية الخاصة بك',
   'cookie.body':
-    'يستخدم ScholarFlow فقط مساحة التخزين اللازمة لإبقائك مسجّل الدخول. وبإذنك يتذكر أيضًا المظهر واللغة. نحن لا نستخدم ملفات تعريف ارتباط للإعلانات أو التتبع.',
+    'يستخدم BornoFlow فقط مساحة التخزين اللازمة لإبقائك مسجّل الدخول. وبإذنك يتذكر أيضًا المظهر واللغة. نحن لا نستخدم ملفات تعريف ارتباط للإعلانات أو التتبع.',
   'cookie.acceptAll': 'قبول الكل',
   'cookie.essentialOnly': 'الضرورية فقط',
   'cookie.customize': 'تخصيص',
@@ -99,7 +100,7 @@ export const ar: Dictionary = {
   'landing.features.title': 'كل ما تحتاجه لتبقى متقدمًا أكاديميًا.',
   'landing.faq.title': 'الأسئلة الشائعة',
   'landing.cta.title': 'اجعل فصلك القادم الأكثر تنظيمًا.',
-  'landing.cta.body': 'اجمع مقرراتك وملاحظاتك ومواعيدك وتقدمك الأكاديمي مع ScholarFlow.',
+  'landing.cta.body': 'اجمع مقرراتك وملاحظاتك ومواعيدك وتقدمك الأكاديمي مع BornoFlow.',
 
   'login.title': 'مرحبًا بعودتك.',
   'login.subtitle': 'فصلك منظم، وأهدافك في متناول يدك.',
@@ -113,7 +114,7 @@ export const ar: Dictionary = {
   'login.signingIn': 'جارٍ تسجيل الدخول…',
   'login.or': 'أو',
   'login.demo': 'جرّب حساب الطالب التجريبي',
-  'login.newHere': 'جديد على ScholarFlow؟',
+  'login.newHere': 'جديد على BornoFlow؟',
   'login.createAccount': 'إنشاء حساب',
   'login.consent': 'بالمتابعة فإنك توافق على',
   'login.and': 'و',

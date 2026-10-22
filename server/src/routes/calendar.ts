@@ -149,7 +149,7 @@ router.get('/export', async (req: AuthenticatedRequest, res: Response, next: Nex
     const icsLines = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
-      'PRODID:-//ScholarFlow//Academic Calendar//EN',
+      'PRODID:-//BornoFlow//Academic Calendar//EN',
       'CALSCALE:GREGORIAN',
       'METHOD:PUBLISH',
       'X-WR-CALNAME:Academic Calendar',

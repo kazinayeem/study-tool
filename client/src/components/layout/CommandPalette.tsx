@@ -342,7 +342,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
             <span>Select</span>
             <kbd className="px-1.5 py-0.5 rounded-[4px] bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#1e293b] font-mono">↵</kbd>
           </div>
-          <span>ScholarFlow Global Search</span>
+          <span>BornoFlow Global Search</span>
         </div>
       </div>
     </div>

@@ -1293,7 +1293,7 @@ export const LexicalEditor: React.FC<LexicalEditorProps> = (props) => {
 
   const initialConfig = useMemo(
     () => ({
-      namespace: 'ScholarFlow Knowledge Base',
+      namespace: 'BornoFlow Knowledge Base',
       theme: editorTheme,
       editable: !props.isReadOnly,
       editorState: initialEditorStateJson,

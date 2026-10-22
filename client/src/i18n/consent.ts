@@ -1,5 +1,5 @@
 /**
- * Cookie / local-storage consent. ScholarFlow only uses strictly necessary storage (sign-in
+ * Cookie / local-storage consent. BornoFlow only uses strictly necessary storage (sign-in
  * token) and optional preference storage (theme, language). No analytics or advertising.
  */
 export interface ConsentState {

@@ -1104,7 +1104,7 @@ export const NotesPage: React.FC = () => {
               <FileText className="h-8 w-8 text-[#0f6b57]" />
             </div>
             <h3 className="font-bold text-base text-[#37352f] dark:text-white">
-              ScholarFlow Word-Style Document Workspace
+              BornoFlow Word-Style Document Workspace
             </h3>
             <p className="text-xs text-[#787774] dark:text-neutral-400 mt-1.5 max-w-md">
               Select an existing document from the left directory or create a new note with A4 page view,

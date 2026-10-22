@@ -7,7 +7,6 @@ import {
   CheckCircle2,
   Eye,
   EyeOff,
-  GraduationCap,
   Lock,
   Mail,
   Sparkles,
@@ -19,6 +18,8 @@ import { SiteFooter } from '../../components/layout/SiteFooter';
 import { useI18n } from '../../i18n/I18nContext';
 import type { TranslationKey } from '../../i18n/translations';
 import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
+import { ThemeToggle } from '../../components/common/ThemeToggle';
+import { BrandLockup } from '../../components/common/BrandLockup';
 
 /** Maps the `?error=` query value from the OAuth redirect to a translation key. */
 const getInitialErrorKey = (): TranslationKey | null => {
@@ -33,7 +34,7 @@ const getInitialErrorKey = (): TranslationKey | null => {
 };
 
 const CARD_CLASS =
-  'rounded-2xl border border-[#E5E7EB] bg-white p-4 shadow-[0_18px_40px_-24px_rgba(17,24,39,0.35)]';
+  'rounded-2xl border border-[#E5E7EB] dark:border-[#2a2a2e] bg-white dark:bg-[#0f0f11] p-4 shadow-[0_18px_40px_-24px_rgba(17,24,39,0.35)]';
 
 const GoogleMark: React.FC<{ className?: string }> = ({ className }) => (
   <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
@@ -95,17 +96,17 @@ const AcademicVisualPanel: React.FC = () => {
   return (
   <aside
     aria-hidden="true"
-    className="relative hidden w-1/2 items-center justify-center overflow-hidden bg-[#f1f8f5] p-10 lg:flex xl:p-16"
+    className="relative hidden w-1/2 items-center justify-center overflow-hidden bg-[#f1f8f5] dark:bg-[#0d1512] p-10 lg:flex xl:p-16"
   >
     <div className="w-full max-w-[560px]">
-      <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E5E7EB] bg-white px-3 py-1 text-[11px] font-medium text-[#0f6b57]">
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E5E7EB] dark:border-[#2a2a2e] bg-white dark:bg-[#0f0f11] px-3 py-1 text-[11px] font-medium text-[#0f6b57] dark:text-[#4ccba5]">
         <Sparkles className="h-3 w-3" />
         {t('login.eyebrow')}
       </span>
-      <h2 className="mt-4 text-[28px] font-semibold leading-tight tracking-[-0.02em] text-[#111827] xl:text-[32px]">
+      <h2 className="mt-4 text-[28px] font-semibold leading-tight tracking-[-0.02em] text-[#111827] dark:text-[#f0eeec] xl:text-[32px]">
         {t('login.panel.title')}
       </h2>
-      <p className="mt-3 max-w-md text-[15px] leading-relaxed text-[#64748B]">
+      <p className="mt-3 max-w-md text-[15px] leading-relaxed text-[#64748B] dark:text-[#a4a097]">
         {t('login.panel.body')}
       </p>
 
@@ -114,12 +115,12 @@ const AcademicVisualPanel: React.FC = () => {
           <div className={CARD_CLASS}>
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#EEF0FE] text-[#0f6b57]">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#EEF0FE] dark:bg-[#0d3b30] text-[#0f6b57] dark:text-[#4ccba5]">
                   <Calendar className="h-4 w-4" />
                 </span>
-                <span className="text-sm font-semibold text-[#111827]">{t('login.panel.week')}</span>
+                <span className="text-sm font-semibold text-[#111827] dark:text-[#f0eeec]">{t('login.panel.week')}</span>
               </div>
-              <span className="rounded-full bg-[#f1f8f5] px-2 py-0.5 text-[11px] font-medium text-[#0f6b57]">
+              <span className="rounded-full bg-[#f1f8f5] dark:bg-[#0d1512] px-2 py-0.5 text-[11px] font-medium text-[#0f6b57] dark:text-[#4ccba5]">
                 Week 8
               </span>
             </div>
@@ -127,31 +128,31 @@ const AcademicVisualPanel: React.FC = () => {
               {schedule.map((item) => (
                 <div key={item.day} className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <span className="w-7 text-[11px] font-semibold text-[#94A3B8]">
+                    <span className="w-7 text-[11px] font-semibold text-[#94A3B8] dark:text-[#787671]">
                       {item.day}
                     </span>
                     <span
                       className="h-1.5 w-1.5 rounded-full"
                       style={{ backgroundColor: item.dot }}
                     />
-                    <span className="text-[12px] font-medium text-[#111827]">
+                    <span className="text-[12px] font-medium text-[#111827] dark:text-[#f0eeec]">
                       {item.course}
                     </span>
                   </div>
-                  <span className="text-[11px] text-[#64748B]">{item.time}</span>
+                  <span className="text-[11px] text-[#64748B] dark:text-[#a4a097]">{item.time}</span>
                 </div>
               ))}
             </div>
           </div>
 
           <div className={CARD_CLASS}>
-            <span className="text-sm font-semibold text-[#111827]">{t('login.panel.progress')}</span>
+            <span className="text-sm font-semibold text-[#111827] dark:text-[#f0eeec]">{t('login.panel.progress')}</span>
             <div className="mt-3.5 space-y-3">
               {courseProgress.map((course) => (
                 <div key={course.name} className="space-y-1.5">
                   <div className="flex items-center justify-between text-[12px]">
-                    <span className="font-medium text-[#111827]">{course.name}</span>
-                    <span className="text-[#64748B]">{course.value}%</span>
+                    <span className="font-medium text-[#111827] dark:text-[#f0eeec]">{course.name}</span>
+                    <span className="text-[#64748B] dark:text-[#a4a097]">{course.value}%</span>
                   </div>
                   <div className="h-1.5 w-full rounded-full bg-[#F1F5F9]">
                     <div
@@ -189,29 +190,29 @@ const AcademicVisualPanel: React.FC = () => {
                 />
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-base font-semibold text-[#111827]">3.82</span>
+                <span className="text-base font-semibold text-[#111827] dark:text-[#f0eeec]">3.82</span>
               </div>
             </div>
-            <span className="mt-2 text-[12px] font-medium text-[#111827]">{t('login.panel.gpa')}</span>
+            <span className="mt-2 text-[12px] font-medium text-[#111827] dark:text-[#f0eeec]">{t('login.panel.gpa')}</span>
             <span className="mt-1 rounded-full bg-[#ECFDF5] px-2 py-0.5 text-[10px] font-medium text-[#059669]">
               On track
             </span>
           </div>
 
           <div className={CARD_CLASS}>
-            <span className="text-sm font-semibold text-[#111827]">{t('login.panel.tasks')}</span>
+            <span className="text-sm font-semibold text-[#111827] dark:text-[#f0eeec]">{t('login.panel.tasks')}</span>
             <div className="mt-3 space-y-2.5">
               {checklist.map((task) => (
                 <div key={task.label} className="flex items-center gap-2.5">
                   {task.done ? (
-                    <CheckCircle2 className="h-4 w-4 shrink-0 text-[#0f6b57]" />
+                    <CheckCircle2 className="h-4 w-4 shrink-0 text-[#0f6b57] dark:text-[#4ccba5]" />
                   ) : (
                     <span className="h-4 w-4 shrink-0 rounded-full border border-[#CBD5E1]" />
                   )}
                   <span
                     className={cn(
                       'text-[12px]',
-                      task.done ? 'text-[#94A3B8] line-through' : 'font-medium text-[#111827]'
+                      task.done ? 'text-[#94A3B8] dark:text-[#787671] line-through' : 'font-medium text-[#111827] dark:text-[#f0eeec]'
                     )}
                   >
                     {task.label}
@@ -225,11 +226,11 @@ const AcademicVisualPanel: React.FC = () => {
 
       <div className={cn(CARD_CLASS, 'mt-5')}>
         <div className="mb-4 flex items-center justify-between">
-          <span className="text-sm font-semibold text-[#111827]">{t('login.panel.timeline')}</span>
-          <span className="text-[11px] text-[#64748B]">Fall 2026</span>
+          <span className="text-sm font-semibold text-[#111827] dark:text-[#f0eeec]">{t('login.panel.timeline')}</span>
+          <span className="text-[11px] text-[#64748B] dark:text-[#a4a097]">Fall 2026</span>
         </div>
         <div className="relative">
-          <div className="absolute inset-x-0 top-[5px] h-0.5 rounded-full bg-[#E5E7EB]" />
+          <div className="absolute inset-x-0 top-[5px] h-0.5 rounded-full bg-[#E5E7EB] dark:bg-[#2a2a2e]" />
           <div className="absolute left-0 top-[5px] h-0.5 w-1/2 rounded-full bg-[#0f6b57]" />
           <div className="relative flex items-start justify-between">
             {timeline.map((step) => (
@@ -240,13 +241,13 @@ const AcademicVisualPanel: React.FC = () => {
                     step.done ? 'bg-[#0f6b57]' : 'bg-[#CBD5E1]'
                   )}
                 />
-                <span className="text-[10px] font-medium text-[#64748B]">{step.label}</span>
+                <span className="text-[10px] font-medium text-[#64748B] dark:text-[#a4a097]">{step.label}</span>
               </div>
             ))}
           </div>
         </div>
-        <p className="mt-3 text-[11px] text-[#64748B]">
-          Week 8 of 16 · <span className="font-medium text-[#111827]">50% complete</span>
+        <p className="mt-3 text-[11px] text-[#64748B] dark:text-[#a4a097]">
+          Week 8 of 16 · <span className="font-medium text-[#111827] dark:text-[#f0eeec]">50% complete</span>
         </p>
       </div>
     </div>
@@ -254,30 +255,47 @@ const AcademicVisualPanel: React.FC = () => {
   );
 };
 
+/**
+ * Owner sign-in defaults. The email is always pre-filled; the password only in dev builds so the
+ * default password never ships inside a production bundle.
+ */
+const OWNER_DEFAULT_EMAIL = 'owner@scholarflow.local';
+const OWNER_DEFAULT_PASSWORD = import.meta.env.DEV ? 'Password123!' : '';
+
+/** Where to go after signing in: the page that sent the visitor here (with its query), else a role default. */
+function redirectTarget(state: unknown, mode: 'student' | 'owner', role?: string): string {
+  const from = (state as { from?: { pathname?: string; search?: string } | string } | null)?.from;
+  if (typeof from === 'string') return from;
+  if (from?.pathname) return `${from.pathname}${from.search ?? ''}`;
+  return role === 'ADMIN' ? '/owner' : '/dashboard';
+}
+
 export const LoginPage: React.FC = () => {
   const { user, loginDemo, loginPassword, isLoading } = useAuth();
   const { t } = useI18n();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const startsAsOwner = new URLSearchParams(window.location.search).get('as') === 'owner';
+  const [email, setEmail] = useState(startsAsOwner ? OWNER_DEFAULT_EMAIL : '');
+  const [password, setPassword] = useState(startsAsOwner ? OWNER_DEFAULT_PASSWORD : '');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(() => {
     const key = getInitialErrorKey();
     return key ? t(key) : null;
   });
   const [notice, setNotice] = useState<string | null>(null);
+  const [mode, setMode] = useState<'student' | 'owner'>(() =>
+    new URLSearchParams(window.location.search).get('as') === 'owner' ? 'owner' : 'student'
+  );
   const [pending, setPending] = useState<'password' | 'demo' | null>(null);
   const [googleAuthEnabled, setGoogleAuthEnabled] = useState(false);
 
   useEffect(() => {
     if (user) {
-      const from =
-        (location.state as any)?.from?.pathname || (location.state as any)?.from || '/dashboard';
-      navigate(from, { replace: true });
+      navigate(redirectTarget(location.state, mode, user.role), { replace: true });
     }
-  }, [user, navigate, location]);
+  }, [user, navigate, location, mode]);
 
   useEffect(() => {
     api
@@ -306,9 +324,7 @@ export const LoginPage: React.FC = () => {
     setPending('demo');
     try {
       await loginDemo();
-      const from =
-        (location.state as any)?.from?.pathname || (location.state as any)?.from || '/dashboard';
-      navigate(from, { replace: true });
+      navigate(redirectTarget(location.state, 'student'), { replace: true });
     } catch (err: any) {
       setError(err?.message || t('login.err.demo'));
     } finally {
@@ -328,12 +344,10 @@ export const LoginPage: React.FC = () => {
 
     setPending('password');
     try {
-      await loginPassword(password, email.trim());
-      const from =
-        (location.state as any)?.from?.pathname || (location.state as any)?.from || '/dashboard';
-      navigate(from, { replace: true });
+      await loginPassword(password, email.trim(), mode === 'owner' ? 'ADMIN' : undefined);
+      navigate(redirectTarget(location.state, 'student'), { replace: true });
     } catch (err: any) {
-      setError(err?.message || t('login.err.invalid'));
+      setError(err?.message === 'ROLE_MISMATCH' ? t('login.owner.notOwner') : err?.message || t('login.err.invalid'));
     } finally {
       setPending(null);
     }
@@ -349,23 +363,17 @@ export const LoginPage: React.FC = () => {
   const isBusy = pending !== null || isLoading;
 
   return (
-    <div className="flex min-h-dvh w-full bg-white font-sans text-[#111827] selection:bg-[#0f6b57] selection:text-white">
+    <div className="flex min-h-dvh w-full bg-white dark:bg-[#0f0f11] font-sans text-[#111827] dark:text-[#f0eeec] selection:bg-[#0f6b57] selection:text-white">
       <main className="flex w-full flex-col lg:h-dvh lg:w-1/2 lg:overflow-y-auto">
         <div className="flex flex-1 flex-col px-6 py-8 sm:px-10 lg:px-14">
           <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0f6b57] text-white shadow-[0_8px_20px_-8px_rgba(15,107,87,0.9)]">
-                <GraduationCap className="h-5 w-5" strokeWidth={2.2} />
-              </span>
-              <span className="text-lg font-semibold tracking-tight text-[#111827]">
-                ScholarFlow
-              </span>
-            </div>
+            <BrandLockup />
             <div className="flex items-center gap-1">
             <LanguageSwitcher variant="compact" />
+            <ThemeToggle />
             <Link
               to="/"
-              className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-[13px] font-medium text-[#64748B] transition-colors hover:text-[#111827] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
+              className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-[13px] font-medium text-[#64748B] dark:text-[#a4a097] transition-colors hover:text-[#111827] dark:hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
             >
               <ArrowLeft className="h-3.5 w-3.5 rtl:rotate-180" />
               {t('login.home')}
@@ -375,27 +383,54 @@ export const LoginPage: React.FC = () => {
 
           <div className="flex flex-1 flex-col justify-center py-10 sm:py-12">
             <div className="mx-auto w-full max-w-[400px]">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0f6b57]">
-                {t('login.eyebrow')}
-              </span>
-              <h1 className="mt-3 text-[30px] font-semibold leading-tight tracking-[-0.02em] text-[#111827]">
-                {t('login.title')}
+              <div role="tablist" aria-label="Account type" className="grid grid-cols-2 rounded-xl bg-[#f1f5f2] p-1 dark:bg-[#19191c]">
+                {(['student', 'owner'] as const).map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    role="tab"
+                    aria-selected={mode === m}
+                    onClick={() => {
+                      setMode(m);
+                      setError(null);
+                      setNotice(null);
+                      // Swap the owner defaults in and out without touching anything the user typed.
+                      if (m === 'owner') {
+                        if (!email) setEmail(OWNER_DEFAULT_EMAIL);
+                        if (!password) setPassword(OWNER_DEFAULT_PASSWORD);
+                      } else {
+                        if (email === OWNER_DEFAULT_EMAIL) setEmail('');
+                        if (password === OWNER_DEFAULT_PASSWORD) setPassword('');
+                      }
+                    }}
+                    className={`h-9 rounded-lg text-sm font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/40 ${
+                      mode === m
+                        ? 'bg-white text-[#0d2a22] shadow-sm dark:bg-[#0f0f11] dark:text-white'
+                        : 'text-[#64748B] hover:text-[#111827] dark:text-[#a4a097] dark:hover:text-white'
+                    }`}
+                  >
+                    {t(m === 'student' ? 'login.tab.student' : 'login.tab.owner')}
+                  </button>
+                ))}
+              </div>
+              <h1 className="mt-6 text-[30px] font-semibold leading-tight tracking-[-0.02em] text-[#111827] dark:text-[#f0eeec]">
+                {mode === 'owner' ? t('login.owner.title') : t('login.title')}
               </h1>
-              <p className="mt-2 text-sm leading-relaxed text-[#64748B]">
-                {t('login.subtitle')}
+              <p className="mt-2 text-sm leading-relaxed text-[#64748B] dark:text-[#a4a097]">
+                {mode === 'owner' ? t('login.owner.subtitle') : t('login.subtitle')}
               </p>
 
               {error && (
                 <div
                   role="alert"
-                  className="mt-6 flex items-start gap-3 rounded-xl border border-[#FECACA] bg-[#FEF2F2] p-3.5"
+                  className="mt-6 flex items-start gap-3 rounded-xl border border-[#FECACA] bg-[#FEF2F2] dark:bg-[#3a1620] p-3.5"
                 >
                   <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-[#DC2626]" />
                   <div className="flex-1">
-                    <p className="text-[13px] font-semibold text-[#7F1D1D]">
+                    <p className="text-[13px] font-semibold text-[#7F1D1D] dark:text-[#ffb4b4]">
                       {t('login.errorTitle')}
                     </p>
-                    <p className="mt-0.5 text-[12px] leading-relaxed text-[#991B1B]">{error}</p>
+                    <p className="mt-0.5 text-[12px] leading-relaxed text-[#991B1B] dark:text-[#ff9c9c]">{error}</p>
                     <button
                       type="button"
                       onClick={() => setError(null)}
@@ -410,15 +445,15 @@ export const LoginPage: React.FC = () => {
               {notice && (
                 <div
                   role="status"
-                  className="mt-6 flex items-start gap-3 rounded-xl border border-[#E5E7EB] bg-[#F8FAFC] p-3.5"
+                  className="mt-6 flex items-start gap-3 rounded-xl border border-[#E5E7EB] dark:border-[#2a2a2e] bg-[#F8FAFC] dark:bg-[#141416] p-3.5"
                 >
-                  <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-[#64748B]" />
+                  <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-[#64748B] dark:text-[#a4a097]" />
                   <div className="flex-1">
-                    <p className="text-[12px] leading-relaxed text-[#475569]">{notice}</p>
+                    <p className="text-[12px] leading-relaxed text-[#475569] dark:text-[#a4a097]">{notice}</p>
                     <button
                       type="button"
                       onClick={() => setNotice(null)}
-                      className="mt-1.5 text-[12px] font-medium text-[#0f6b57] underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
+                      className="mt-1.5 text-[12px] font-medium text-[#0f6b57] dark:text-[#4ccba5] underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
                     >
                       {t('common.dismiss')}
                     </button>
@@ -426,26 +461,31 @@ export const LoginPage: React.FC = () => {
                 </div>
               )}
 
+              {mode === 'student' && (
+                <>
               <button
                 type="button"
                 id="google-login-btn"
                 onClick={handleGoogleLogin}
                 disabled={isBusy}
-                className="mt-6 flex h-11 w-full items-center justify-center gap-3 rounded-xl border border-[#E5E7EB] bg-white text-sm font-medium text-[#111827] transition-colors hover:border-[#CBD5E1] hover:bg-[#F8FAFC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30 disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-6 flex h-11 w-full items-center justify-center gap-3 rounded-xl border border-[#E5E7EB] dark:border-[#2a2a2e] bg-white dark:bg-[#0f0f11] text-sm font-medium text-[#111827] dark:text-[#f0eeec] transition-colors hover:border-[#CBD5E1] hover:bg-[#F8FAFC] dark:hover:bg-[#202024] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <GoogleMark className="h-4 w-4 shrink-0" />
                 {t('login.google')}
               </button>
 
               <div className="my-5 flex items-center gap-3">
-                <span className="h-px flex-1 bg-[#E5E7EB]" />
-                <span className="text-[11px] font-medium uppercase tracking-wider text-[#94A3B8]">
+                <span className="h-px flex-1 bg-[#E5E7EB] dark:bg-[#2a2a2e]" />
+                <span className="text-[11px] font-medium uppercase tracking-wider text-[#94A3B8] dark:text-[#787671]">
                   {t('login.orEmail')}
                 </span>
-                <span className="h-px flex-1 bg-[#E5E7EB]" />
+                <span className="h-px flex-1 bg-[#E5E7EB] dark:bg-[#2a2a2e]" />
               </div>
 
-              <form onSubmit={handlePasswordSubmit} className="space-y-4">
+                </>
+              )}
+
+              <form onSubmit={handlePasswordSubmit} className={`space-y-4 ${mode === 'owner' ? 'mt-6' : ''}`}>
                 <div>
                   <label
                     htmlFor="email"
@@ -454,7 +494,7 @@ export const LoginPage: React.FC = () => {
                     {t('login.email')}
                   </label>
                   <div className="relative mt-1.5">
-                    <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8]" />
+                    <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8] dark:text-[#787671]" />
                     <input
                       id="email"
                       name="email"
@@ -464,7 +504,7 @@ export const LoginPage: React.FC = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder={t('login.emailPlaceholder')}
-                      className="h-11 w-full rounded-xl border border-[#E5E7EB] bg-white pl-10 pr-3 text-sm text-[#111827] transition-colors placeholder:text-[#9CA3AF] focus:border-[#0f6b57] focus:outline-none focus:ring-2 focus:ring-[#0f6b57]/20"
+                      className="h-11 w-full rounded-xl border border-[#E5E7EB] dark:border-[#2a2a2e] bg-white dark:bg-[#0f0f11] pl-10 pr-3 text-sm text-[#111827] dark:text-[#f0eeec] transition-colors placeholder:text-[#9CA3AF] focus:border-[#0f6b57] focus:outline-none focus:ring-2 focus:ring-[#0f6b57]/20"
                     />
                   </div>
                 </div>
@@ -480,13 +520,13 @@ export const LoginPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={handleForgotPassword}
-                      className="rounded text-[12px] font-medium text-[#0f6b57] underline-offset-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
+                      className="rounded text-[12px] font-medium text-[#0f6b57] dark:text-[#4ccba5] underline-offset-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
                     >
                       {t('login.forgot')}
                     </button>
                   </div>
                   <div className="relative mt-1.5">
-                    <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8]" />
+                    <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#94A3B8] dark:text-[#787671]" />
                     <input
                       id="password"
                       name="password"
@@ -496,14 +536,14 @@ export const LoginPage: React.FC = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder={t('login.passwordPlaceholder')}
-                      className="h-11 w-full rounded-xl border border-[#E5E7EB] bg-white pl-10 pr-11 text-sm text-[#111827] transition-colors placeholder:text-[#9CA3AF] focus:border-[#0f6b57] focus:outline-none focus:ring-2 focus:ring-[#0f6b57]/20"
+                      className="h-11 w-full rounded-xl border border-[#E5E7EB] dark:border-[#2a2a2e] bg-white dark:bg-[#0f0f11] pl-10 pr-11 text-sm text-[#111827] dark:text-[#f0eeec] transition-colors placeholder:text-[#9CA3AF] focus:border-[#0f6b57] focus:outline-none focus:ring-2 focus:ring-[#0f6b57]/20"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword((v) => !v)}
                       aria-label={showPassword ? t('login.hidePassword') : t('login.showPassword')}
                       aria-pressed={showPassword}
-                      className="absolute right-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-[#94A3B8] transition-colors hover:bg-[#F1F5F9] hover:text-[#0f6b57] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
+                      className="absolute right-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-[#94A3B8] dark:text-[#787671] transition-colors hover:bg-[#F1F5F9] hover:text-[#0f6b57] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
                     >
                       {showPassword ? (
                         <EyeOff className="h-4 w-4" />
@@ -525,17 +565,19 @@ export const LoginPage: React.FC = () => {
                       {t('login.signingIn')}
                     </>
                   ) : (
-                    t('login.signIn')
+                    mode === 'owner' ? t('login.owner.button') : t('login.signIn')
                   )}
                 </button>
               </form>
 
+              {mode === 'student' && (
+                <>
               <div className="mt-5 flex items-center gap-3">
-                <span className="h-px flex-1 bg-[#E5E7EB]" />
-                <span className="text-[11px] font-medium uppercase tracking-wider text-[#94A3B8]">
+                <span className="h-px flex-1 bg-[#E5E7EB] dark:bg-[#2a2a2e]" />
+                <span className="text-[11px] font-medium uppercase tracking-wider text-[#94A3B8] dark:text-[#787671]">
                   {t('login.or')}
                 </span>
-                <span className="h-px flex-1 bg-[#E5E7EB]" />
+                <span className="h-px flex-1 bg-[#E5E7EB] dark:bg-[#2a2a2e]" />
               </div>
 
               <button
@@ -543,7 +585,7 @@ export const LoginPage: React.FC = () => {
                 id="demo-student-login-btn"
                 onClick={handleDemoLogin}
                 disabled={isBusy}
-                className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-[#E5E7EB] bg-white text-sm font-medium text-[#111827] transition-colors hover:border-[#CBD5E1] hover:bg-[#F8FAFC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30 disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-[#E5E7EB] dark:border-[#2a2a2e] bg-white dark:bg-[#0f0f11] text-sm font-medium text-[#111827] dark:text-[#f0eeec] transition-colors hover:border-[#CBD5E1] hover:bg-[#F8FAFC] dark:hover:bg-[#202024] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {pending === 'demo' ? (
                   <>
@@ -555,11 +597,14 @@ export const LoginPage: React.FC = () => {
                   </>
                 ) : (
                   <>
-                    <Sparkles className="h-4 w-4 text-[#0f6b57]" />
+                    <Sparkles className="h-4 w-4 text-[#0f6b57] dark:text-[#4ccba5]" />
                     {t('login.demo')}
                   </>
                 )}
               </button>
+
+                </>
+              )}
 
               <p className="mt-6 text-center text-xs leading-relaxed text-[#787671]">
                 {t('login.consent')}{' '}
@@ -573,15 +618,23 @@ export const LoginPage: React.FC = () => {
                 .
               </p>
 
-              <p className="mt-4 text-center text-sm text-[#64748B]">
+              {mode === 'student' && (
+              <p className="mt-4 text-center text-sm text-[#64748B] dark:text-[#a4a097]">
                 {t('login.newHere')}{' '}
                 <button
                   type="button"
                   onClick={handleGoogleLogin}
-                  className="rounded font-medium text-[#0f6b57] underline-offset-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
+                  className="rounded font-medium text-[#0f6b57] dark:text-[#4ccba5] underline-offset-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
                 >
                   {t('login.createAccount')}
                 </button>
+              </p>
+              )}
+
+              <p className="mt-4 text-center text-sm">
+                <Link to="/#pricing" className="font-medium text-[#0f6b57] underline-offset-2 hover:underline dark:text-[#4ccba5]">
+                  {t('login.pricing')}
+                </Link>
               </p>
             </div>
           </div>

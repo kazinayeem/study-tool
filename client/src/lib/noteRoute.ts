@@ -13,7 +13,7 @@ export interface NoteRouteResolution {
 /**
  * Resolve the semester + note identifiers from the current notes route.
  *
- * ScholarFlow exposes two note routes:
+ * BornoFlow exposes two note routes:
  *   - /semesters/:id/notes/:noteId  -> `id` is the SEMESTER, `noteId` is the NOTE
  *   - /notes/:id                    -> `id` is the NOTE
  *

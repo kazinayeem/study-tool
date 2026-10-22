@@ -476,7 +476,7 @@ router.get('/export/csv', async (req: AuthenticatedRequest, res: Response, next:
 
     const csvContent = [headers.join(','), ...rows].join('\n');
     res.setHeader('Content-Type', 'text/csv');
-    res.setHeader('Content-Disposition', 'attachment; filename="scholarflow_grades_export.csv"');
+    res.setHeader('Content-Disposition', 'attachment; filename="bornoflow_grades_export.csv"');
     res.send(csvContent);
   } catch (error) {
     next(error);

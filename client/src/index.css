@@ -1412,3 +1412,33 @@ html.pdf-capture * {
 html.pdf-capture .max-w-7xl, html.pdf-capture .max-w-6xl {
     max-width: none !important;
   }
+
+/* ---------------- Theme switch transition ---------------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
+  animation-timing-function: ease;
+}
+html.theme-fade,
+html.theme-fade *,
+html.theme-fade *::before,
+html.theme-fade *::after {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, fill 0.3s ease, stroke 0.3s ease !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* Landing page colour tokens that inline styles use. */
+:root {
+  --landing-tint: #eef8f4;
+  --landing-brand-text: #0f6b57;
+}
+html.dark {
+  --landing-tint: #0d3b30;
+  --landing-brand-text: #4ccba5;
+}

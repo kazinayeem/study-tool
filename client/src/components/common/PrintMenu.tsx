@@ -25,7 +25,7 @@ function findPrintArea(): HTMLElement {
 
 const slug = (v: string) =>
   v
-    .replace(/\s*\|\s*ScholarFlow\s*$/i, '')
+    .replace(/\s*\|\s*BornoFlow\s*$/i, '')
     .trim()
     .replace(/[^\p{L}\p{N}]+/gu, '-')
     .replace(/^-+|-+$/g, '')
@@ -82,7 +82,7 @@ export const PrintMenu: React.FC<PrintMenuProps> = ({ className, variant = 'icon
       await exportElementToPdf({
         element: findPrintArea(),
         settings,
-        title: document.title.replace(/\s*\|\s*ScholarFlow\s*$/i, ''),
+        title: document.title.replace(/\s*\|\s*BornoFlow\s*$/i, ''),
         fileName: `${slug(document.title)}.pdf`,
       });
       setOpen(false);

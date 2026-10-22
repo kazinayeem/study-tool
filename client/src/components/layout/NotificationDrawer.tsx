@@ -60,7 +60,7 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({ isOpen, 
     if ('Notification' in window) {
       const permission = await Notification.requestPermission();
       if (permission === 'granted') {
-        new Notification('ScholarFlow Notifications Enabled', {
+        new Notification('BornoFlow Notifications Enabled', {
           body: 'You will receive study session and deadline alerts while the tab is open.',
         });
       }

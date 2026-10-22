@@ -18,7 +18,8 @@ export interface AuthContextType {
   isDemo: boolean;
   loginGoogle: (idToken: string) => Promise<void>;
   loginDemo: () => Promise<void>;
-  loginPassword: (password: string, email?: string) => Promise<void>;
+  /** `requireRole` rejects (and signs back out) before any state changes when the account has another role. */
+  loginPassword: (password: string, email?: string, requireRole?: string) => Promise<{ role?: string } | undefined>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
 }
@@ -80,14 +81,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const loginPassword = async (password: string, email = 'owner@scholarflow.local') => {
+  const loginPassword = async (password: string, email = 'owner@scholarflow.local', requireRole?: string) => {
     setIsLoading(true);
     try {
       const response = await api.login(password, email);
       if (response?.token) {
         localStorage.setItem('scholarflow_token', response.token);
       }
-      setUser(response?.user || response);
+      const signedIn = response?.user || response;
+      if (requireRole && signedIn?.role !== requireRole) {
+        // The server also set a session cookie, so clear it as well as the token.
+        localStorage.removeItem('scholarflow_token');
+        await api.logout().catch(() => {});
+        throw new Error('ROLE_MISMATCH');
+      }
+      setUser(signedIn);
+      return signedIn;
     } finally {
       setIsLoading(false);
     }

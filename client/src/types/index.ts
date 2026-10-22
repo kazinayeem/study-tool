@@ -863,3 +863,91 @@ export interface FeeOverview {
   rows: { semesterId: string; name: string; currency: string; credits: number; total: number; paid: number; due: number }[];
   grand: { total: number; paid: number; due: number };
 }
+
+// ---- SaaS plans & subscriptions ----
+export interface Plan {
+  id: string;
+  name: string;
+  description: string | null;
+  durationMonths: number;
+  isSemester: boolean;
+  price: number;
+  currency: string;
+  features: string[];
+  isActive: boolean;
+  isPopular: boolean;
+  sortOrder: number;
+  _count?: { subscriptions: number };
+}
+
+export type PaymentMethodCode = 'BKASH' | 'NAGAD' | 'ROCKET' | 'BANK' | 'CARD' | 'OTHER';
+export type SubscriptionStatus = 'PENDING' | 'ACTIVE' | 'REJECTED' | 'CANCELLED' | 'EXPIRED';
+
+export interface PaymentInfo {
+  paymentInstructions: string;
+  paymentMethods: PaymentMethodCode[];
+  supportContact: string;
+}
+
+export interface Subscription {
+  id: string;
+  userId: string;
+  planId: string | null;
+  planName: string;
+  amount: number;
+  currency: string;
+  durationMonths: number;
+  status: SubscriptionStatus;
+  paymentMethod: PaymentMethodCode;
+  transactionId: string;
+  payerNumber: string | null;
+  paidAt: string | null;
+  studentNote: string | null;
+  startsAt: string | null;
+  endsAt: string | null;
+  reviewedAt: string | null;
+  reviewNote: string | null;
+  createdAt: string;
+  user?: { id: string; name: string | null; email: string; role: string };
+}
+
+export interface OwnerStats {
+  pending: number;
+  active: number;
+  students: number;
+  revenue: number;
+  revenueThisMonth: number;
+  currency: string;
+  oldestPendingAt: string | null;
+}
+
+// ---- Owner: student overview ----
+export interface OwnerStudent {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  accountType: string;
+  status: string;
+  avatarUrl: string | null;
+  lastLoginAt: string | null;
+  createdAt: string;
+  counts: { semesters: number; courses: number; notes: number; exams: number; tasks: number; tasksDone: number };
+  storage: { documents: number; photos: number; versions: number; total: number };
+  subscription: { planName: string; endsAt: string | null } | null;
+}
+
+export interface OwnerStudentsResponse {
+  students: OwnerStudent[];
+  totals: { students: number; storageBytes: number; diskBytes: number; tasks: number; notes: number };
+}
+
+export interface OwnerStudentDetail {
+  user: Omit<OwnerStudent, 'counts' | 'storage' | 'subscription'>;
+  storage: { documents: number; photos: number; versions: number; total: number };
+  semesters: { id: string; name: string; status: string; startDate: string; endDate: string; _count: { courses: number; assignments: number } }[];
+  assignments: { id: string; title: string; status: string; priority: string; progress: number; deadline: string; course: { code: string } | null; semester: { name: string } | null }[];
+  exams: { id: string; title: string; examType: string; examDate: string; preparationStatus: string; course: { code: string } | null }[];
+  documents: { id: string; title: string; category: string; mimeType: string; fileSize: number; createdAt: string }[];
+  subscriptions: Subscription[];
+}

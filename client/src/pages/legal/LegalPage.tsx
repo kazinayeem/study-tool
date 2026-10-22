@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowLeft, GraduationCap } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useI18n } from '../../i18n/I18nContext';
 import { LEGAL_PAGES, LEGAL_UPDATED, getLegalDoc, type LegalSlug } from '../../i18n/legalContent';
 import { SiteFooter } from '../../components/layout/SiteFooter';
 import { LanguageSwitcher } from '../../components/common/LanguageSwitcher';
 import { PrintMenu } from '../../components/common/PrintMenu';
+import { ThemeToggle } from '../../components/common/ThemeToggle';
+import { BrandLockup } from '../../components/common/BrandLockup';
 
 export const LegalPage: React.FC<{ slug: LegalSlug }> = ({ slug }) => {
   const { t, lang } = useI18n();
@@ -18,7 +20,7 @@ export const LegalPage: React.FC<{ slug: LegalSlug }> = ({ slug }) => {
   );
 
   useEffect(() => {
-    document.title = `${title} | ScholarFlow`;
+    document.title = `${title} | BornoFlow`;
   }, [title]);
 
   useEffect(() => {
@@ -30,15 +32,11 @@ export const LegalPage: React.FC<{ slug: LegalSlug }> = ({ slug }) => {
     <div className="min-h-dvh w-full bg-white text-[#14201c] dark:bg-[#0f0f11] dark:text-[#f0eeec]">
       <header className="app-chrome sticky top-0 z-40 border-b border-[#e5e3df] bg-white/90 backdrop-blur-md dark:border-[#2a2a2e] dark:bg-[#0f0f11]/90">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
-          <Link to="/" className="flex items-center gap-2.5" aria-label="ScholarFlow">
-            <span className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-[#0f6b57] text-white">
-              <GraduationCap className="h-5 w-5" strokeWidth={2.2} />
-            </span>
-            <span className="font-[family-name:var(--font-display)] text-base font-bold">ScholarFlow</span>
-          </Link>
+          <BrandLockup />
           <div className="flex items-center gap-2">
             <LanguageSwitcher variant="compact" />
             <PrintMenu />
+            <ThemeToggle className="!h-9 !w-9 border-transparent" />
             <Link
               to="/"
               className="hidden h-10 items-center gap-1.5 rounded-lg px-3 text-sm font-medium text-[#0f6b57] hover:bg-[#eef8f4] dark:text-[#4ccba5] dark:hover:bg-[#0d3b30] sm:inline-flex"

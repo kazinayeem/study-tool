@@ -231,7 +231,7 @@ router.post('/test', optionalAuthenticateOwner, async (req: AuthenticatedRequest
           notificationType: 'TEST_EMAIL',
           targetTitle: 'SMTP Configuration Test',
           recipient: req.body.recipientEmail || prefs.recipientEmail || 'unknown',
-          subject: 'Test Email from ScholarFlow',
+          subject: 'Test Email from BornoFlow',
           scheduledTime: new Date(),
           actualSendTime: new Date(),
           status: 'Failed',

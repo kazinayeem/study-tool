@@ -1,4 +1,4 @@
-import type { FeeSummary, FeeOverview, FeeItem } from '../types';
+import type { FeeSummary, FeeOverview, FeeItem, Plan, PaymentInfo, Subscription, OwnerStats, OwnerStudentsResponse, OwnerStudentDetail } from '../types';
 import type {
   ClassSession,
   ClassPhoto,
@@ -421,6 +421,36 @@ export const api = {
   payFeeItem: (id: string, amount: number) =>
     request<FeeItem>(`/fees/items/${id}/pay`, { method: 'POST', body: JSON.stringify({ amount }) }),
   deleteFeeItem: (id: string) => request<{ success: boolean }>(`/fees/items/${id}`, { method: 'DELETE' }),
+
+  // Plans, billing and the owner console
+  getPlans: () => request<{ plans: Plan[]; payment: PaymentInfo }>('/plans'),
+  getMyBilling: () =>
+    request<{ current: Subscription | null; subscriptions: Subscription[]; payment: PaymentInfo }>('/billing/me'),
+  subscribe: (data: {
+    planId: string;
+    paymentMethod: string;
+    transactionId: string;
+    payerNumber?: string | null;
+    paidAt?: string | null;
+    note?: string | null;
+  }) => request<Subscription>('/billing/subscribe', { method: 'POST', body: JSON.stringify(data) }),
+  cancelSubscription: (id: string) => request<{ success: boolean }>(`/billing/${id}`, { method: 'DELETE' }),
+  getOwnerStats: () => request<OwnerStats>('/owner/stats'),
+  getOwnerSubscriptions: (status: string) => request<Subscription[]>(`/owner/subscriptions?status=${status}`),
+  approveSubscription: (id: string, note?: string) =>
+    request<Subscription>(`/owner/subscriptions/${id}/approve`, { method: 'POST', body: JSON.stringify({ note: note || null }) }),
+  rejectSubscription: (id: string, note?: string) =>
+    request<Subscription>(`/owner/subscriptions/${id}/reject`, { method: 'POST', body: JSON.stringify({ note: note || null }) }),
+  getOwnerStudents: () => request<OwnerStudentsResponse>('/owner/students'),
+  getOwnerStudent: (id: string) => request<OwnerStudentDetail>(`/owner/students/${id}`),
+  getOwnerPlans: () => request<Plan[]>('/owner/plans'),
+  createPlan: (data: Record<string, unknown>) => request<Plan>('/owner/plans', { method: 'POST', body: JSON.stringify(data) }),
+  updatePlan: (id: string, data: Record<string, unknown>) =>
+    request<Plan>(`/owner/plans/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deletePlan: (id: string) => request<{ success: boolean; deactivated: boolean }>(`/owner/plans/${id}`, { method: 'DELETE' }),
+  getOwnerSettings: () => request<PaymentInfo>('/owner/settings'),
+  saveOwnerSettings: (data: Partial<PaymentInfo>) =>
+    request<PaymentInfo>('/owner/settings', { method: 'PUT', body: JSON.stringify(data) }),
 
   // Calendar
   getCalendarEvents: (params: Record<string, string> = {}) => {

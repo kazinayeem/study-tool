@@ -27,9 +27,11 @@ import projectsRouter from './routes/projects.js';
 import { classSessionsRouter, classPhotosRouter } from './routes/classSessions.js';
 import degreeRouter from './routes/degree.js';
 import feesRouter from './routes/fees.js';
+import { plansRouter, billingRouter, ownerRouter } from './routes/billing.js';
+import { ownerStudentsRouter } from './routes/ownerStudents.js';
 import { verifySmtpConnection } from './services/mailer.js';
 import { initScheduler } from './services/scheduler.js';
-import { getOrCreateDefaultOwner, authenticateUser } from './middleware/auth.js';
+import { getOrCreateDefaultOwner, authenticateUser, requireAdmin } from './middleware/auth.js';
 
 const app = express();
 
@@ -88,6 +90,10 @@ app.use('/api/tasks', authenticateUser, assignmentsRouter); // Alias for task ma
 app.use('/api/projects', authenticateUser, projectsRouter);
 app.use('/api/exams', authenticateUser, examsRouter);
 app.use('/api/fees', authenticateUser, feesRouter);
+app.use('/api/plans', plansRouter);
+app.use('/api/billing', authenticateUser, billingRouter);
+app.use('/api/owner', authenticateUser, requireAdmin, ownerRouter);
+app.use('/api/owner', authenticateUser, requireAdmin, ownerStudentsRouter);
 app.use('/api/calendar', authenticateUser, calendarRouter);
 app.use('/api/dashboard', authenticateUser, dashboardRouter);
 app.use('/api/search', authenticateUser, searchRouter);

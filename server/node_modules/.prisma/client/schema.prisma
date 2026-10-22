@@ -477,6 +477,7 @@ model User {
   studyGoal              StudyGoal?
   feePlans               SemesterFeePlan[]
   feeItems               FeeItem[]
+  subscriptions          Subscription[]
 
   @@index([role])
   @@index([status])
@@ -1117,4 +1118,62 @@ model FeeItem {
   @@index([semesterId])
   @@index([courseId])
   @@index([userId])
+}
+
+// SaaS pricing: plans the owner publishes. Students buy one by paying outside the app and submitting
+// the transaction id for the owner to approve.
+model Plan {
+  id             String         @id @default(uuid())
+  name           String
+  description    String?
+  durationMonths Int            @default(1)
+  isSemester     Boolean        @default(false)
+  price          Float          @default(0)
+  currency       String         @default("BDT")
+  features       String         @default("[]") // JSON array of strings
+  isActive       Boolean        @default(true)
+  isPopular      Boolean        @default(false)
+  sortOrder      Int            @default(0)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  subscriptions  Subscription[]
+
+  @@index([isActive, sortOrder])
+}
+
+model Subscription {
+  id             String    @id @default(uuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  planId         String?
+  plan           Plan?     @relation(fields: [planId], references: [id], onDelete: SetNull)
+  // Snapshot of what the student agreed to, so later plan edits never change past purchases.
+  planName       String
+  amount         Float
+  currency       String    @default("BDT")
+  durationMonths Int
+  status         String    @default("PENDING") // PENDING, ACTIVE, REJECTED, CANCELLED
+  paymentMethod  String    @default("OTHER") // BKASH, NAGAD, ROCKET, BANK, CARD, OTHER
+  transactionId  String
+  payerNumber    String?
+  paidAt         DateTime?
+  studentNote    String?
+  startsAt       DateTime?
+  endsAt         DateTime?
+  reviewedById   String?
+  reviewedAt     DateTime?
+  reviewNote     String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@index([transactionId])
+}
+
+// Key/value platform settings the owner edits (payment instructions, etc.).
+model PlatformSetting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
 }

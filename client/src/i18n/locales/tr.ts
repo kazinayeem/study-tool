@@ -44,6 +44,7 @@ export const tr: Dictionary = {
   'header.signIn': 'Giriş yap',
   'header.exitDemo': 'Demodan çık',
 
+  'brand.byline': 'Bornosoft ürünü',
   'footer.tagline':
     'Dönemleri, dersleri, notları, belgeleri, teslim tarihlerini ve diploma planını tek yerde toplayan kişisel bir akademik çalışma alanı.',
   'footer.product': 'Ürün',
@@ -52,8 +53,8 @@ export const tr: Dictionary = {
   'footer.signIn': 'Giriş yap',
   'footer.createAccount': 'Hesap oluştur',
   'footer.cookieSettings': 'Çerez ayarları',
-  'footer.rights': '© {year} ScholarFlow. Kişisel öğrenci yönetimi için geliştirildi.',
-  'footer.productOf': 'ScholarFlow şu şirketin ürünüdür:',
+  'footer.rights': '© {year} BornoFlow. Kişisel öğrenci yönetimi için geliştirildi.',
+  'footer.productOf': 'BornoFlow şu şirketin ürünüdür:',
   'footer.languageLabel': 'Dil',
 
   'legal.privacy': 'Gizlilik Politikası',
@@ -69,7 +70,7 @@ export const tr: Dictionary = {
 
   'cookie.title': 'Gizlilik tercihleriniz',
   'cookie.body':
-    'ScholarFlow yalnızca oturumunuzu açık tutmak için gereken tarayıcı depolamasını kullanır. İzninizle temanızı ve dilinizi de hatırlar. Reklam veya izleme çerezleri kullanmıyoruz.',
+    'BornoFlow yalnızca oturumunuzu açık tutmak için gereken tarayıcı depolamasını kullanır. İzninizle temanızı ve dilinizi de hatırlar. Reklam veya izleme çerezleri kullanmıyoruz.',
   'cookie.acceptAll': 'Tümünü kabul et',
   'cookie.essentialOnly': 'Yalnızca gerekli olanlar',
   'cookie.customize': 'Özelleştir',
@@ -99,7 +100,7 @@ export const tr: Dictionary = {
   'landing.features.title': 'Akademik olarak önde kalmak için ihtiyacınız olan her şey.',
   'landing.faq.title': 'Sık sorulan sorular',
   'landing.cta.title': 'Bir sonraki dönemi en düzenli döneminiz yapın.',
-  'landing.cta.body': 'Derslerinizi, notlarınızı, teslim tarihlerinizi ve ilerlemenizi ScholarFlow ile bir araya getirin.',
+  'landing.cta.body': 'Derslerinizi, notlarınızı, teslim tarihlerinizi ve ilerlemenizi BornoFlow ile bir araya getirin.',
 
   'login.title': 'Tekrar hoş geldiniz.',
   'login.subtitle': 'Dönemin düzenli, hedeflerin yakın.',
@@ -113,7 +114,7 @@ export const tr: Dictionary = {
   'login.signingIn': 'Giriş yapılıyor…',
   'login.or': 'veya',
   'login.demo': 'Demo öğrenci hesabını keşfet',
-  'login.newHere': 'ScholarFlow’a yeni misiniz?',
+  'login.newHere': 'BornoFlow’a yeni misiniz?',
   'login.createAccount': 'Hesap oluştur',
   'login.consent': 'Devam ederek şunları kabul etmiş olursunuz:',
   'login.and': 've',

@@ -339,7 +339,7 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onProfileUpdat
               </div>
               <div className="text-left">
                 <span className="font-medium block text-[13px]">View Landing Page</span>
-                <span className="text-[11px] text-[#787671] dark:text-[#a4a097]">ScholarFlow product overview</span>
+                <span className="text-[11px] text-[#787671] dark:text-[#a4a097]">BornoFlow product overview</span>
               </div>
             </Link>
 
@@ -382,7 +382,7 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onProfileUpdat
 
           {/* ── Footer ── */}
           <div className="px-4 py-2.5 bg-[#fafaf9] dark:bg-[#141416] border-t border-[#e5e3df] dark:border-[#2a2a2e] flex items-center justify-between">
-            <span className="text-[10px] text-[#a4a097]">ScholarFlow Academic OS</span>
+            <span className="text-[10px] text-[#a4a097]">BornoFlow Academic OS</span>
             <span className="text-[10px] text-[#a4a097]">Local · Private · Secure</span>
           </div>
         </div>

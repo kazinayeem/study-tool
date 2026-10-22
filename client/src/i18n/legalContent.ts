@@ -37,7 +37,7 @@ export const LEGAL_PAGES: { slug: LegalSlug; path: string; titleKey: Translation
 const en: Record<LegalSlug, LegalDoc> = {
   privacy: {
     intro:
-      'ScholarFlow is a personal academic workspace for students, operated by Bornosoft. This policy explains what information the service handles, why, and the choices you have.',
+      'BornoFlow is a personal academic workspace for students, operated by Bornosoft. This policy explains what information the service handles, why, and the choices you have.',
     sections: [
       {
         id: 'collect',
@@ -46,8 +46,9 @@ const en: Record<LegalSlug, LegalDoc> = {
         list: [
           'Account details — your name, email address, and (when you use Google sign-in) your Google profile identifier and avatar.',
           'Academic content you create — semesters, courses, assignments, exams, grades, study plans, notes, tuition and fee records, bookmarks, and annotations.',
-          'Files you upload — PDFs, documents, images, and class photos, stored on the ScholarFlow server.',
+          'Files you upload — PDFs, documents, images, and class photos, stored on the BornoFlow server.',
           'Settings — your notification preferences, active semester, and study goals.',
+          'Subscription and payment records — the plan you buy, the payment method, the transaction ID and payer number you submit, and the owner’s approval decision.',
           'Technical data — standard server logs such as request time and error details, used to keep the service working and secure.',
         ],
       },
@@ -68,7 +69,7 @@ const en: Record<LegalSlug, LegalDoc> = {
         paragraphs: [
           'Your data is not shared with other users unless you create a share link, in which case anyone with that link can view the shared item until you revoke it.',
           'If you choose Google sign-in, Google processes your sign-in under its own privacy policy. If email reminders are enabled, an email service provider delivers those messages.',
-          'Workspace administrators can manage accounts (for example, disabling an account) and see account-level information. The product is designed so administrators cannot read your private note bodies, document contents, or study logs.',
+          'The service owner and workspace administrators can manage accounts (for example, disabling an account) and see account details, usage counts, how much storage you use, and the titles and status of your tasks and exams, so they can run billing and support. They cannot read your note text or the contents of your documents.',
           'We may disclose information if required by law.',
         ],
       },
@@ -76,7 +77,7 @@ const en: Record<LegalSlug, LegalDoc> = {
         id: 'storage',
         heading: '4. Storage, security, and retention',
         paragraphs: [
-          'Data is stored on the ScholarFlow server. Access requires authentication, and the server enforces that you can only read and change your own records. No system is perfectly secure, so please use a strong password and keep your sign-in private.',
+          'Data is stored on the BornoFlow server. Access requires authentication, and the server enforces that you can only read and change your own records. No system is perfectly secure, so please use a strong password and keep your sign-in private.',
           'We keep your content until you delete it or your account is removed. See Data Rights & Retention for details on exports, backups, and deletion.',
         ],
       },
@@ -84,14 +85,14 @@ const en: Record<LegalSlug, LegalDoc> = {
         id: 'cookies',
         heading: '5. Cookies and browser storage',
         paragraphs: [
-          'ScholarFlow uses strictly necessary browser storage to keep you signed in, and optional preference storage for your theme and language. We do not use advertising or analytics cookies. See the Cookie Policy for the full list.',
+          'BornoFlow uses strictly necessary browser storage to keep you signed in, and optional preference storage for your theme and language. We do not use advertising or analytics cookies. See the Cookie Policy for the full list.',
         ],
       },
       {
         id: 'children',
         heading: '6. Children',
         paragraphs: [
-          'ScholarFlow is intended for students. If you are under the age at which you can consent to data processing in your country, use the service only with the involvement of a parent, guardian, or your school.',
+          'BornoFlow is intended for students. If you are under the age at which you can consent to data processing in your country, use the service only with the involvement of a parent, guardian, or your school.',
         ],
       },
       {
@@ -113,13 +114,13 @@ const en: Record<LegalSlug, LegalDoc> = {
 
   terms: {
     intro:
-      'These terms govern your use of ScholarFlow. By creating an account or using the service you agree to them.',
+      'These terms govern your use of BornoFlow. By creating an account or using the service you agree to them.',
     sections: [
       {
         id: 'service',
         heading: '1. The service',
         paragraphs: [
-          'ScholarFlow lets students organise semesters, courses, assignments, exams, notes, documents, grades, fees, and degree progress. Features may change, and we may add or remove them over time.',
+          'BornoFlow lets students organise semesters, courses, assignments, exams, notes, documents, grades, fees, and degree progress. Features may change, and we may add or remove them over time.',
         ],
       },
       {
@@ -136,7 +137,7 @@ const en: Record<LegalSlug, LegalDoc> = {
         id: 'content',
         heading: '3. Your content',
         paragraphs: [
-          'You keep ownership of everything you create or upload. You give ScholarFlow only the permission needed to store, process, and display it to you, and to others when you choose to share it. You confirm you have the right to upload what you upload.',
+          'You keep ownership of everything you create or upload. You give BornoFlow only the permission needed to store, process, and display it to you, and to others when you choose to share it. You confirm you have the right to upload what you upload.',
         ],
       },
       {
@@ -169,7 +170,7 @@ const en: Record<LegalSlug, LegalDoc> = {
         id: 'termination',
         heading: '8. Ending your use',
         paragraphs: [
-          'You can stop using ScholarFlow at any time and ask for your data to be deleted. We may suspend or end access for misuse or where required by law.',
+          'You can stop using BornoFlow at any time and ask for your data to be deleted. We may suspend or end access for misuse or where required by law.',
         ],
       },
       {
@@ -184,7 +185,7 @@ const en: Record<LegalSlug, LegalDoc> = {
 
   cookies: {
     intro:
-      'This policy explains what browser storage ScholarFlow uses. ScholarFlow does not use advertising, tracking, or third-party analytics cookies.',
+      'This policy explains what browser storage BornoFlow uses. BornoFlow does not use advertising, tracking, or third-party analytics cookies.',
     sections: [
       {
         id: 'what',
@@ -237,7 +238,7 @@ const en: Record<LegalSlug, LegalDoc> = {
   },
 
   'acceptable-use': {
-    intro: 'These rules keep ScholarFlow safe and useful for everyone.',
+    intro: 'These rules keep BornoFlow safe and useful for everyone.',
     sections: [
       {
         id: 'dont',
@@ -325,7 +326,7 @@ const en: Record<LegalSlug, LegalDoc> = {
 
   accessibility: {
     intro:
-      'We want ScholarFlow to be usable by as many students as possible, on phones, tablets, and desktops.',
+      'We want BornoFlow to be usable by as many students as possible, on phones, tablets, and desktops.',
     sections: [
       {
         id: 'what',
@@ -357,13 +358,13 @@ const en: Record<LegalSlug, LegalDoc> = {
   },
 
   disclaimer: {
-    intro: 'Please read this notice about the information and tools in ScholarFlow.',
+    intro: 'Please read this notice about the information and tools in BornoFlow.',
     sections: [
       {
         id: 'academic',
         heading: '1. Academic information',
         paragraphs: [
-          'Grades, GPA/CGPA, credits, degree progress, and schedules in ScholarFlow are calculated from the data you enter. They are estimates for your own planning and are not official records. Always rely on your institution for official results and requirements.',
+          'Grades, GPA/CGPA, credits, degree progress, and schedules in BornoFlow are calculated from the data you enter. They are estimates for your own planning and are not official records. Always rely on your institution for official results and requirements.',
         ],
       },
       {
@@ -384,7 +385,7 @@ const en: Record<LegalSlug, LegalDoc> = {
         id: 'legal',
         heading: '4. Not legal advice',
         paragraphs: [
-          'The policy pages describe how ScholarFlow works today. They are not legal advice and should be reviewed by a qualified professional before being relied on as a binding agreement.',
+          'The policy pages describe how BornoFlow works today. They are not legal advice and should be reviewed by a qualified professional before being relied on as a binding agreement.',
         ],
       },
     ],
@@ -394,7 +395,7 @@ const en: Record<LegalSlug, LegalDoc> = {
 const bn: Record<LegalSlug, LegalDoc> = {
   privacy: {
     intro:
-      'ScholarFlow শিক্ষার্থীদের জন্য একটি ব্যক্তিগত একাডেমিক ওয়ার্কস্পেস, যা Bornosoft পরিচালনা করে। এই নীতিতে ব্যাখ্যা করা হয়েছে সেবাটি কোন তথ্য সংগ্রহ ও ব্যবহার করে, কেন করে এবং আপনার কী কী নিয়ন্ত্রণ আছে।',
+      'BornoFlow শিক্ষার্থীদের জন্য একটি ব্যক্তিগত একাডেমিক ওয়ার্কস্পেস, যা Bornosoft পরিচালনা করে। এই নীতিতে ব্যাখ্যা করা হয়েছে সেবাটি কোন তথ্য সংগ্রহ ও ব্যবহার করে, কেন করে এবং আপনার কী কী নিয়ন্ত্রণ আছে।',
     sections: [
       {
         id: 'collect',
@@ -403,8 +404,9 @@ const bn: Record<LegalSlug, LegalDoc> = {
         list: [
           'অ্যাকাউন্টের তথ্য — আপনার নাম, ইমেইল ঠিকানা এবং (গুগল সাইন-ইন ব্যবহার করলে) গুগল প্রোফাইল শনাক্তকারী ও ছবি।',
           'আপনার তৈরি একাডেমিক বিষয়বস্তু — সেমিস্টার, কোর্স, অ্যাসাইনমেন্ট, পরীক্ষা, গ্রেড, পড়ার পরিকল্পনা, নোট, টিউশন ও ফির হিসাব, বুকমার্ক এবং মন্তব্য।',
-          'আপনার আপলোড করা ফাইল — পিডিএফ, ডকুমেন্ট, ছবি ও ক্লাসের ছবি, যা ScholarFlow সার্ভারে রাখা হয়।',
+          'আপনার আপলোড করা ফাইল — পিডিএফ, ডকুমেন্ট, ছবি ও ক্লাসের ছবি, যা BornoFlow সার্ভারে রাখা হয়।',
           'সেটিংস — নোটিফিকেশনের পছন্দ, চলমান সেমিস্টার ও পড়ার লক্ষ্য।',
+          'সাবস্ক্রিপশন ও পেমেন্টের রেকর্ড — আপনার কেনা প্ল্যান, পেমেন্টের মাধ্যম, জমা দেওয়া ট্রান্সজেকশন আইডি ও পাঠানো নম্বর এবং ওনারের অনুমোদনের সিদ্ধান্ত।',
           'প্রযুক্তিগত তথ্য — অনুরোধের সময় ও ত্রুটির বিবরণের মতো সাধারণ সার্ভার লগ, যা সেবা সচল ও নিরাপদ রাখতে ব্যবহৃত হয়।',
         ],
       },
@@ -425,7 +427,7 @@ const bn: Record<LegalSlug, LegalDoc> = {
         paragraphs: [
           'আপনি শেয়ার লিংক তৈরি না করলে আপনার তথ্য অন্য ব্যবহারকারীদের সঙ্গে শেয়ার হয় না; লিংক তৈরি করলে লিংকধারী যে কেউ আপনি বাতিল না করা পর্যন্ত সেই বিষয়টি দেখতে পারবেন।',
           'গুগল সাইন-ইন বেছে নিলে গুগল নিজস্ব গোপনীয়তা নীতি অনুযায়ী সাইন-ইন প্রক্রিয়া করে। ইমেইল রিমাইন্ডার চালু থাকলে একটি ইমেইল সেবা প্রদানকারী বার্তাগুলো পৌঁছে দেয়।',
-          'ওয়ার্কস্পেস অ্যাডমিনিস্ট্রেটররা অ্যাকাউন্ট পরিচালনা (যেমন অ্যাকাউন্ট নিষ্ক্রিয় করা) করতে এবং অ্যাকাউন্ট-স্তরের তথ্য দেখতে পারেন। পণ্যটি এমনভাবে তৈরি যাতে অ্যাডমিনিস্ট্রেটররা আপনার ব্যক্তিগত নোটের বিষয়বস্তু, ডকুমেন্টের ভেতরের তথ্য বা পড়ার লগ পড়তে না পারেন।',
+          'সেবার মালিক ও ওয়ার্কস্পেস অ্যাডমিনিস্ট্রেটররা অ্যাকাউন্ট পরিচালনা (যেমন অ্যাকাউন্ট নিষ্ক্রিয় করা) করতে এবং অ্যাকাউন্টের তথ্য, ব্যবহারের সংখ্যা, আপনি কতটা স্টোরেজ ব্যবহার করছেন এবং আপনার কাজ ও পরীক্ষার শিরোনাম ও অবস্থা দেখতে পারেন, যাতে বিলিং ও সহায়তা চালানো যায়। তাঁরা আপনার নোটের লেখা বা ডকুমেন্টের ভেতরের তথ্য পড়তে পারেন না।',
           'আইন অনুযায়ী বাধ্য হলে আমরা তথ্য প্রকাশ করতে পারি।',
         ],
       },
@@ -433,7 +435,7 @@ const bn: Record<LegalSlug, LegalDoc> = {
         id: 'storage',
         heading: '৪. সংরক্ষণ, নিরাপত্তা ও ধারণকাল',
         paragraphs: [
-          'তথ্য ScholarFlow সার্ভারে সংরক্ষিত থাকে। প্রবেশের জন্য প্রমাণীকরণ লাগে এবং সার্ভার নিশ্চিত করে যে আপনি কেবল নিজের রেকর্ড পড়তে ও বদলাতে পারবেন। কোনো ব্যবস্থাই সম্পূর্ণ নিরাপদ নয়, তাই শক্তিশালী পাসওয়ার্ড ব্যবহার করুন এবং সাইন-ইনের তথ্য গোপন রাখুন।',
+          'তথ্য BornoFlow সার্ভারে সংরক্ষিত থাকে। প্রবেশের জন্য প্রমাণীকরণ লাগে এবং সার্ভার নিশ্চিত করে যে আপনি কেবল নিজের রেকর্ড পড়তে ও বদলাতে পারবেন। কোনো ব্যবস্থাই সম্পূর্ণ নিরাপদ নয়, তাই শক্তিশালী পাসওয়ার্ড ব্যবহার করুন এবং সাইন-ইনের তথ্য গোপন রাখুন।',
           'আপনি মুছে ফেলার বা অ্যাকাউন্ট সরানোর আগ পর্যন্ত আমরা আপনার বিষয়বস্তু রাখি। এক্সপোর্ট, ব্যাকআপ ও মুছে ফেলার বিস্তারিত জানতে "তথ্যের অধিকার ও সংরক্ষণ" দেখুন।',
         ],
       },
@@ -441,14 +443,14 @@ const bn: Record<LegalSlug, LegalDoc> = {
         id: 'cookies',
         heading: '৫. কুকি ও ব্রাউজার স্টোরেজ',
         paragraphs: [
-          'ScholarFlow আপনাকে সাইন-ইন রাখতে একান্ত প্রয়োজনীয় ব্রাউজার স্টোরেজ এবং থিম ও ভাষার জন্য ঐচ্ছিক পছন্দ-স্টোরেজ ব্যবহার করে। আমরা বিজ্ঞাপন বা অ্যানালিটিক্স কুকি ব্যবহার করি না। পুরো তালিকার জন্য কুকি নীতি দেখুন।',
+          'BornoFlow আপনাকে সাইন-ইন রাখতে একান্ত প্রয়োজনীয় ব্রাউজার স্টোরেজ এবং থিম ও ভাষার জন্য ঐচ্ছিক পছন্দ-স্টোরেজ ব্যবহার করে। আমরা বিজ্ঞাপন বা অ্যানালিটিক্স কুকি ব্যবহার করি না। পুরো তালিকার জন্য কুকি নীতি দেখুন।',
         ],
       },
       {
         id: 'children',
         heading: '৬. শিশুদের ক্ষেত্রে',
         paragraphs: [
-          'ScholarFlow শিক্ষার্থীদের জন্য। আপনার দেশে তথ্য প্রক্রিয়াকরণে সম্মতি দেওয়ার বয়সের চেয়ে কম হলে অভিভাবক বা প্রতিষ্ঠানের সম্পৃক্ততায় সেবাটি ব্যবহার করুন।',
+          'BornoFlow শিক্ষার্থীদের জন্য। আপনার দেশে তথ্য প্রক্রিয়াকরণে সম্মতি দেওয়ার বয়সের চেয়ে কম হলে অভিভাবক বা প্রতিষ্ঠানের সম্পৃক্ততায় সেবাটি ব্যবহার করুন।',
         ],
       },
       {
@@ -469,13 +471,13 @@ const bn: Record<LegalSlug, LegalDoc> = {
   },
 
   terms: {
-    intro: 'এই শর্তাবলি ScholarFlow-এর ব্যবহার নিয়ন্ত্রণ করে। অ্যাকাউন্ট খুললে বা সেবা ব্যবহার করলে আপনি এগুলো মেনে নিচ্ছেন।',
+    intro: 'এই শর্তাবলি BornoFlow-এর ব্যবহার নিয়ন্ত্রণ করে। অ্যাকাউন্ট খুললে বা সেবা ব্যবহার করলে আপনি এগুলো মেনে নিচ্ছেন।',
     sections: [
       {
         id: 'service',
         heading: '১. সেবা',
         paragraphs: [
-          'ScholarFlow শিক্ষার্থীদের সেমিস্টার, কোর্স, অ্যাসাইনমেন্ট, পরীক্ষা, নোট, ডকুমেন্ট, গ্রেড, ফি ও ডিগ্রি অগ্রগতি গুছিয়ে রাখতে সাহায্য করে। ফিচার বদলাতে পারে এবং সময়ের সঙ্গে আমরা ফিচার যোগ বা বাদ দিতে পারি।',
+          'BornoFlow শিক্ষার্থীদের সেমিস্টার, কোর্স, অ্যাসাইনমেন্ট, পরীক্ষা, নোট, ডকুমেন্ট, গ্রেড, ফি ও ডিগ্রি অগ্রগতি গুছিয়ে রাখতে সাহায্য করে। ফিচার বদলাতে পারে এবং সময়ের সঙ্গে আমরা ফিচার যোগ বা বাদ দিতে পারি।',
         ],
       },
       {
@@ -492,7 +494,7 @@ const bn: Record<LegalSlug, LegalDoc> = {
         id: 'content',
         heading: '৩. আপনার বিষয়বস্তু',
         paragraphs: [
-          'আপনি যা তৈরি বা আপলোড করেন তার মালিকানা আপনারই থাকে। সংরক্ষণ, প্রক্রিয়াকরণ ও আপনাকে (এবং আপনি শেয়ার করলে অন্যদের) দেখানোর জন্য যতটুকু অনুমতি দরকার, শুধু ততটুকুই ScholarFlow-কে দেন। আপনি নিশ্চিত করছেন যে যা আপলোড করছেন তার অধিকার আপনার আছে।',
+          'আপনি যা তৈরি বা আপলোড করেন তার মালিকানা আপনারই থাকে। সংরক্ষণ, প্রক্রিয়াকরণ ও আপনাকে (এবং আপনি শেয়ার করলে অন্যদের) দেখানোর জন্য যতটুকু অনুমতি দরকার, শুধু ততটুকুই BornoFlow-কে দেন। আপনি নিশ্চিত করছেন যে যা আপলোড করছেন তার অধিকার আপনার আছে।',
         ],
       },
       {
@@ -525,7 +527,7 @@ const bn: Record<LegalSlug, LegalDoc> = {
         id: 'termination',
         heading: '৮. ব্যবহার বন্ধ করা',
         paragraphs: [
-          'আপনি যেকোনো সময় ScholarFlow ব্যবহার বন্ধ করতে এবং আপনার তথ্য মুছে ফেলার অনুরোধ করতে পারেন। অপব্যবহার বা আইনি বাধ্যবাধকতায় আমরা প্রবেশাধিকার স্থগিত বা শেষ করতে পারি।',
+          'আপনি যেকোনো সময় BornoFlow ব্যবহার বন্ধ করতে এবং আপনার তথ্য মুছে ফেলার অনুরোধ করতে পারেন। অপব্যবহার বা আইনি বাধ্যবাধকতায় আমরা প্রবেশাধিকার স্থগিত বা শেষ করতে পারি।',
         ],
       },
       {
@@ -540,7 +542,7 @@ const bn: Record<LegalSlug, LegalDoc> = {
 
   cookies: {
     intro:
-      'এই নীতিতে বলা হয়েছে ScholarFlow কোন ব্রাউজার স্টোরেজ ব্যবহার করে। ScholarFlow বিজ্ঞাপন, ট্র্যাকিং বা তৃতীয় পক্ষের অ্যানালিটিক্স কুকি ব্যবহার করে না।',
+      'এই নীতিতে বলা হয়েছে BornoFlow কোন ব্রাউজার স্টোরেজ ব্যবহার করে। BornoFlow বিজ্ঞাপন, ট্র্যাকিং বা তৃতীয় পক্ষের অ্যানালিটিক্স কুকি ব্যবহার করে না।',
     sections: [
       {
         id: 'what',
@@ -593,7 +595,7 @@ const bn: Record<LegalSlug, LegalDoc> = {
   },
 
   'acceptable-use': {
-    intro: 'এই নিয়মগুলো ScholarFlow-কে সবার জন্য নিরাপদ ও উপযোগী রাখে।',
+    intro: 'এই নিয়মগুলো BornoFlow-কে সবার জন্য নিরাপদ ও উপযোগী রাখে।',
     sections: [
       {
         id: 'dont',
@@ -677,7 +679,7 @@ const bn: Record<LegalSlug, LegalDoc> = {
   },
 
   accessibility: {
-    intro: 'আমরা চাই যত বেশি সম্ভব শিক্ষার্থী ফোন, ট্যাবলেট ও ডেস্কটপে ScholarFlow ব্যবহার করতে পারুক।',
+    intro: 'আমরা চাই যত বেশি সম্ভব শিক্ষার্থী ফোন, ট্যাবলেট ও ডেস্কটপে BornoFlow ব্যবহার করতে পারুক।',
     sections: [
       {
         id: 'what',
@@ -709,13 +711,13 @@ const bn: Record<LegalSlug, LegalDoc> = {
   },
 
   disclaimer: {
-    intro: 'ScholarFlow-এর তথ্য ও টুল সম্পর্কে এই বিজ্ঞপ্তিটি অনুগ্রহ করে পড়ুন।',
+    intro: 'BornoFlow-এর তথ্য ও টুল সম্পর্কে এই বিজ্ঞপ্তিটি অনুগ্রহ করে পড়ুন।',
     sections: [
       {
         id: 'academic',
         heading: '১. একাডেমিক তথ্য',
         paragraphs: [
-          'ScholarFlow-এ দেখানো গ্রেড, জিপিএ/সিজিপিএ, ক্রেডিট, ডিগ্রি অগ্রগতি ও সূচি আপনার দেওয়া তথ্য থেকে হিসাব করা। এগুলো আপনার নিজের পরিকল্পনার জন্য অনুমান, অফিসিয়াল রেকর্ড নয়। অফিসিয়াল ফলাফল ও শর্তের জন্য সবসময় আপনার প্রতিষ্ঠানের ওপর নির্ভর করুন।',
+          'BornoFlow-এ দেখানো গ্রেড, জিপিএ/সিজিপিএ, ক্রেডিট, ডিগ্রি অগ্রগতি ও সূচি আপনার দেওয়া তথ্য থেকে হিসাব করা। এগুলো আপনার নিজের পরিকল্পনার জন্য অনুমান, অফিসিয়াল রেকর্ড নয়। অফিসিয়াল ফলাফল ও শর্তের জন্য সবসময় আপনার প্রতিষ্ঠানের ওপর নির্ভর করুন।',
         ],
       },
       {
@@ -734,7 +736,7 @@ const bn: Record<LegalSlug, LegalDoc> = {
         id: 'legal',
         heading: '৪. আইনি পরামর্শ নয়',
         paragraphs: [
-          'নীতি পৃষ্ঠাগুলোতে ScholarFlow বর্তমানে যেভাবে কাজ করে তা বর্ণিত। এগুলো আইনি পরামর্শ নয়; বাধ্যতামূলক চুক্তি হিসেবে ভরসার আগে একজন যোগ্য পেশাজীবীকে দিয়ে পর্যালোচনা করিয়ে নিন।',
+          'নীতি পৃষ্ঠাগুলোতে BornoFlow বর্তমানে যেভাবে কাজ করে তা বর্ণিত। এগুলো আইনি পরামর্শ নয়; বাধ্যতামূলক চুক্তি হিসেবে ভরসার আগে একজন যোগ্য পেশাজীবীকে দিয়ে পর্যালোচনা করিয়ে নিন।',
         ],
       },
     ],

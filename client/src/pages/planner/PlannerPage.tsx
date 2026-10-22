@@ -172,7 +172,7 @@ export const PlannerPage: React.FC = () => {
             setIsTimerRunning(false);
             // Alert user
             if ('Notification' in window && Notification.permission === 'granted') {
-              new Notification('ScholarFlow Focus Timer', {
+              new Notification('BornoFlow Focus Timer', {
                 body:
                   timerMode === 'focus'
                     ? 'Pomodoro complete! Time for a short break.'
@@ -905,7 +905,7 @@ export const PlannerPage: React.FC = () => {
 
             <a
               href="/api/planner/export.csv"
-              download="scholarflow_study_sessions.csv"
+              download="bornoflow_study_sessions.csv"
               className="flex items-center gap-1.5 rounded-[8px] border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-2xs hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors self-start sm:self-auto"
             >
               <Download className="h-3.5 w-3.5 text-emerald-600" />

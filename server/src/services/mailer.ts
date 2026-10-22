@@ -490,7 +490,7 @@ export function getTestEmailTemplate(recipient: string, timezone = 'Asia/Dhaka')
       Upcoming deadline reminders and exam alerts will be dispatched according to your notification preferences.
     </p>
     `,
-    { text: 'Open ScholarFlow Dashboard', url: APP_BASE_URL }
+    { text: 'Open BornoFlow Dashboard', url: APP_BASE_URL }
   );
 
   const text = `Test Email from ${SMTP_CONFIG.fromName}\n\n` +

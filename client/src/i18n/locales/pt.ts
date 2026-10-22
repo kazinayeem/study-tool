@@ -44,6 +44,7 @@ export const pt: Dictionary = {
   'header.signIn': 'Entrar',
   'header.exitDemo': 'Sair da demonstração',
 
+  'brand.byline': 'um produto da Bornosoft',
   'footer.tagline':
     'Um espaço acadêmico pessoal que reúne semestres, disciplinas, anotações, documentos, prazos e planejamento do curso em um só lugar.',
   'footer.product': 'Produto',
@@ -52,8 +53,8 @@ export const pt: Dictionary = {
   'footer.signIn': 'Entrar',
   'footer.createAccount': 'Criar conta',
   'footer.cookieSettings': 'Configurações de cookies',
-  'footer.rights': '© {year} ScholarFlow. Criado para a gestão pessoal do estudante.',
-  'footer.productOf': 'ScholarFlow é um produto da',
+  'footer.rights': '© {year} BornoFlow. Criado para a gestão pessoal do estudante.',
+  'footer.productOf': 'BornoFlow é um produto da',
   'footer.languageLabel': 'Idioma',
 
   'legal.privacy': 'Política de privacidade',
@@ -69,7 +70,7 @@ export const pt: Dictionary = {
 
   'cookie.title': 'Suas escolhas de privacidade',
   'cookie.body':
-    'O ScholarFlow usa apenas o armazenamento do navegador necessário para manter você conectado. Com a sua permissão, também lembra o tema e o idioma. Não usamos cookies de publicidade ou rastreamento.',
+    'O BornoFlow usa apenas o armazenamento do navegador necessário para manter você conectado. Com a sua permissão, também lembra o tema e o idioma. Não usamos cookies de publicidade ou rastreamento.',
   'cookie.acceptAll': 'Aceitar tudo',
   'cookie.essentialOnly': 'Somente essenciais',
   'cookie.customize': 'Personalizar',
@@ -99,7 +100,7 @@ export const pt: Dictionary = {
   'landing.features.title': 'Tudo o que você precisa para ficar à frente nos estudos.',
   'landing.faq.title': 'Perguntas frequentes',
   'landing.cta.title': 'Faça do seu próximo semestre o mais organizado.',
-  'landing.cta.body': 'Reúna disciplinas, anotações, prazos e progresso acadêmico com o ScholarFlow.',
+  'landing.cta.body': 'Reúna disciplinas, anotações, prazos e progresso acadêmico com o BornoFlow.',
 
   'login.title': 'Bem-vindo de volta.',
   'login.subtitle': 'Seu semestre organizado. Seus objetivos ao alcance.',
@@ -113,7 +114,7 @@ export const pt: Dictionary = {
   'login.signingIn': 'Entrando…',
   'login.or': 'ou',
   'login.demo': 'Explorar a conta de estudante de demonstração',
-  'login.newHere': 'Novo no ScholarFlow?',
+  'login.newHere': 'Novo no BornoFlow?',
   'login.createAccount': 'Criar uma conta',
   'login.consent': 'Ao continuar, você concorda com nossa',
   'login.and': 'e',

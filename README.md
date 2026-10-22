@@ -1,4 +1,4 @@
-# ScholarFlow — Personal Student Management System
+# BornoFlow — Personal Student Management System
 
 A personal academic workspace combining the structured organization of **Notion**, the file management of **Google Drive**, a dedicated **PDF reader & annotation workspace**, an **academic calendar**, and advanced **GPA analytics & study planning**.
 
