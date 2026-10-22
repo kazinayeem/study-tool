@@ -235,6 +235,7 @@ export const NotesPage: React.FC = () => {
   const resolvedNote = listNote || detailNote;
 
   const applyNoteToEditor = useCallback((note: Note) => {
+    versionRef.current = { id: note.id, version: note.version };
     setActiveNote(note);
     setTitle(note.title || '');
     setContent(note.content || '');
@@ -486,8 +487,13 @@ export const NotesPage: React.FC = () => {
     },
   });
 
-  // Autosave logic
-  const performSave = useCallback(
+  // Autosave logic. Saves are serialised and always based on the newest server version we know,
+  // otherwise fast typing sends a stale `expectedVersion` and the server answers 409.
+  const versionRef = useRef<{ id: string; version: number } | null>(null);
+  const savingRef = useRef(false);
+  const pendingSaveRef = useRef<Parameters<typeof doSave> | null>(null);
+
+  const doSave = useCallback(
     async (
       noteToSave: Note,
       newTitle: string,
@@ -502,7 +508,9 @@ export const NotesPage: React.FC = () => {
       setErrorMessage(null);
       // Capture the note version we are basing this write on, so a slow response
       // from an older edit can never overwrite a newer one.
-      const baseVersion = noteToSave.version;
+      const known = versionRef.current;
+      const baseVersion =
+        known && known.id === noteToSave.id ? Math.max(known.version, noteToSave.version) : noteToSave.version;
       try {
         const updated = await api.updateNote(noteToSave.id, {
           title: newTitle.trim() || 'Untitled Academic Note',
@@ -515,6 +523,7 @@ export const NotesPage: React.FC = () => {
           expectedVersion: baseVersion,
         });
 
+        versionRef.current = { id: updated.id, version: updated.version };
         queryClient.setQueryData(['note', updated.id], updated);
         // Only push the server snapshot into the editor if the user has not
         // switched to a different note while this request was in flight.
@@ -536,6 +545,25 @@ export const NotesPage: React.FC = () => {
       }
     },
     [queryClient]
+  );
+
+  const performSave = useCallback(
+    async (...args: Parameters<typeof doSave>) => {
+      if (savingRef.current) {
+        pendingSaveRef.current = args;
+        return;
+      }
+      savingRef.current = true;
+      try {
+        await doSave(...args);
+      } finally {
+        savingRef.current = false;
+      }
+      const next = pendingSaveRef.current;
+      pendingSaveRef.current = null;
+      if (next) void performSave(...next);
+    },
+    [doSave]
   );
 
   // Trigger debounced autosave (1.2s delay)

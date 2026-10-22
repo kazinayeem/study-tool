@@ -62,7 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
 
   // Top level workspace navigation
   const workspaceItems = [
-    { label: 'Dashboard', icon: LayoutDashboard, path: '/', altPath: '/dashboard' },
+    { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
     { label: 'Semesters', icon: CalendarDays, path: '/semesters', count: semesters.length > 0 ? semesters.length : undefined },
     {
       label: 'Degree Progress',
@@ -142,7 +142,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
     >
       {/* Brand Header */}
       <div className="flex h-16 items-center justify-between px-4 border-b border-[#e5e3df] dark:border-[#2a2a2e]">
-        <Link to="/" className="flex items-center gap-2.5 overflow-hidden">
+        <Link to="/dashboard" className="flex items-center gap-2.5 overflow-hidden">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] bg-[#0f6b57] text-white">
             <BookOpen className="h-5 w-5" />
           </div>

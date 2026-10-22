@@ -389,10 +389,16 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
   const [uploading, setUploading] = useState(false);
   const [stats, setStats] = useState({ words: 0, chars: 0 });
   const [zoom, setZoom] = useState(1);
+  const [pageCount, setPageCount] = useState(1);
+  const [pageHeight, setPageHeight] = useState(1056);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const imageInputRef = useRef<HTMLInputElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLTextAreaElement>(null);
+  const pageRef = useRef<HTMLDivElement>(null);
+  const workspaceRef = useRef<HTMLDivElement>(null);
+  const paginateFrameRef = useRef<number | undefined>(undefined);
 
   // Let the title wrap onto several lines instead of clipping long titles.
   useEffect(() => {
@@ -410,6 +416,8 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
   const suppressChangeRef = useRef(false);
   const suppressTimerRef = useRef<number | undefined>(undefined);
   const lastSignatureRef = useRef<string | null>(null);
+  // Last content this editor emitted; the parent echoes it back as props and re-applying it would reset the caret.
+  const lastEmittedRef = useRef<{ html: string; json: string } | null>(null);
   const activeRef = useRef(false);
 
   const isFullScreenControlled = onToggleFullScreen !== undefined;
@@ -473,6 +481,10 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
     const signature = `${noteId ?? 'new'}|${initialContentState ?? ''}|${initialContent ?? ''}`;
     if (lastSignatureRef.current === signature) return;
     lastSignatureRef.current = signature;
+    const emitted = lastEmittedRef.current;
+    if (emitted && (initialContentState ? initialContentState === emitted.json : initialContent === emitted.html)) {
+      return;
+    }
     applyExternalContent(initialContent, initialContentState);
   }, [noteId, initialContent, initialContentState, applyExternalContent]);
 
@@ -522,6 +534,105 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
     return () => root.removeEventListener('keydown', onKey);
   }, [editor, onSave]);
 
+  /* ---------------- pagination ---------------- */
+  // Word-style page flow. Blocks that would straddle a page boundary are pushed to the next
+  // page with an inline top margin; blocks taller than a page keep flowing across the seam.
+  const paginate = useCallback(() => {
+    const page = pageRef.current;
+    const root = editor.getRootElement();
+    if (!page || !root) return;
+
+    const pageWidth = page.offsetWidth;
+    const P = Math.round(pageWidth * (1056 / 816));
+    const inner = page.firstElementChild as HTMLElement | null;
+    const M = inner ? parseFloat(getComputedStyle(inner).paddingTop) || 72 : 72;
+
+    const pushed = root.querySelectorAll<HTMLElement>('[data-pg-push]');
+    pushed.forEach((el) => {
+      el.style.marginTop = '';
+      delete el.dataset.pgPush;
+    });
+
+    const blocks: HTMLElement[] = [];
+    Array.from(root.children).forEach((child) => {
+      const el = child as HTMLElement;
+      if (el.tagName === 'UL' || el.tagName === 'OL') {
+        Array.from(el.children).forEach((li) => blocks.push(li as HTMLElement));
+      } else {
+        blocks.push(el);
+      }
+    });
+
+    const top0 = page.getBoundingClientRect().top;
+    const toY = (v: number) => (v - top0) / zoom;
+    let contentBottom = 0;
+
+    for (let i = 0; i < blocks.length; i++) {
+      const el = blocks[i];
+      const r = el.getBoundingClientRect();
+      const t = toY(r.top);
+      const b = toY(r.bottom);
+      contentBottom = Math.max(contentBottom, b);
+      const sheet = Math.floor(t / P);
+      const limit = (sheet + 1) * P - M;
+      const nextTop = (sheet + 1) * P + M;
+      const fits = b - t <= P - 2 * M;
+      if (b > limit && t < limit && fits && t > sheet * P + M + 2) {
+        // Keep a heading with the paragraph that follows it.
+        const prev = blocks[i - 1];
+        const target = prev && /^H[1-3]$/.test(prev.tagName) && !prev.dataset.pgPush && toY(prev.getBoundingClientRect().top) > sheet * P + M + 2 ? prev : el;
+        const tt = toY(target.getBoundingClientRect().top);
+        const base = parseFloat(getComputedStyle(target).marginTop) || 0;
+        target.style.marginTop = `${base + (nextTop - tt)}px`;
+        target.dataset.pgPush = '1';
+        if (target !== el) {
+          i -= 1;
+        } else {
+          const r2 = el.getBoundingClientRect();
+          contentBottom = Math.max(contentBottom, toY(r2.bottom));
+        }
+      }
+    }
+
+    const pages = Math.max(1, Math.ceil((contentBottom + M) / P));
+    setPageHeight((h) => (h === P ? h : P));
+    setPageCount((c) => (c === pages ? c : pages));
+  }, [editor, zoom]);
+
+  const schedulePaginate = useCallback(() => {
+    if (paginateFrameRef.current !== undefined) cancelAnimationFrame(paginateFrameRef.current);
+    paginateFrameRef.current = requestAnimationFrame(paginate);
+  }, [paginate]);
+
+  useEffect(() => {
+    const unregister = editor.registerUpdateListener(() => schedulePaginate());
+    const page = pageRef.current;
+    const ro = page ? new ResizeObserver(schedulePaginate) : null;
+    if (page && ro) ro.observe(page);
+    schedulePaginate();
+    document.fonts?.ready.then(schedulePaginate).catch(() => {});
+    return () => {
+      unregister();
+      ro?.disconnect();
+      if (paginateFrameRef.current !== undefined) cancelAnimationFrame(paginateFrameRef.current);
+    };
+  }, [editor, schedulePaginate]);
+
+  // Track which page is in view for the "Page X of N" indicator.
+  useEffect(() => {
+    const ws = workspaceRef.current;
+    if (!ws) return;
+    const onScroll = () => {
+      const page = pageRef.current;
+      if (!page) return;
+      const rel = (ws.getBoundingClientRect().top + ws.clientHeight / 2 - page.getBoundingClientRect().top) / zoom;
+      setCurrentPage(Math.max(1, Math.min(pageCount, Math.floor(rel / pageHeight) + 1)));
+    };
+    onScroll();
+    ws.addEventListener('scroll', onScroll, { passive: true });
+    return () => ws.removeEventListener('scroll', onScroll);
+  }, [pageCount, pageHeight, zoom]);
+
   /* ---------------- toolbar state ---------------- */
   useEffect(() => {
     const refreshStats = () => {
@@ -552,6 +663,7 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
         return;
       }
 
+      lastEmittedRef.current = { html, json };
       onContentChange(html, json);
       onSerializedStateChange?.(json);
     },
@@ -1001,8 +1113,12 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
       </header>
 
       {/* ---------------- Document canvas ---------------- */}
-      <div className="lex-workspace">
-        <div className="lex-page" style={{ zoom }}>
+      <div className="lex-workspace" ref={workspaceRef}>
+        <div
+          className="lex-page"
+          ref={pageRef}
+          style={{ zoom, minHeight: pageCount * pageHeight, ["--lex-page-h" as string]: `${pageHeight}px` }}
+        >
           <div className="lex-page-inner">
             <textarea
               ref={titleRef}
@@ -1036,6 +1152,16 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
               />
             </div>
           </div>
+          {Array.from({ length: pageCount }, (_, i) => (
+            <span
+              key={i}
+              aria-hidden="true"
+              className="lex-page-number print:hidden"
+              style={{ top: (i + 1) * pageHeight - 30 }}
+            >
+              {i + 1} / {pageCount}
+            </span>
+          ))}
         </div>
       </div>
 
@@ -1046,6 +1172,8 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
           <span>{statusLabel}</span>
           <span className="lex-divider" />
           <span>{stats.words} words</span>
+          <span className="lex-divider" />
+          <span>Page {currentPage} of {pageCount}</span>
           <span className="hidden sm:inline lex-divider" />
           <span className="hidden sm:inline">{stats.chars} characters</span>
         </div>

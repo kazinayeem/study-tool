@@ -81,6 +81,27 @@
     --app-bg: #0f0f11;
   }
 
+  html[lang='bn'] {
+    --font-sans: 'Noto Sans Bengali', 'Public Sans', sans-serif;
+    --font-display: 'Noto Sans Bengali', sans-serif;
+  }
+  html[lang='ar'] {
+    --font-sans: 'Noto Sans Arabic', 'Public Sans', sans-serif;
+    --font-display: 'Noto Sans Arabic', sans-serif;
+  }
+  html[lang='hi'] {
+    --font-sans: 'Noto Sans Devanagari', 'Public Sans', sans-serif;
+    --font-display: 'Noto Sans Devanagari', sans-serif;
+  }
+  html[lang='zh'] {
+    --font-sans: 'Public Sans', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
+    --font-display: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
+  }
+  html[lang='ja'] {
+    --font-sans: 'Public Sans', 'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif;
+    --font-display: 'Hiragino Sans', 'Yu Gothic', 'Noto Sans CJK JP', sans-serif;
+  }
+
   h1, h2, h3 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
@@ -712,10 +733,17 @@
 }
 
 .lex-page {
+  position: relative;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(var(--lex-page-h, 1056px) - 2px),
+    #d8d4cc calc(var(--lex-page-h, 1056px) - 2px),
+    #d8d4cc var(--lex-page-h, 1056px)
+  );
   width: 100%;
   max-width: 816px;
-  min-height: min(1056px, 100%);
-  background: #ffffff;
+  background-color: #ffffff;
   border: 1px solid #e5e3df;
   border-radius: 2px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
@@ -1240,4 +1268,28 @@ html.dark .lex-zoom-value {
 }
 html.dark .lex-divider {
   background: #2a2a2e;
+}
+
+.lex-page-number {
+  position: absolute;
+  right: clamp(20px, 9vw, 84px);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: #a4a097;
+  pointer-events: none;
+  user-select: none;
+}
+html.dark .lex-page {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(var(--lex-page-h, 1056px) - 2px),
+    #3a3a40 calc(var(--lex-page-h, 1056px) - 2px),
+    #3a3a40 var(--lex-page-h, 1056px)
+  );
+}
+@media print {
+  .lex-page {
+    background-image: none;
+  }
 }

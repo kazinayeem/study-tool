@@ -26,6 +26,7 @@ import plannerRouter from './routes/planner.js';
 import projectsRouter from './routes/projects.js';
 import { classSessionsRouter, classPhotosRouter } from './routes/classSessions.js';
 import degreeRouter from './routes/degree.js';
+import feesRouter from './routes/fees.js';
 import { verifySmtpConnection } from './services/mailer.js';
 import { initScheduler } from './services/scheduler.js';
 import { getOrCreateDefaultOwner, authenticateUser } from './middleware/auth.js';
@@ -86,6 +87,7 @@ app.use('/api/assignments', authenticateUser, assignmentsRouter);
 app.use('/api/tasks', authenticateUser, assignmentsRouter); // Alias for task management API
 app.use('/api/projects', authenticateUser, projectsRouter);
 app.use('/api/exams', authenticateUser, examsRouter);
+app.use('/api/fees', authenticateUser, feesRouter);
 app.use('/api/calendar', authenticateUser, calendarRouter);
 app.use('/api/dashboard', authenticateUser, dashboardRouter);
 app.use('/api/search', authenticateUser, searchRouter);

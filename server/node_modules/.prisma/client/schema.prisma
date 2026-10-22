@@ -33,8 +33,10 @@ model Semester {
   studyPlans     StudyPlan[]
   projects       Project[]
   classSessions  ClassSession[]
+  feePlan        SemesterFeePlan?
+  feeItems       FeeItem[]
   userId         String?
-  user           User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User?            @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([status])
   @@index([isArchived])
@@ -77,6 +79,7 @@ model Course {
   classSessions  ClassSession[]
   userId         String?
   user           User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  feeItems       FeeItem[]
 
   @@index([semesterId])
   @@index([code])
@@ -472,6 +475,8 @@ model User {
   dashboardPreference    DashboardPreference?
   targetGpaGoal          TargetGpaGoal?
   studyGoal              StudyGoal?
+  feePlans               SemesterFeePlan[]
+  feeItems               FeeItem[]
 
   @@index([role])
   @@index([status])
@@ -1070,4 +1075,46 @@ model PlannedCourse {
   @@unique([degreeProgramId, curriculumCourseId, targetSemesterName])
   @@index([degreeProgramId])
   @@index([targetSemesterName])
+}
+
+// Per-semester tuition settings: cost = credits x perCreditFee, minus a waiver/scholarship percentage.
+model SemesterFeePlan {
+  id            String   @id @default(uuid())
+  semesterId    String   @unique
+  semester      Semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
+  currency      String   @default("BDT")
+  perCreditFee  Float    @default(0)
+  waiverPercent Float    @default(0)
+  tuitionPaid   Float    @default(0)
+  notes         String?
+  userId        String?
+  user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([userId])
+}
+
+// One payable line on top of tuition: admission, mid-term, final, lab, library, etc.
+model FeeItem {
+  id         String    @id @default(uuid())
+  semesterId String
+  semester   Semester  @relation(fields: [semesterId], references: [id], onDelete: Cascade)
+  courseId   String?
+  course     Course?   @relation(fields: [courseId], references: [id], onDelete: SetNull)
+  category   String    @default("OTHER") // REGISTRATION, MID_EXAM, FINAL_EXAM, LAB, LIBRARY, ACTIVITY, TRANSPORT, HOSTEL, OTHER
+  label      String
+  amount     Float     @default(0)
+  paidAmount Float     @default(0)
+  dueDate    DateTime?
+  paidAt     DateTime?
+  notes      String?
+  userId     String?
+  user       User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([semesterId])
+  @@index([courseId])
+  @@index([userId])
 }
