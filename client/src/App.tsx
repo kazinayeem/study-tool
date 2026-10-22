@@ -1,4 +1,5 @@
 import { CookieConsent } from './components/common/CookieConsent';
+import { applyPageStyle, loadPrintSettings } from './lib/printSettings';
 import React, { Suspense } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AppLayout } from './components/layout/AppLayout';
@@ -152,6 +153,27 @@ const AdminGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 };
 
 export const App: React.FC = () => {
+  // Keep @page in sync with the saved setup so the browser's own Ctrl/Cmd+P uses it too, and always
+  // print on a light theme.
+  React.useEffect(() => {
+    applyPageStyle(loadPrintSettings());
+    let wasDark = false;
+    const before = () => {
+      applyPageStyle(loadPrintSettings());
+      wasDark = document.documentElement.classList.contains('dark');
+      document.documentElement.classList.remove('dark');
+    };
+    const after = () => {
+      if (wasDark) document.documentElement.classList.add('dark');
+    };
+    window.addEventListener('beforeprint', before);
+    window.addEventListener('afterprint', after);
+    return () => {
+      window.removeEventListener('beforeprint', before);
+      window.removeEventListener('afterprint', after);
+    };
+  }, []);
+
   return (
     <Suspense fallback={<PageSkeleton />}>
       <CookieConsent />

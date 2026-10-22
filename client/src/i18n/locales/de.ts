@@ -44,6 +44,8 @@ export const de: Dictionary = {
   'header.signIn': 'Anmelden',
   'header.exitDemo': 'Demo beenden',
 
+  'footer.tagline':
+    'Ein persönlicher akademischer Arbeitsbereich, der Semester, Kurse, Notizen, Dokumente, Fristen und Studienplanung an einem Ort bündelt.',
   'footer.product': 'Produkt',
   'footer.account': 'Konto',
   'footer.legal': 'Rechtliches',

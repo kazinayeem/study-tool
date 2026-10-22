@@ -1293,3 +1293,122 @@ html.dark .lex-page {
     background-image: none;
   }
 }
+
+/* ---------------- Global print / PDF layout ---------------- */
+@media print {
+  html, body, #root {
+    height: auto !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+  }
+  .app-shell,
+  .app-shell-body {
+    display: block !important;
+    height: auto !important;
+    width: auto !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+  }
+  .app-main {
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+  }
+  .app-chrome,
+  .no-print,
+  [data-no-print] {
+    display: none !important;
+  }
+  .notes-root {
+    position: static !important;
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .notes-root > aside {
+    display: none !important;
+  }
+  .notes-root main,
+  .lex-editor-root,
+  .lex-workspace {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+  }
+  .card-notion,
+  tr,
+  li,
+  figure,
+  img,
+  svg,
+  [role='progressbar'] {
+    break-inside: avoid;
+  }
+  h1, h2, h3 {
+    break-after: avoid;
+  }
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    box-shadow: none !important;
+  }
+  .max-w-7xl, .max-w-6xl {
+    max-width: none !important;
+  }
+}
+
+/* Same layout used while rasterising a page for "Download PDF". */
+html, html.pdf-capture body, html.pdf-capture #root {
+    height: auto !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+  }
+html.pdf-capture .app-shell, html.pdf-capture .app-shell-body {
+    display: block !important;
+    height: auto !important;
+    width: auto !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+  }
+html.pdf-capture .app-main {
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+  }
+html.pdf-capture .app-chrome, html.pdf-capture .no-print, html.pdf-capture [data-no-print] {
+    display: none !important;
+  }
+html.pdf-capture .notes-root {
+    position: static !important;
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+html.pdf-capture .notes-root > aside {
+    display: none !important;
+  }
+html.pdf-capture .notes-root main, html.pdf-capture .lex-editor-root, html.pdf-capture .lex-workspace {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+  }
+html.pdf-capture .card-notion, html.pdf-capture tr, html.pdf-capture li, html.pdf-capture figure, html.pdf-capture img, html.pdf-capture svg, html.pdf-capture [role='progressbar'] {
+    break-inside: avoid;
+  }
+html.pdf-capture h1, html.pdf-capture h2, html.pdf-capture h3 {
+    break-after: avoid;
+  }
+html.pdf-capture * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    box-shadow: none !important;
+  }
+html.pdf-capture .max-w-7xl, html.pdf-capture .max-w-6xl {
+    max-width: none !important;
+  }

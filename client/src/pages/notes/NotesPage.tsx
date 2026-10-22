@@ -680,7 +680,7 @@ export const NotesPage: React.FC = () => {
 
   return (
     <div
-      className={`flex w-full overflow-hidden bg-[#f4f3f0] dark:bg-[#121212] ${
+      className={`notes-root flex w-full overflow-hidden bg-[#f4f3f0] dark:bg-[#121212] ${
         isFullScreen
           ? 'fixed inset-0 z-50 h-dvh'
           : 'absolute inset-x-0 top-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] md:bottom-0'
@@ -1188,7 +1188,7 @@ export const NotesPage: React.FC = () => {
             )}
 
             {/* Document Quick Action Toolbar Strip */}
-            <div className="flex items-center justify-between px-4 py-1.5 bg-[#fbfbfa] dark:bg-neutral-850 border-b border-[#e5e3df] dark:border-neutral-800 text-xs text-[#787774] dark:text-neutral-400 shrink-0 select-none">
+            <div className="no-print flex items-center justify-between px-4 py-1.5 bg-[#fbfbfa] dark:bg-neutral-850 border-b border-[#e5e3df] dark:border-neutral-800 text-xs text-[#787774] dark:text-neutral-400 shrink-0 select-none">
               <div className="flex items-center space-x-2">
                 {/* Mobile: back to the notes list */}
                 {!isFullScreen && (

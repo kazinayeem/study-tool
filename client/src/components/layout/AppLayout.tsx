@@ -24,6 +24,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { useI18n } from '../../i18n/I18nContext';
 import { LanguageSwitcher } from '../common/LanguageSwitcher';
+import { PrintMenu } from '../common/PrintMenu';
 import { api } from '../../lib/api';
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -69,9 +70,9 @@ export const AppLayout: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <div className="app-shell flex h-dvh w-full overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       {/* Desktop Sidebar */}
-      <div className="hidden md:flex">
+      <div className="app-chrome hidden md:flex">
         <Sidebar
           collapsed={collapsed}
           setCollapsed={setCollapsed}
@@ -81,7 +82,7 @@ export const AppLayout: React.FC = () => {
 
       {/* Mobile Sidebar overlay */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-40 flex md:hidden bg-slate-900/60 backdrop-blur-xs">
+        <div className="app-chrome fixed inset-0 z-40 flex md:hidden bg-slate-900/60 backdrop-blur-xs">
           <div className="relative flex w-72 flex-col bg-white dark:bg-slate-900 shadow-xl">
             <Sidebar
               collapsed={false}
@@ -97,10 +98,10 @@ export const AppLayout: React.FC = () => {
       )}
 
       {/* Main Content Area */}
-      <div className="flex flex-1 flex-col overflow-hidden min-w-0 bg-[#ffffff] dark:bg-[#0f0f11]">
+      <div className="app-shell-body flex flex-1 flex-col overflow-hidden min-w-0 bg-[#ffffff] dark:bg-[#0f0f11]">
         {/* Persistent Demo Mode Indicator Banner: Notion Bold Yellow */}
         {isDemo && (
-          <div className="bg-[#f9e79f] text-[#37352f] border-b border-[#ebd06b] px-4 py-2 text-xs font-medium flex items-center justify-between shrink-0 shadow-2xs z-30">
+          <div className="app-chrome bg-[#f9e79f] text-[#37352f] border-b border-[#ebd06b] px-4 py-2 text-xs font-medium flex items-center justify-between shrink-0 shadow-2xs z-30">
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 shrink-0 text-[#0f6b57]" />
               <span className="font-bold text-[#1a1a1a]">{t('header.demoActive')}</span>
@@ -118,7 +119,7 @@ export const AppLayout: React.FC = () => {
         )}
 
         {/* Top Header Bar: Notion Clean Surface & Hairline Border */}
-        <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-[#e5e3df] bg-white dark:border-[#2a2a2e] dark:bg-[#141416] px-3 sm:px-4 z-10 text-[#37352f] dark:text-[#f0eeec]">
+        <header className="app-chrome flex h-14 shrink-0 items-center justify-between gap-2 border-b border-[#e5e3df] bg-white dark:border-[#2a2a2e] dark:bg-[#141416] px-3 sm:px-4 z-10 text-[#37352f] dark:text-[#f0eeec]">
           <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             <button
               onClick={() => setMobileMenuOpen(true)}
@@ -164,6 +165,8 @@ export const AppLayout: React.FC = () => {
 
             <LanguageSwitcher variant="compact" className="hidden !h-9 sm:inline-flex" />
 
+            <PrintMenu />
+
             {/* Dark / Light Mode Toggle */}
             <button
               onClick={toggleTheme}
@@ -191,14 +194,14 @@ export const AppLayout: React.FC = () => {
         </header>
 
         {/* Scrollable Page Body */}
-        <main className="relative flex-1 overflow-y-auto bg-[#ffffff] pb-[calc(4rem+env(safe-area-inset-bottom))] dark:bg-[#0f0f11] md:pb-0">
+        <main className="app-main relative flex-1 overflow-y-auto bg-[#ffffff] pb-[calc(4rem+env(safe-area-inset-bottom))] dark:bg-[#0f0f11] md:pb-0">
           <Outlet />
         </main>
 
         {/* Mobile bottom tab bar: primary destinations within thumb reach */}
         <nav
           aria-label="Primary"
-          className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-[#e5e3df] bg-white pb-[env(safe-area-inset-bottom)] dark:border-[#2a2a2e] dark:bg-[#141416] md:hidden"
+          className="app-chrome fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-[#e5e3df] bg-white pb-[env(safe-area-inset-bottom)] dark:border-[#2a2a2e] dark:bg-[#141416] md:hidden"
         >
           {[
             { to: '/dashboard', label: t('nav.tabHome'), icon: LayoutDashboard },

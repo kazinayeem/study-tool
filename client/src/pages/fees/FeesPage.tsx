@@ -414,9 +414,9 @@ export const FeesPage: React.FC = () => {
             </div>
           </section>
 
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
             {/* Tuition settings */}
-            <section className={cn(cardClass, 'self-start p-5 print:hidden')} aria-labelledby="tuition-h">
+            <section className={cn(cardClass, 'min-w-0 self-start p-5 print:hidden')} aria-labelledby="tuition-h">
               <h2 id="tuition-h" className="text-base font-bold text-[#14201c] dark:text-white">{t('fees.settings')}</h2>
               <div className="mt-4 grid grid-cols-2 gap-3">
                 <label className="block">
@@ -478,7 +478,7 @@ export const FeesPage: React.FC = () => {
             </section>
 
             {/* Breakdown + per course */}
-            <div className="space-y-6">
+            <div className="min-w-0 space-y-6">
               <section className={cn(cardClass, 'p-5')} aria-labelledby="breakdown-h">
                 <h2 id="breakdown-h" className="text-base font-bold text-[#14201c] dark:text-white">{t('fees.breakdown')}</h2>
                 {segments.length === 0 ? (

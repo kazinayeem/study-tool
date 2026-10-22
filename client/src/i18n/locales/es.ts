@@ -44,6 +44,8 @@ export const es: Dictionary = {
   'header.signIn': 'Iniciar sesión',
   'header.exitDemo': 'Salir de la demo',
 
+  'footer.tagline':
+    'Un espacio académico personal que reúne semestres, cursos, apuntes, documentos, plazos y plan de estudios en un solo lugar.',
   'footer.product': 'Producto',
   'footer.account': 'Cuenta',
   'footer.legal': 'Legal',

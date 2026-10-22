@@ -119,7 +119,7 @@ export const AcademicMetadataBar: React.FC<AcademicMetadataBarProps> = ({
   };
 
   return (
-    <div className="shrink-0 bg-[#fbfbfa] dark:bg-neutral-900 border-b border-[#e5e3df] dark:border-neutral-800 px-3 sm:px-4 py-1.5 transition-colors">
+    <div className="no-print shrink-0 bg-[#fbfbfa] dark:bg-neutral-900 border-b border-[#e5e3df] dark:border-neutral-800 px-3 sm:px-4 py-1.5 transition-colors">
       {/* Top row: Academic Breadcrumb + Save Status Indicator */}
       <div className="flex items-center justify-between gap-3 min-h-8">
         <div className="hidden min-w-0 2xl:block overflow-hidden">

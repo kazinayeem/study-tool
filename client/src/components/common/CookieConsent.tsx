@@ -38,7 +38,7 @@ export const CookieConsent: React.FC = () => {
       role="dialog"
       aria-modal="false"
       aria-labelledby="cookie-title"
-      className="fixed inset-x-3 bottom-3 z-[70] mx-auto max-w-2xl rounded-2xl border border-[#e5e3df] bg-white p-4 shadow-[0_20px_60px_-20px_rgba(13,42,34,0.45)] dark:border-[#2a2a2e] dark:bg-[#141416] sm:bottom-5 sm:p-5 max-md:bottom-[calc(4.5rem+env(safe-area-inset-bottom))]"
+      className="no-print fixed inset-x-3 bottom-3 z-[70] mx-auto max-w-2xl rounded-2xl border border-[#e5e3df] bg-white p-4 shadow-[0_20px_60px_-20px_rgba(13,42,34,0.45)] dark:border-[#2a2a2e] dark:bg-[#141416] sm:bottom-5 sm:p-5 max-md:bottom-[calc(4.5rem+env(safe-area-inset-bottom))]"
     >
       <div className="flex items-start gap-3">
         <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#dcf0e8] text-[#0f6b57] dark:bg-[#0d3b30] dark:text-[#4ccba5]">

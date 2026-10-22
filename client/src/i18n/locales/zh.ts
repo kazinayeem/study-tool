@@ -44,6 +44,8 @@ export const zh: Dictionary = {
   'header.signIn': '登录',
   'header.exitDemo': '退出演示',
 
+  'footer.tagline':
+    '一个个人学业工作区，将学期、课程、笔记、文档、截止日期和学位规划集中在一处。',
   'footer.product': '产品',
   'footer.account': '账户',
   'footer.legal': '法律信息',

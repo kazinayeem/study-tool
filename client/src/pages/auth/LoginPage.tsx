@@ -349,8 +349,8 @@ export const LoginPage: React.FC = () => {
   const isBusy = pending !== null || isLoading;
 
   return (
-    <div className="flex min-h-screen w-full bg-white font-sans text-[#111827] selection:bg-[#0f6b57] selection:text-white">
-      <main className="flex w-full flex-col lg:h-screen lg:w-1/2 lg:overflow-y-auto">
+    <div className="flex min-h-dvh w-full bg-white font-sans text-[#111827] selection:bg-[#0f6b57] selection:text-white">
+      <main className="flex w-full flex-col lg:h-dvh lg:w-1/2 lg:overflow-y-auto">
         <div className="flex flex-1 flex-col px-6 py-8 sm:px-10 lg:px-14">
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2.5">

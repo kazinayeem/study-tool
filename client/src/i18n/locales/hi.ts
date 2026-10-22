@@ -44,6 +44,8 @@ export const hi: Dictionary = {
   'header.signIn': 'साइन इन',
   'header.exitDemo': 'डेमो से बाहर निकलें',
 
+  'footer.tagline':
+    'एक व्यक्तिगत शैक्षणिक वर्कस्पेस जो सेमेस्टर, कोर्स, नोट्स, दस्तावेज़, समय-सीमाएँ और डिग्री योजना को एक व्यवस्थित जगह लाता है।',
   'footer.product': 'उत्पाद',
   'footer.account': 'खाता',
   'footer.legal': 'कानूनी',

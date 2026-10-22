@@ -753,7 +753,7 @@ export const LandingPage: React.FC = () => {
   }, [mobileOpen]);
 
   return (
-    <div className="min-h-screen w-full bg-white text-[#111827] antialiased selection:bg-[#0f6b57] selection:text-white">
+    <div className="min-h-dvh w-full bg-white text-[#111827] antialiased selection:bg-[#0f6b57] selection:text-white">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[#111827] focus:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/40"
@@ -840,7 +840,7 @@ export const LandingPage: React.FC = () => {
                     </Link>
                     <Link to={primaryTo} className={cn(BTN_PRIMARY, 'w-full')}>
                       {primaryLabel}
-                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden="true" />
                     </Link>
                   </>
                 )}
@@ -866,7 +866,7 @@ export const LandingPage: React.FC = () => {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Link to={primaryTo} className={cn(BTN_PRIMARY, 'px-6 py-3 text-[15px]')}>
                   {user ? t('landing.openDashboard') : t('landing.getStartedFree')}
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden="true" />
                 </Link>
                 <Link to="/login" className={cn(BTN_SECONDARY, 'px-6 py-3 text-[15px]')}>
                   {t('landing.exploreWorkspace')}
@@ -1085,7 +1085,7 @@ export const LandingPage: React.FC = () => {
                 </p>
                 <Link to={primaryTo} className={cn(BTN_PRIMARY, 'mt-8 px-6 py-3 text-[15px]')}>
                   {user ? t('landing.openDashboard') : t('landing.getStartedFree')}
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden="true" />
                 </Link>
               </div>
             </Reveal>
@@ -1146,7 +1146,7 @@ export const LandingPage: React.FC = () => {
                 <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                   <Link to={primaryTo} className={cn(BTN_PRIMARY, 'px-6 py-3 text-[15px]')}>
                     {user ? t('landing.openDashboard') : t('landing.getStartedFree')}
-                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden="true" />
                   </Link>
                   <a
                     href="#features"

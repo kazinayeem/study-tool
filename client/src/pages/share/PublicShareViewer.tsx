@@ -45,7 +45,7 @@ export const PublicShareViewer: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#ffffff] dark:bg-[#0f0f11] flex flex-col items-center justify-center p-4">
+      <div className="min-h-dvh bg-[#ffffff] dark:bg-[#0f0f11] flex flex-col items-center justify-center p-4">
         <div className="card-notion w-full max-w-md rounded-[12px] bg-white dark:bg-[#141416] border border-[#e5e3df] dark:border-[#2a2a2e] p-8 shadow-2xs text-center space-y-4">
           <div className="h-12 w-12 rounded-[8px] bg-[#f0eeec] dark:bg-[#202024] animate-pulse mx-auto" />
           <div className="h-4 w-48 bg-[#f0eeec] dark:bg-[#202024] rounded-[6px] animate-pulse mx-auto" />
@@ -59,7 +59,7 @@ export const PublicShareViewer: React.FC = () => {
   if (isError || !data) {
     const errorMsg = (error as any)?.message || 'This share link is unavailable or has expired.';
     return (
-      <div className="min-h-screen bg-[#ffffff] dark:bg-[#0f0f11] flex flex-col items-center justify-center p-4 text-[#37352f] dark:text-[#f0eeec]">
+      <div className="min-h-dvh bg-[#ffffff] dark:bg-[#0f0f11] flex flex-col items-center justify-center p-4 text-[#37352f] dark:text-[#f0eeec]">
         <div className="card-notion w-full max-w-md rounded-[12px] bg-white dark:bg-[#141416] border border-[#e5e3df] dark:border-[#2a2a2e] p-8 shadow-2xs text-center space-y-4">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-[8px] bg-[#fde0ec] text-[#e03131] border border-[#d9480f]/30">
             <AlertCircle className="h-6 w-6" />
@@ -79,7 +79,7 @@ export const PublicShareViewer: React.FC = () => {
   // If password is required and not verified yet
   if (data.requiresPassword) {
     return (
-      <div className="min-h-screen bg-[#ffffff] dark:bg-[#0f0f11] flex flex-col items-center justify-center p-4 text-[#37352f] dark:text-[#f0eeec]">
+      <div className="min-h-dvh bg-[#ffffff] dark:bg-[#0f0f11] flex flex-col items-center justify-center p-4 text-[#37352f] dark:text-[#f0eeec]">
         <div className="card-notion w-full max-w-md rounded-[12px] bg-white dark:bg-[#141416] border border-[#e5e3df] dark:border-[#2a2a2e] p-8 shadow-2xs space-y-5">
           <div className="text-center space-y-2">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-[8px] bg-[#dcf0e8] text-[#0f6b57] border border-[#a8dcc9]">
@@ -127,7 +127,7 @@ export const PublicShareViewer: React.FC = () => {
   const { resource, resourceType, allowDownload } = data.data;
 
   return (
-    <div className="min-h-screen bg-[#ffffff] dark:bg-[#0f0f11] text-[#37352f] dark:text-[#f0eeec] flex flex-col">
+    <div className="min-h-dvh bg-[#ffffff] dark:bg-[#0f0f11] text-[#37352f] dark:text-[#f0eeec] flex flex-col">
       {/* Header Bar */}
       <header className="h-14 border-b border-[#e5e3df] dark:border-[#2a2a2e] bg-white dark:bg-[#141416] px-6 flex items-center justify-between sticky top-0 z-20">
         <div className="flex items-center gap-3">

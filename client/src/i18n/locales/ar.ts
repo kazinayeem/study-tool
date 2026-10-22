@@ -44,6 +44,8 @@ export const ar: Dictionary = {
   'header.signIn': 'تسجيل الدخول',
   'header.exitDemo': 'الخروج من العرض التجريبي',
 
+  'footer.tagline':
+    'مساحة عمل أكاديمية شخصية تجمع الفصول والمقررات والملاحظات والمستندات والمواعيد وخطة الدرجة في مكان واحد منظم.',
   'footer.product': 'المنتج',
   'footer.account': 'الحساب',
   'footer.legal': 'قانوني',

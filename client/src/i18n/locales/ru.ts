@@ -44,6 +44,8 @@ export const ru: Dictionary = {
   'header.signIn': 'Войти',
   'header.exitDemo': 'Выйти из демо',
 
+  'footer.tagline':
+    'Личное учебное пространство, где семестры, курсы, заметки, документы, сроки и план обучения собраны в одном месте.',
   'footer.product': 'Продукт',
   'footer.account': 'Аккаунт',
   'footer.legal': 'Правовая информация',

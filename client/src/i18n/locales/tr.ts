@@ -44,6 +44,8 @@ export const tr: Dictionary = {
   'header.signIn': 'Giriş yap',
   'header.exitDemo': 'Demodan çık',
 
+  'footer.tagline':
+    'Dönemleri, dersleri, notları, belgeleri, teslim tarihlerini ve diploma planını tek yerde toplayan kişisel bir akademik çalışma alanı.',
   'footer.product': 'Ürün',
   'footer.account': 'Hesap',
   'footer.legal': 'Yasal',

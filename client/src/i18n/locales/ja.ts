@@ -44,6 +44,8 @@ export const ja: Dictionary = {
   'header.signIn': 'ログイン',
   'header.exitDemo': 'デモを終了',
 
+  'footer.tagline':
+    '学期、科目、ノート、書類、締め切り、学位の計画をひとつにまとめる、個人向けの学習ワークスペース。',
   'footer.product': '製品',
   'footer.account': 'アカウント',
   'footer.legal': '法的情報',

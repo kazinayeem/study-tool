@@ -44,6 +44,8 @@ export const pt: Dictionary = {
   'header.signIn': 'Entrar',
   'header.exitDemo': 'Sair da demonstração',
 
+  'footer.tagline':
+    'Um espaço acadêmico pessoal que reúne semestres, disciplinas, anotações, documentos, prazos e planejamento do curso em um só lugar.',
   'footer.product': 'Produto',
   'footer.account': 'Conta',
   'footer.legal': 'Legal',
