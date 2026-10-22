@@ -32,7 +32,7 @@ import {
   type ElementFormatType,
   type LexicalEditor as LexicalEditorInstance,
 } from 'lexical';
-import { $setBlocksType, $patchStyleText } from '@lexical/selection';
+import { $setBlocksType, $patchStyleText, $getSelectionStyleValueForProperty } from '@lexical/selection';
 import { $findMatchingParent, $getNearestNodeOfType, mergeRegister } from '@lexical/utils';
 import { HeadingNode, QuoteNode, $createHeadingNode, $createQuoteNode } from '@lexical/rich-text';
 import {
@@ -77,6 +77,8 @@ import {
   ListChecks,
   ListOrdered,
   Maximize2,
+  ZoomIn,
+  ZoomOut,
   Minimize2,
   Minus,
   Outdent as OutdentIcon,
@@ -125,12 +127,12 @@ export interface LexicalEditorProps {
 const TEXT_COLORS = [
   { label: 'Default', value: null },
   { label: 'Charcoal', value: '#37352f' },
-  { label: 'Purple', value: '#5645d4' },
+  { label: 'Purple', value: '#0f6b57' },
   { label: 'Blue', value: '#2563eb' },
   { label: 'Green', value: '#059669' },
   { label: 'Amber', value: '#d97706' },
   { label: 'Red', value: '#dc2626' },
-  { label: 'Violet', value: '#7c3aed' },
+  { label: 'Violet', value: '#0f6b57' },
   { label: 'Gray', value: '#6b7280' },
 ];
 
@@ -141,8 +143,27 @@ const HIGHLIGHT_COLORS = [
   { label: 'Orange', value: '#fed7aa' },
   { label: 'Blue', value: '#bfdbfe' },
   { label: 'Pink', value: '#fbcfe8' },
-  { label: 'Purple', value: '#ddd6fe' },
+  { label: 'Purple', value: '#a8dcc9' },
 ];
+
+const FONT_FAMILIES = [
+  { label: 'Default', value: '' },
+  { label: 'Public Sans', value: "'Public Sans', sans-serif" },
+  { label: 'Georgia', value: 'Georgia, serif' },
+  { label: 'Times New Roman', value: "'Times New Roman', Times, serif" },
+  { label: 'Arial', value: 'Arial, Helvetica, sans-serif' },
+  { label: 'Courier New', value: "'Courier New', monospace" },
+  { label: 'JetBrains Mono', value: "'JetBrains Mono', monospace" },
+];
+
+const FONT_SIZES = [11, 12, 14, 16, 18, 20, 24, 28, 32, 36];
+const LINE_SPACINGS = [
+  { label: '1.0', value: '1' },
+  { label: '1.15', value: '1.15' },
+  { label: '1.5', value: '1.5' },
+  { label: '2.0', value: '2' },
+];
+const ZOOM_STEPS = [0.75, 0.9, 1, 1.1, 1.25, 1.5];
 
 type BlockType = 'paragraph' | 'h1' | 'h2' | 'h3' | 'quote' | 'code';
 type ListType = 'bullet' | 'number' | 'check' | null;
@@ -160,6 +181,9 @@ interface ToolbarSnapshot {
   align: ElementFormatType;
   isInTable: boolean;
   isLink: boolean;
+  fontFamily: string;
+  fontSize: string;
+  lineHeight: string;
 }
 
 const DEFAULT_TOOLBAR: ToolbarSnapshot = {
@@ -175,6 +199,9 @@ const DEFAULT_TOOLBAR: ToolbarSnapshot = {
   align: 'left',
   isInTable: false,
   isLink: false,
+  fontFamily: '',
+  fontSize: '16px',
+  lineHeight: '',
 };
 
 const BLOCK_OPTIONS: { label: string; value: BlockType }[] = [
@@ -223,6 +250,20 @@ interface PopoverProps {
 
 const Popover: React.FC<PopoverProps> = ({ label, open, onOpenChange, children, icon }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState<{ top: number; left: number } | null>(null);
+
+  // The toolbar scrolls horizontally on small screens, which would clip an absolutely
+  // positioned panel, so the panel is fixed to the viewport and clamped inside it.
+  useEffect(() => {
+    if (!open || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const panelWidth = 240;
+    setPos({
+      top: rect.bottom + 6,
+      left: Math.max(8, Math.min(rect.left, window.innerWidth - panelWidth - 8)),
+    });
+  }, [open]);
+
   useEffect(() => {
     if (!open) return;
     const onDocClick = (e: MouseEvent) => {
@@ -245,7 +286,11 @@ const Popover: React.FC<PopoverProps> = ({ label, open, onOpenChange, children, 
         {icon}
         <ChevronDown className="lex-toolbar-caret" />
       </ToolbarButton>
-      {open && <div className="lex-popover">{children}</div>}
+      {open && (
+        <div className="lex-popover" style={pos ? { top: pos.top, left: pos.left } : undefined}>
+          {children}
+        </div>
+      )}
     </div>
   );
 };
@@ -298,6 +343,9 @@ function readToolbarSnapshot(): ToolbarSnapshot {
     align,
     isInTable,
     isLink: !!$getNearestNodeOfType(anchor, LinkNode),
+    fontFamily: $getSelectionStyleValueForProperty(selection, 'font-family', ''),
+    fontSize: $getSelectionStyleValueForProperty(selection, 'font-size', '16px'),
+    lineHeight: $getSelectionStyleValueForProperty(selection, 'line-height', ''),
   };
 }
 
@@ -318,6 +366,7 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
   onTitleChange,
   onContentChange,
   onSerializedStateChange,
+  onSave,
   saveStatus = 'saved',
   isReadOnly = false,
   isFullScreen,
@@ -339,9 +388,25 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
   const [tableCols, setTableCols] = useState(3);
   const [uploading, setUploading] = useState(false);
   const [stats, setStats] = useState({ words: 0, chars: 0 });
+  const [zoom, setZoom] = useState(1);
 
   const imageInputRef = useRef<HTMLInputElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLTextAreaElement>(null);
+
+  // Let the title wrap onto several lines instead of clipping long titles.
+  useEffect(() => {
+    const el = titleRef.current;
+    if (!el) return;
+    const fit = () => {
+      el.style.height = 'auto';
+      el.style.height = `${el.scrollHeight}px`;
+    };
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [initialTitle, zoom]);
   const suppressChangeRef = useRef(false);
   const suppressTimerRef = useRef<number | undefined>(undefined);
   const lastSignatureRef = useRef<string | null>(null);
@@ -430,6 +495,32 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
       window.removeEventListener('keydown', onKey);
     };
   }, [isFocusMode, isFullScreenControlled]);
+
+  /* ---------------- keyboard shortcuts (Word-style) ---------------- */
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (!(e.metaKey || e.ctrlKey)) return;
+      const key = e.key.toLowerCase();
+      if (key === 's') {
+        e.preventDefault();
+        onSave?.();
+      } else if (key === 'k' && !e.shiftKey && (e.target as HTMLElement)?.closest?.('[contenteditable="true"]')) {
+        e.preventDefault();
+        e.stopPropagation();
+        setLinkOpen(true);
+      } else if (e.shiftKey && key === '7') {
+        e.preventDefault();
+        editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
+      } else if (e.shiftKey && key === '8') {
+        e.preventDefault();
+        editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
+      }
+    };
+    root.addEventListener('keydown', onKey);
+    return () => root.removeEventListener('keydown', onKey);
+  }, [editor, onSave]);
 
   /* ---------------- toolbar state ---------------- */
   useEffect(() => {
@@ -530,11 +621,45 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
     [editor]
   );
 
+  const applyStyle = useCallback(
+    (style: Record<string, string | null>) => {
+      editor.update(() => {
+        const selection = $getSelection();
+        if ($isRangeSelection(selection)) $patchStyleText(selection, style);
+      });
+    },
+    [editor]
+  );
+
+  const stepFontSize = useCallback(
+    (direction: 1 | -1) => {
+      const current = parseInt(toolbar.fontSize, 10) || 16;
+      const idx = FONT_SIZES.findIndex((n) => n >= current);
+      const nextIdx = Math.max(0, Math.min(FONT_SIZES.length - 1, (idx === -1 ? FONT_SIZES.length - 1 : idx) + direction));
+      applyStyle({ 'font-size': `${FONT_SIZES[nextIdx]}px` });
+    },
+    [toolbar.fontSize, applyStyle]
+  );
+
+  const stepZoom = useCallback((direction: 1 | -1) => {
+    setZoom((z) => {
+      const idx = ZOOM_STEPS.findIndex((v) => Math.abs(v - z) < 0.001);
+      const next = Math.max(0, Math.min(ZOOM_STEPS.length - 1, (idx === -1 ? 2 : idx) + direction));
+      return ZOOM_STEPS[next];
+    });
+  }, []);
+
   const clearFormatting = useCallback(() => {
     editor.update(() => {
       const selection = $getSelection();
       if (!$isRangeSelection(selection)) return;
-      $patchStyleText(selection, { color: null, 'background-color': null });
+      $patchStyleText(selection, {
+        color: null,
+        'background-color': null,
+        'font-family': null,
+        'font-size': null,
+        'line-height': null,
+      });
       selection.getNodes().forEach((node) => {
         if ($isTextNode(node)) node.setFormat(0);
         else if ($isElementNode(node)) {
@@ -655,6 +780,44 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
             {BLOCK_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>
                 {o.label}
+              </option>
+            ))}
+          </select>
+
+          <select
+            aria-label="Font family"
+            className="lex-select lex-select-font"
+            value={FONT_FAMILIES.some((f) => f.value === toolbar.fontFamily) ? toolbar.fontFamily : ''}
+            onChange={(e) => applyStyle({ 'font-family': e.target.value || null })}
+          >
+            {FONT_FAMILIES.map((f) => (
+              <option key={f.label} value={f.value}>
+                {f.label}
+              </option>
+            ))}
+          </select>
+
+          <div className="lex-stepper" role="group" aria-label="Font size">
+            <button type="button" className="lex-stepper-btn" aria-label="Decrease font size" onMouseDown={(e) => e.preventDefault()} onClick={() => stepFontSize(-1)}>
+              −
+            </button>
+            <span className="lex-stepper-value">{parseInt(toolbar.fontSize, 10) || 16}</span>
+            <button type="button" className="lex-stepper-btn" aria-label="Increase font size" onMouseDown={(e) => e.preventDefault()} onClick={() => stepFontSize(1)}>
+              +
+            </button>
+          </div>
+
+          <select
+            aria-label="Line spacing"
+            className="lex-select"
+            title="Line spacing"
+            value={LINE_SPACINGS.some((l) => l.value === toolbar.lineHeight) ? toolbar.lineHeight : ''}
+            onChange={(e) => applyStyle({ 'line-height': e.target.value || null })}
+          >
+            <option value="">Spacing</option>
+            {LINE_SPACINGS.map((l) => (
+              <option key={l.value} value={l.value}>
+                {l.label}
               </option>
             ))}
           </select>
@@ -839,12 +1002,19 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
 
       {/* ---------------- Document canvas ---------------- */}
       <div className="lex-workspace">
-        <div className="lex-page">
+        <div className="lex-page" style={{ zoom }}>
           <div className="lex-page-inner">
-            <input
-              type="text"
+            <textarea
+              ref={titleRef}
+              rows={1}
               value={initialTitle}
-              onChange={(e) => onTitleChange(e.target.value)}
+              onChange={(e) => onTitleChange(e.target.value.replace(/\n/g, ' '))}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  editor.focus();
+                }
+              }}
               placeholder="Document title…"
               aria-label="Note title"
               disabled={isReadOnly}
@@ -880,6 +1050,17 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
           <span className="hidden sm:inline">{stats.chars} characters</span>
         </div>
         <div className="lex-status-right">
+          <div className="lex-zoom" role="group" aria-label="Zoom">
+            <button type="button" className="lex-chip lex-chip-icon" aria-label="Zoom out" onClick={() => stepZoom(-1)} disabled={zoom <= ZOOM_STEPS[0]}>
+              <ZoomOut className="lex-icon-sm" />
+            </button>
+            <button type="button" className="lex-zoom-value" aria-label="Reset zoom" onClick={() => setZoom(1)}>
+              {Math.round(zoom * 100)}%
+            </button>
+            <button type="button" className="lex-chip lex-chip-icon" aria-label="Zoom in" onClick={() => stepZoom(1)} disabled={zoom >= ZOOM_STEPS[ZOOM_STEPS.length - 1]}>
+              <ZoomIn className="lex-icon-sm" />
+            </button>
+          </div>
           {noteId && (
             <a
               href={api.getNoteDocxExportUrl(noteId)}
@@ -887,11 +1068,11 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
               className="lex-chip"
               title="Download as Microsoft Word (.docx)"
             >
-              <Download className="lex-icon-sm" /> Export Word
+              <Download className="lex-icon-sm" /> <span className="lex-chip-text">Export Word</span>
             </a>
           )}
           <button type="button" className="lex-chip" onClick={() => window.print()} title="Print or save as PDF">
-            <Printer className="lex-icon-sm" /> Print / PDF
+            <Printer className="lex-icon-sm" /> <span className="lex-chip-text">Print / PDF</span>
           </button>
           <button
             type="button"
@@ -902,7 +1083,7 @@ const LexicalEditorSurface: React.FC<SurfaceProps> = ({
             title={fullScreenActive ? 'Exit Full Screen (Esc)' : 'Full Screen'}
           >
             {fullScreenActive ? <Minimize2 className="lex-icon-sm" /> : <Maximize2 className="lex-icon-sm" />}
-            {fullScreenActive ? 'Exit Full Screen' : 'Full Screen'}
+            <span className="lex-chip-text">{fullScreenActive ? 'Exit Full Screen' : 'Full Screen'}</span>
           </button>
         </div>
       </footer>

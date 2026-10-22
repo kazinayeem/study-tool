@@ -340,8 +340,8 @@ export const PlannerPage: React.FC = () => {
       {/* Top Header */}
       <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-center">
 
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-[8px] bg-[#5645d4]/10 text-[#5645d4]">
+        <div className="flex min-w-0 items-center gap-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] bg-[#0f6b57]/10 text-[#0f6b57]">
             <Clock className="h-5 w-5" />
           </div>
           <div>
@@ -402,7 +402,7 @@ export const PlannerPage: React.FC = () => {
         <div className="card-notion p-5">
           <div className="flex items-center justify-between text-xs text-slate-500">
             <span className="font-medium">Time Logged (7 Days)</span>
-            <Clock className="h-4 w-4 text-[#5645d4]" />
+            <Clock className="h-4 w-4 text-[#0f6b57]" />
           </div>
           <div className="mt-2 flex items-baseline gap-2">
             <span className="text-3xl font-extrabold text-slate-900 dark:text-white">
@@ -458,7 +458,7 @@ export const PlannerPage: React.FC = () => {
           onClick={() => setActiveTab('agenda')}
           className={`flex items-center gap-2 border-b-2 px-4 py-2.5 text-xs font-semibold transition-colors ${
             activeTab === 'agenda'
-              ? 'border-[#5645d4] text-[#5645d4]'
+              ? 'border-[#0f6b57] text-[#0f6b57]'
               : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
           }`}
         >
@@ -470,7 +470,7 @@ export const PlannerPage: React.FC = () => {
           onClick={() => setActiveTab('plans')}
           className={`flex items-center gap-2 border-b-2 px-4 py-2.5 text-xs font-semibold transition-colors ${
             activeTab === 'plans'
-              ? 'border-[#5645d4] text-[#5645d4]'
+              ? 'border-[#0f6b57] text-[#0f6b57]'
               : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
           }`}
         >
@@ -482,7 +482,7 @@ export const PlannerPage: React.FC = () => {
           onClick={() => setActiveTab('timer')}
           className={`flex items-center gap-2 border-b-2 px-4 py-2.5 text-xs font-semibold transition-colors ${
             activeTab === 'timer'
-              ? 'border-[#5645d4] text-[#5645d4]'
+              ? 'border-[#0f6b57] text-[#0f6b57]'
               : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
           }`}
         >
@@ -499,12 +499,12 @@ export const PlannerPage: React.FC = () => {
         <div className="space-y-4">
           {/* Filters Bar */}
           <div className="flex flex-wrap items-center justify-between gap-3 card-notion p-3.5">
-            <div className="flex items-center gap-3">
-              <Filter className="h-4 w-4 text-slate-400" />
+            <div className="flex min-w-0 flex-wrap items-center gap-3">
+              <Filter className="h-4 w-4 shrink-0 text-slate-400" />
               <select
                 value={selectedCourseFilter}
                 onChange={(e) => setSelectedCourseFilter(e.target.value)}
-                className="rounded-[8px] border border-[#e5e3df] bg-white px-3 py-1.5 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:outline-none focus:border-[#5645d4]"
+                className="rounded-[8px] border border-[#e5e3df] bg-white px-3 py-1.5 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:outline-none focus:border-[#0f6b57]"
               >
                 <option value="">All Courses</option>
                 {courses.map((c) => (
@@ -515,7 +515,7 @@ export const PlannerPage: React.FC = () => {
               <select
                 value={selectedStatusFilter}
                 onChange={(e) => setSelectedStatusFilter(e.target.value)}
-                className="rounded-[8px] border border-[#e5e3df] bg-white px-3 py-1.5 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:outline-none focus:border-[#5645d4]"
+                className="rounded-[8px] border border-[#e5e3df] bg-white px-3 py-1.5 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:outline-none focus:border-[#0f6b57]"
               >
                 <option value="">All Statuses</option>
                 <option value="PLANNED">Planned</option>
@@ -565,7 +565,7 @@ export const PlannerPage: React.FC = () => {
                         : isMissed
                         ? 'border-rose-200 bg-rose-50/30 dark:border-rose-950 dark:bg-rose-950/10'
                         : isInProgress
-                        ? 'border-[#5645d4]/40 bg-[#5645d4]/5 dark:border-[#5645d4]/30'
+                        ? 'border-[#0f6b57]/40 bg-[#0f6b57]/5 dark:border-[#0f6b57]/30'
                         : ''
                     }`}
                   >
@@ -589,7 +589,7 @@ export const PlannerPage: React.FC = () => {
                         </div>
 
                         {s.topic && (
-                          <div className="text-xs text-[#5645d4] dark:text-[#8070f6] font-medium mt-0.5">
+                          <div className="text-xs text-[#0f6b57] dark:text-[#4ccba5] font-medium mt-0.5">
                             Topic: {s.topic}
                           </div>
                         )}
@@ -626,7 +626,7 @@ export const PlannerPage: React.FC = () => {
                               setActiveTab('timer');
                               handleStartTimer(s.id);
                             }}
-                            className="p-1.5 rounded-[6px] text-[#5645d4] hover:bg-[#5645d4]/10 dark:text-[#8070f6]"
+                            className="p-1.5 rounded-[6px] text-[#0f6b57] hover:bg-[#0f6b57]/10 dark:text-[#4ccba5]"
                             title="Focus on this session"
                           >
                             <Play className="h-4 w-4" />
@@ -734,7 +734,7 @@ export const PlannerPage: React.FC = () => {
                       </h3>
                       <div className="mt-1 flex items-center gap-2 text-xs text-slate-500">
                         {p.course && (
-                          <span className="font-semibold text-[#5645d4] dark:text-[#8070f6]">
+                          <span className="font-semibold text-[#0f6b57] dark:text-[#4ccba5]">
                             {p.course.code}
                           </span>
                         )}
@@ -785,7 +785,7 @@ export const PlannerPage: React.FC = () => {
                       </div>
                       <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
                         <div
-                          className="h-full rounded-full bg-[#5645d4] transition-all"
+                          className="h-full rounded-full bg-[#0f6b57] transition-all"
                           style={{
                             width: `${
                               (p.sessions.filter((s: any) => s.status === 'COMPLETED').length /
@@ -813,7 +813,7 @@ export const PlannerPage: React.FC = () => {
               onClick={() => handleResetTimer('focus')}
               className={`rounded-[6px] px-4 py-2 text-xs font-medium transition-all ${
                 timerMode === 'focus'
-                  ? 'bg-[#5645d4] text-white shadow-xs'
+                  ? 'bg-[#0f6b57] text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
               }`}
             >
@@ -823,7 +823,7 @@ export const PlannerPage: React.FC = () => {
               onClick={() => handleResetTimer('shortBreak')}
               className={`rounded-[6px] px-4 py-2 text-xs font-medium transition-all ${
                 timerMode === 'shortBreak'
-                  ? 'bg-[#5645d4] text-white shadow-xs'
+                  ? 'bg-[#0f6b57] text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
               }`}
             >
@@ -833,7 +833,7 @@ export const PlannerPage: React.FC = () => {
               onClick={() => handleResetTimer('longBreak')}
               className={`rounded-[6px] px-4 py-2 text-xs font-medium transition-all ${
                 timerMode === 'longBreak'
-                  ? 'bg-[#5645d4] text-white shadow-xs'
+                  ? 'bg-[#0f6b57] text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
               }`}
             >
@@ -848,7 +848,7 @@ export const PlannerPage: React.FC = () => {
 
           {/* Active Session Label */}
           {activeTimerSessionId && (
-            <div className="mb-6 inline-flex items-center gap-2 rounded-[8px] bg-[#5645d4]/10 px-3 py-1.5 text-xs text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6]">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-[8px] bg-[#0f6b57]/10 px-3 py-1.5 text-xs text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5]">
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
               <span>
                 Linked Session: {sessions.find((s) => s.id === activeTimerSessionId)?.title}
@@ -895,7 +895,7 @@ export const PlannerPage: React.FC = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <BarChart2 className="h-5 w-5 text-[#5645d4]" />
+                <BarChart2 className="h-5 w-5 text-[#0f6b57]" />
                 Personal Study Time Analytics
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
@@ -917,7 +917,7 @@ export const PlannerPage: React.FC = () => {
           <div className="rounded-[12px] border border-slate-200 bg-white p-5 shadow-2xs dark:border-slate-800 dark:bg-slate-900">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <Target className="h-4 w-4 text-[#5645d4]" />
+                <Target className="h-4 w-4 text-[#0f6b57]" />
                 <span className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                   Weekly Study Target Progress
                 </span>
@@ -928,7 +928,7 @@ export const PlannerPage: React.FC = () => {
                     setGoalHoursInput(Math.round(((studyGoalData?.targetMinutesPerWeek || 900) / 60) * 10) / 10);
                     setIsEditingGoal(true);
                   }}
-                  className="text-xs font-bold text-[#5645d4] hover:underline"
+                  className="text-xs font-bold text-[#0f6b57] hover:underline"
                 >
                   Adjust Goal
                 </button>
@@ -947,7 +947,7 @@ export const PlannerPage: React.FC = () => {
                   <button
                     onClick={() => updateGoalMutation.mutate(Math.round(goalHoursInput * 60))}
                     disabled={updateGoalMutation.isPending}
-                    className="rounded-[6px] bg-[#5645d4] px-2.5 py-1 text-xs font-bold text-white shadow-2xs"
+                    className="rounded-[6px] bg-[#0f6b57] px-2.5 py-1 text-xs font-bold text-white shadow-2xs"
                   >
                     Save
                   </button>
@@ -967,13 +967,13 @@ export const PlannerPage: React.FC = () => {
                   Logged: <strong className="text-slate-900 dark:text-white">{Math.round(((studyAnalytics?.weeklyMinutes || 0) / 60) * 10) / 10}h</strong> of{' '}
                   <strong className="text-slate-900 dark:text-white">{Math.round(((studyGoalData?.targetMinutesPerWeek || 900) / 60) * 10) / 10}h target</strong>
                 </span>
-                <span className="font-extrabold text-[#5645d4]">
+                <span className="font-extrabold text-[#0f6b57]">
                   {Math.min(100, Math.round(((studyAnalytics?.weeklyMinutes || 0) / (studyGoalData?.targetMinutesPerWeek || 900)) * 100))}%
                 </span>
               </div>
               <div className="w-full bg-slate-100 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
                 <div
-                  className="bg-[#5645d4] h-full rounded-full transition-all"
+                  className="bg-[#0f6b57] h-full rounded-full transition-all"
                   style={{
                     width: `${Math.min(100, Math.round(((studyAnalytics?.weeklyMinutes || 0) / (studyGoalData?.targetMinutesPerWeek || 900)) * 100))}%`,
                   }}
@@ -994,7 +994,7 @@ export const PlannerPage: React.FC = () => {
 
             <div className="rounded-[12px] border border-slate-200 bg-white p-4 shadow-2xs dark:border-slate-800 dark:bg-slate-900">
               <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">This Week</p>
-              <p className="text-2xl font-black text-[#5645d4] mt-1">
+              <p className="text-2xl font-black text-[#0f6b57] mt-1">
                 {studyAnalytics?.weeklyMinutes !== undefined ? `${Math.round((studyAnalytics.weeklyMinutes / 60) * 10) / 10}h` : '0h'}
               </p>
               <p className="text-[10px] text-slate-500 mt-0.5">{studyAnalytics?.weeklyMinutes || 0} minutes studied</p>
@@ -1040,12 +1040,12 @@ export const PlannerPage: React.FC = () => {
 
                 <div>
                   <div className="flex justify-between text-xs font-semibold mb-1">
-                    <span className="text-[#5645d4] dark:text-[#8070f6]">Actual Hours Logged</span>
+                    <span className="text-[#0f6b57] dark:text-[#4ccba5]">Actual Hours Logged</span>
                     <span>{Math.round(((studyAnalytics?.plannedVsActual?.actualMinutes || 0) / 60) * 10) / 10}h</span>
                   </div>
                   <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                     <div
-                      className="bg-[#5645d4] h-full rounded-full"
+                      className="bg-[#0f6b57] h-full rounded-full"
                       style={{ width: `${Math.min(100, ((studyAnalytics?.plannedVsActual?.actualMinutes || 0) / Math.max(1, (studyAnalytics?.plannedVsActual?.plannedMinutes || 0) + (studyAnalytics?.plannedVsActual?.actualMinutes || 0))) * 100)}%` }}
                     />
                   </div>
@@ -1070,7 +1070,7 @@ export const PlannerPage: React.FC = () => {
                       </div>
                       <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
                         <div
-                          className="bg-[#5645d4] h-full rounded-full"
+                          className="bg-[#0f6b57] h-full rounded-full"
                           style={{ width: `${Math.min(100, (c.minutes / Math.max(1, studyAnalytics.weeklyMinutes || c.minutes)) * 100)}%` }}
                         />
                       </div>
@@ -1088,7 +1088,7 @@ export const PlannerPage: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-xs">
           <div className="w-full max-w-lg card-notion p-6 shadow-xl dark:bg-slate-900">
             <div className="flex items-center gap-2 mb-2">
-              <Sparkles className="h-5 w-5 text-[#5645d4]" />
+              <Sparkles className="h-5 w-5 text-[#0f6b57]" />
               <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                 Generate Smart Study Plan
               </h3>
@@ -1115,7 +1115,7 @@ export const PlannerPage: React.FC = () => {
                   placeholder="e.g. Midterm Comprehensive Revision, Discrete Math Proofs"
                   value={planTitle}
                   onChange={(e) => setPlanTitle(e.target.value)}
-                  className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#5645d4]"
+                  className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#0f6b57]"
                 />
               </div>
 
@@ -1127,7 +1127,7 @@ export const PlannerPage: React.FC = () => {
                   <select
                     value={planCourseId}
                     onChange={(e) => setPlanCourseId(e.target.value)}
-                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   >
                     {courses.map((c) => (
                       <option key={c.id} value={c.id}>{c.code} - {c.title}</option>
@@ -1144,7 +1144,7 @@ export const PlannerPage: React.FC = () => {
                     placeholder="e.g. Dynamic Programming"
                     value={planTopic}
                     onChange={(e) => setPlanTopic(e.target.value)}
-                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   />
                 </div>
               </div>
@@ -1160,11 +1160,11 @@ export const PlannerPage: React.FC = () => {
                     max="5"
                     value={planDifficulty}
                     onChange={(e) => setPlanDifficulty(Number(e.target.value))}
-                    className="w-full accent-[#5645d4]"
+                    className="w-full accent-[#0f6b57]"
                   />
                   <div className="flex justify-between text-[10px] text-slate-400">
                     <span>1 (Easy)</span>
-                    <span className="font-bold text-[#5645d4]">{planDifficulty}</span>
+                    <span className="font-bold text-[#0f6b57]">{planDifficulty}</span>
                     <span>5 (Challenging)</span>
                   </div>
                 </div>
@@ -1176,7 +1176,7 @@ export const PlannerPage: React.FC = () => {
                   <select
                     value={planPriority}
                     onChange={(e) => setPlanPriority(e.target.value)}
-                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   >
                     <option value="LOW">Low</option>
                     <option value="MEDIUM">Medium</option>
@@ -1197,7 +1197,7 @@ export const PlannerPage: React.FC = () => {
                     max="100"
                     value={planEstimatedHours}
                     onChange={(e) => setPlanEstimatedHours(Number(e.target.value))}
-                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   />
                 </div>
 
@@ -1212,7 +1212,7 @@ export const PlannerPage: React.FC = () => {
                     max="12"
                     value={planDailyHoursLimit}
                     onChange={(e) => setPlanDailyHoursLimit(Number(e.target.value))}
-                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   />
                 </div>
               </div>
@@ -1226,7 +1226,7 @@ export const PlannerPage: React.FC = () => {
                     type="date"
                     value={planStartDate}
                     onChange={(e) => setPlanStartDate(e.target.value)}
-                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   />
                 </div>
 
@@ -1238,7 +1238,7 @@ export const PlannerPage: React.FC = () => {
                     type="date"
                     value={planTargetDate}
                     onChange={(e) => setPlanTargetDate(e.target.value)}
-                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   />
                 </div>
               </div>
@@ -1296,7 +1296,7 @@ export const PlannerPage: React.FC = () => {
                   placeholder="e.g. Chapter 4 Practice Problems"
                   value={sessionTitle}
                   onChange={(e) => setSessionTitle(e.target.value)}
-                  className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#5645d4]"
+                  className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#0f6b57]"
                 />
               </div>
 
@@ -1307,7 +1307,7 @@ export const PlannerPage: React.FC = () => {
                 <select
                   value={sessionCourseId}
                   onChange={(e) => setSessionCourseId(e.target.value)}
-                  className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#5645d4]"
+                  className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#0f6b57]"
                 >
                   <option value="">General Study</option>
                   {courses.map((c) => (
@@ -1325,7 +1325,7 @@ export const PlannerPage: React.FC = () => {
                     type="datetime-local"
                     value={sessionStartTime}
                     onChange={(e) => setSessionStartTime(e.target.value)}
-                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   />
                 </div>
 
@@ -1337,7 +1337,7 @@ export const PlannerPage: React.FC = () => {
                     type="datetime-local"
                     value={sessionEndTime}
                     onChange={(e) => setSessionEndTime(e.target.value)}
-                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#e5e3df] bg-white px-3 py-2 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   />
                 </div>
               </div>

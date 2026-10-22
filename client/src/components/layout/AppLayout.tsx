@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Outlet, NavLink, useLocation } from 'react-router-dom';
 import {
   Search,
   Bell,
@@ -8,6 +8,10 @@ import {
   Plus,
   Menu,
   Sparkles,
+  LayoutDashboard,
+  CalendarDays,
+  CheckSquare,
+  FileText,
 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { Sidebar } from './Sidebar';
@@ -22,13 +26,19 @@ import { api } from '../../lib/api';
 import { useNavigate, Link } from 'react-router-dom';
 
 export const AppLayout: React.FC = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(() => typeof window !== 'undefined' && window.innerWidth < 1280);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isQuickAddOpen, setIsQuickAddOpen] = useState(false);
   const [quickAddType, setQuickAddType] = useState('document');
   const { theme, toggleTheme } = useTheme();
+  const { pathname } = useLocation();
+
+  // Close the mobile drawer after navigating so the new page isn't hidden behind it.
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   const { data: reminders = [] } = useQuery({
     queryKey: ['reminders'],
@@ -89,7 +99,7 @@ export const AppLayout: React.FC = () => {
         {isDemo && (
           <div className="bg-[#f9e79f] text-[#37352f] border-b border-[#ebd06b] px-4 py-2 text-xs font-medium flex items-center justify-between shrink-0 shadow-2xs z-30">
             <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 shrink-0 text-[#5645d4]" />
+              <Sparkles className="h-4 w-4 shrink-0 text-[#0f6b57]" />
               <span className="font-bold text-[#1a1a1a]">Demo Mode Active:</span>
               <span className="hidden sm:inline text-[#5d5b54]">
                 Exploring ScholarFlow with pre-seeded sandboxed student records. Changes are isolated to this session.
@@ -105,25 +115,29 @@ export const AppLayout: React.FC = () => {
         )}
 
         {/* Top Header Bar: Notion Clean Surface & Hairline Border */}
-        <header className="flex h-14 shrink-0 items-center justify-between border-b border-[#e5e3df] bg-white dark:border-[#2a2a2e] dark:bg-[#141416] px-4 z-10 text-[#37352f] dark:text-[#f0eeec]">
-          <div className="flex items-center gap-3">
+        <header className="flex h-14 shrink-0 items-center justify-between gap-2 border-b border-[#e5e3df] bg-white dark:border-[#2a2a2e] dark:bg-[#141416] px-3 sm:px-4 z-10 text-[#37352f] dark:text-[#f0eeec]">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="md:hidden p-1.5 rounded-[6px] text-[#787671] hover:bg-[#f6f5f4] dark:hover:bg-[#202024]"
+              aria-label="Open navigation menu"
+              className="md:hidden -ml-1.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-[8px] text-[#5d5b54] hover:bg-[#f6f5f4] dark:text-[#a4a097] dark:hover:bg-[#202024]"
             >
               <Menu className="h-5 w-5" />
             </button>
-            <Breadcrumbs />
+            <div className="min-w-0 overflow-hidden">
+              <Breadcrumbs />
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-0.5 sm:gap-2">
             {/* Global Search Bar trigger (Notion search-pill: 8px rounded rectangle) */}
             <button
               onClick={() => setIsCommandOpen(true)}
-              className="flex items-center gap-2.5 rounded-[8px] border border-[#e5e3df] bg-[#f6f5f4] px-3 py-1.5 text-xs text-[#787671] hover:border-[#c8c4be] hover:bg-[#ede9e4] hover:text-[#1a1a1a] dark:border-[#2a2a2e] dark:bg-[#1c1c1f] dark:hover:border-[#3a3a40] dark:hover:text-white transition-all sm:w-64 cursor-pointer"
+              aria-label="Search workspace"
+              className="flex h-11 w-11 items-center justify-center gap-2.5 rounded-[8px] border-0 bg-transparent px-0 text-xs sm:h-auto sm:w-64 sm:justify-start sm:border sm:border-[#e5e3df] sm:bg-[#f6f5f4] sm:px-3 sm:py-1.5 sm:text-xs text-[#787671] hover:border-[#c8c4be] hover:bg-[#ede9e4] hover:text-[#1a1a1a] dark:border-[#2a2a2e] dark:bg-[#1c1c1f] dark:hover:border-[#3a3a40] dark:hover:text-white transition-all cursor-pointer"
             >
               <Search className="h-3.5 w-3.5 text-[#787671]" />
-              <span className="truncate">Search workspace...</span>
+              <span className="hidden truncate sm:inline">Search workspace...</span>
               <kbd className="hidden sm:inline-block ml-auto rounded-[4px] bg-white px-1.5 py-0.5 text-[10px] font-semibold text-[#787671] border border-[#e5e3df] dark:bg-[#252528] dark:border-[#37352f]">
                 ⌘K
               </kbd>
@@ -132,30 +146,31 @@ export const AppLayout: React.FC = () => {
             {/* Notifications Trigger */}
             <button
               onClick={() => setIsNotificationsOpen(true)}
-              className="relative rounded-[8px] p-2 text-[#787671] hover:bg-[#f6f5f4] hover:text-[#1a1a1a] dark:hover:bg-[#202024] dark:hover:text-white transition-colors cursor-pointer"
+              className="relative flex h-11 w-11 items-center justify-center rounded-[8px] text-[#787671] sm:h-9 sm:w-9 hover:bg-[#f6f5f4] hover:text-[#1a1a1a] dark:hover:bg-[#202024] dark:hover:text-white transition-colors cursor-pointer"
               title="Notifications"
             >
               <Bell className="h-4 w-4" />
               {(inAppData?.unreadCount ?? 0) > 0 ? (
-                <span className="absolute -top-0.5 -right-0.5 h-4 min-w-[16px] px-1 rounded-full bg-[#ff64c8] text-white text-[9px] font-bold flex items-center justify-center ring-2 ring-white dark:ring-[#141416]">
+                <span className="absolute -top-0.5 -right-0.5 h-4 min-w-[16px] px-1 rounded-full bg-[#d9480f] text-white text-[9px] font-bold flex items-center justify-center ring-2 ring-white dark:ring-[#141416]">
                   {inAppData!.unreadCount > 9 ? '9+' : inAppData!.unreadCount}
                 </span>
               ) : reminders.length > 0 ? (
-                <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-[#5645d4] ring-2 ring-white dark:ring-[#141416]" />
+                <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-[#0f6b57] ring-2 ring-white dark:ring-[#141416]" />
               ) : null}
             </button>
 
             {/* Dark / Light Mode Toggle */}
             <button
               onClick={toggleTheme}
-              className="rounded-[8px] p-2 text-[#787671] hover:bg-[#f6f5f4] hover:text-[#1a1a1a] dark:hover:bg-[#202024] dark:hover:text-white transition-colors cursor-pointer"
-              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to light mode'}
+              className="flex h-11 w-11 items-center justify-center rounded-[8px] text-[#787671] hover:bg-[#f6f5f4] hover:text-[#1a1a1a] dark:hover:bg-[#202024] dark:hover:text-white transition-colors cursor-pointer sm:h-9 sm:w-9"
+              aria-label="Toggle theme"
+              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             >
               {theme === 'dark' ? <Sun className="h-4 w-4 text-[#f5d75e]" /> : <Moon className="h-4 w-4" />}
             </button>
 
             {/* User Profile Dropdown */}
-            <div className="pl-2 border-l border-[#e5e3df] dark:border-[#2a2a2e]">
+            <div className="ml-1 pl-1 sm:pl-2 sm:ml-0 border-l border-[#e5e3df] dark:border-[#2a2a2e]">
               {user ? (
                 <ProfileDropdown />
               ) : (
@@ -171,9 +186,44 @@ export const AppLayout: React.FC = () => {
         </header>
 
         {/* Scrollable Page Body */}
-        <main className="flex-1 overflow-y-auto bg-[#ffffff] dark:bg-[#0f0f11]">
+        <main className="relative flex-1 overflow-y-auto bg-[#ffffff] pb-[calc(4rem+env(safe-area-inset-bottom))] dark:bg-[#0f0f11] md:pb-0">
           <Outlet />
         </main>
+
+        {/* Mobile bottom tab bar: primary destinations within thumb reach */}
+        <nav
+          aria-label="Primary"
+          className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-[#e5e3df] bg-white pb-[env(safe-area-inset-bottom)] dark:border-[#2a2a2e] dark:bg-[#141416] md:hidden"
+        >
+          {[
+            { to: '/dashboard', label: 'Home', icon: LayoutDashboard },
+            { to: '/semesters', label: 'Semesters', icon: CalendarDays },
+            { to: '/assignments', label: 'Tasks', icon: CheckSquare },
+            { to: '/notes', label: 'Notes', icon: FileText },
+          ].map(({ to, label, icon: Icon }) => (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }) =>
+                `flex h-16 flex-col items-center justify-center gap-1 text-[11px] font-medium ${
+                  isActive
+                    ? 'text-[#0f6b57] dark:text-[#4ccba5]'
+                    : 'text-[#787671] dark:text-[#a4a097]'
+                }`
+              }
+            >
+              <Icon className="h-5 w-5" />
+              {label}
+            </NavLink>
+          ))}
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="flex h-16 flex-col items-center justify-center gap-1 text-[11px] font-medium text-[#787671] dark:text-[#a4a097]"
+          >
+            <Menu className="h-5 w-5" />
+            More
+          </button>
+        </nav>
       </div>
 
       {/* Global Modals & Drawers */}

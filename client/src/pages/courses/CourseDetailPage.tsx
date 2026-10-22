@@ -238,7 +238,7 @@ export const CourseDetailPage: React.FC = () => {
             <div className="flex items-center gap-3">
               <span
                 className="h-3.5 w-3.5 rounded-full"
-                style={{ backgroundColor: course.color || '#5645d4' }}
+                style={{ backgroundColor: course.color || '#0f6b57' }}
               />
               <span className="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-[6px] bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                 {course.code}
@@ -249,7 +249,7 @@ export const CourseDetailPage: React.FC = () => {
               {course.semester && (
                 <Link
                   to={`/semesters/${course.semester.id}`}
-                  className="text-xs font-medium text-[#5645d4] hover:underline dark:text-[#8070f6]"
+                  className="text-xs font-medium text-[#0f6b57] hover:underline dark:text-[#4ccba5]"
                 >
                   {course.semester.name}
                 </Link>
@@ -274,14 +274,14 @@ export const CourseDetailPage: React.FC = () => {
               className="btn-notion-secondary text-xs flex items-center gap-1.5"
               title="Share Course Page & Syllabus"
             >
-              <Share2 className="h-3.5 w-3.5 text-[#5645d4]" /> Share Course
+              <Share2 className="h-3.5 w-3.5 text-[#0f6b57]" /> Share Course
             </button>
 
             {/* Progress Control */}
             <div className="flex flex-col items-start md:items-end gap-2 bg-slate-50 dark:bg-slate-800/40 p-3.5 rounded-[8px] border border-[#e5e3df] dark:border-[#1e293b]">
               <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
                 <span>Syllabus Mastery:</span>
-                <span className="text-[#5645d4] dark:text-[#8070f6] font-bold">{currentProgress}%</span>
+                <span className="text-[#0f6b57] dark:text-[#4ccba5] font-bold">{currentProgress}%</span>
               </div>
               <input
                 type="range"
@@ -291,7 +291,7 @@ export const CourseDetailPage: React.FC = () => {
                 onChange={(e) => setProgressVal(parseInt(e.target.value, 10))}
                 onMouseUp={() => updateProgressMutation.mutate(currentProgress)}
                 onTouchEnd={() => updateProgressMutation.mutate(currentProgress)}
-                className="h-1.5 w-36 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#5645d4]"
+                className="h-1.5 w-36 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#0f6b57]"
               />
             </div>
           </div>
@@ -314,7 +314,7 @@ export const CourseDetailPage: React.FC = () => {
                 onClick={() => setTab(t.id as any)}
                 className={`flex items-center gap-2 border-b-2 pb-3 transition-colors ${
                   tab === t.id
-                    ? 'border-[#5645d4] text-[#5645d4] dark:border-[#8070f6] dark:text-[#8070f6]'
+                    ? 'border-[#0f6b57] text-[#0f6b57] dark:border-[#4ccba5] dark:text-[#4ccba5]'
                     : 'border-transparent text-slate-500 hover:text-slate-800 dark:text-slate-400'
                 }`}
               >
@@ -429,7 +429,7 @@ export const CourseDetailPage: React.FC = () => {
                     setVisibleCount(9);
                   }}
                   placeholder="Search this course's documents..."
-                  className="w-full h-[40px] rounded-[8px] border border-[#c8c4be] bg-[#f6f5f4] dark:bg-[#1c1c1f] dark:border-[#37352f] pl-10 pr-3 text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#5645d4] transition-all"
+                  className="w-full h-[40px] rounded-[8px] border border-[#c8c4be] bg-[#f6f5f4] dark:bg-[#1c1c1f] dark:border-[#37352f] pl-10 pr-3 text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#0f6b57] transition-all"
                 />
               </div>
 
@@ -439,7 +439,7 @@ export const CourseDetailPage: React.FC = () => {
                   setDocCategoryFilter(e.target.value);
                   setVisibleCount(9);
                 }}
-                className="h-[40px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs font-medium text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#5645d4] cursor-pointer"
+                className="h-[40px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs font-medium text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#0f6b57] cursor-pointer"
               >
                 <option value="">All Categories</option>
                 {DOCUMENT_CATEGORIES.map((cat) => (
@@ -495,7 +495,7 @@ export const CourseDetailPage: React.FC = () => {
               </p>
               <button
                 onClick={() => setIsUploadDocOpen(true)}
-                className="mt-2 text-xs font-semibold text-[#5645d4] underline inline-block"
+                className="mt-2 text-xs font-semibold text-[#0f6b57] underline inline-block"
               >
                 Upload your first lecture slide or previous question paper
               </button>
@@ -509,7 +509,7 @@ export const CourseDetailPage: React.FC = () => {
                   setDocCategoryFilter('');
                   setVisibleCount(9);
                 }}
-                className="mt-2 text-xs font-semibold text-[#5645d4] underline inline-block"
+                className="mt-2 text-xs font-semibold text-[#0f6b57] underline inline-block"
               >
                 Clear search and filters
               </button>
@@ -521,7 +521,7 @@ export const CourseDetailPage: React.FC = () => {
                   <div key={doc.id} className="card-notion p-4 flex flex-col justify-between">
                     <div>
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-[4px] bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6]">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-[4px] bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5]">
                           {doc.category}
                         </span>
                         <span className="text-[10px] text-slate-400">{formatBytes(doc.fileSize)}</span>
@@ -532,7 +532,7 @@ export const CourseDetailPage: React.FC = () => {
                         className="block text-left w-full"
                         title="Preview document"
                       >
-                        <h4 className="text-xs font-bold text-slate-900 dark:text-white hover:text-[#5645d4] truncate">
+                        <h4 className="text-xs font-bold text-slate-900 dark:text-white hover:text-[#0f6b57] truncate">
                           {doc.title}
                         </h4>
                       </button>
@@ -550,7 +550,7 @@ export const CourseDetailPage: React.FC = () => {
                       <div className="flex items-center gap-0.5">
                         <button
                           onClick={() => setPreviewTarget(doc)}
-                          className="p-1.5 rounded-[6px] text-slate-500 hover:bg-[#f6f5f4] hover:text-[#5645d4] dark:hover:bg-[#202024] transition-colors"
+                          className="p-1.5 rounded-[6px] text-slate-500 hover:bg-[#f6f5f4] hover:text-[#0f6b57] dark:hover:bg-[#202024] transition-colors"
                           title="Preview"
                         >
                           <Eye className="h-4 w-4" />
@@ -565,14 +565,14 @@ export const CourseDetailPage: React.FC = () => {
                         </a>
                         <button
                           onClick={() => setShareTarget(doc)}
-                          className="p-1.5 rounded-[6px] text-slate-500 hover:bg-[#f6f5f4] hover:text-[#5645d4] dark:hover:bg-[#202024] transition-colors"
+                          className="p-1.5 rounded-[6px] text-slate-500 hover:bg-[#f6f5f4] hover:text-[#0f6b57] dark:hover:bg-[#202024] transition-colors"
                           title="Share"
                         >
                           <Share2 className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => openEditModal(doc)}
-                          className="p-1.5 rounded-[6px] text-slate-500 hover:bg-[#f6f5f4] hover:text-[#5645d4] dark:hover:bg-[#202024] transition-colors"
+                          className="p-1.5 rounded-[6px] text-slate-500 hover:bg-[#f6f5f4] hover:text-[#0f6b57] dark:hover:bg-[#202024] transition-colors"
                           title="Edit details"
                         >
                           <Pencil className="h-4 w-4" />
@@ -595,7 +595,7 @@ export const CourseDetailPage: React.FC = () => {
                             setActionError(null);
                             setDeleteTarget(doc);
                           }}
-                          className="p-1.5 rounded-[6px] text-slate-500 hover:bg-[#fde0ec] hover:text-[#e03131] dark:hover:bg-[#391c57]/30 transition-colors"
+                          className="p-1.5 rounded-[6px] text-slate-500 hover:bg-[#fde0ec] hover:text-[#e03131] dark:hover:bg-[#0d3b30]/30 transition-colors"
                           title="Delete"
                         >
                           <Trash2 className="h-4 w-4" />
@@ -604,7 +604,7 @@ export const CourseDetailPage: React.FC = () => {
 
                       <Link
                         to={`/documents/${doc.id}/view`}
-                        className="inline-flex items-center gap-1 text-xs font-semibold text-[#5645d4] dark:text-[#8070f6] hover:underline"
+                        className="inline-flex items-center gap-1 text-xs font-semibold text-[#0f6b57] dark:text-[#4ccba5] hover:underline"
                       >
                         Open <ArrowRight className="h-3 w-3" />
                       </Link>
@@ -684,7 +684,7 @@ export const CourseDetailPage: React.FC = () => {
                       {formatDate(exam.examDate, 'EEE, MMM d, yyyy h:mm a')} {exam.room ? `• ${exam.room}` : ''}
                     </p>
                   </div>
-                  <Link to="/exams" className="text-xs font-semibold text-[#5645d4] hover:underline">
+                  <Link to="/exams" className="text-xs font-semibold text-[#0f6b57] hover:underline">
                     View Exam Tracker →
                   </Link>
                 </div>
@@ -712,7 +712,7 @@ export const CourseDetailPage: React.FC = () => {
                       Deadline: {formatDate(a.deadline, 'MMM d, h:mm a')} • Priority: {a.priority}
                     </p>
                   </div>
-                  <Link to="/assignments" className="text-xs font-semibold text-[#5645d4] hover:underline">
+                  <Link to="/assignments" className="text-xs font-semibold text-[#0f6b57] hover:underline">
                     Manage Task →
                   </Link>
                 </div>
@@ -831,7 +831,7 @@ export const CourseDetailPage: React.FC = () => {
             </div>
 
             {actionError && (
-              <div className="p-3 rounded-[8px] bg-[#fde0ec] border border-[#ff64c8]/30 text-[#e03131] text-xs flex items-center gap-2">
+              <div className="p-3 rounded-[8px] bg-[#fde0ec] border border-[#d9480f]/30 text-[#e03131] text-xs flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 shrink-0" />
                 <span>{actionError}</span>
               </div>
@@ -844,7 +844,7 @@ export const CourseDetailPage: React.FC = () => {
                   type="text"
                   value={editForm.title}
                   onChange={(e) => setEditForm((f) => ({ ...f, title: e.target.value }))}
-                  className="w-full h-[40px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#5645d4]"
+                  className="w-full h-[40px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#0f6b57]"
                 />
               </div>
               <div>
@@ -852,7 +852,7 @@ export const CourseDetailPage: React.FC = () => {
                 <select
                   value={editForm.category}
                   onChange={(e) => setEditForm((f) => ({ ...f, category: e.target.value }))}
-                  className="w-full h-[40px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#5645d4] cursor-pointer"
+                  className="w-full h-[40px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#0f6b57] cursor-pointer"
                 >
                   {DOCUMENT_CATEGORIES.map((cat) => (
                     <option key={cat} value={cat}>
@@ -867,7 +867,7 @@ export const CourseDetailPage: React.FC = () => {
                   rows={3}
                   value={editForm.description}
                   onChange={(e) => setEditForm((f) => ({ ...f, description: e.target.value }))}
-                  className="w-full px-3 py-2 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#5645d4] resize-none"
+                  className="w-full px-3 py-2 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#0f6b57] resize-none"
                 />
               </div>
             </div>
@@ -918,7 +918,7 @@ export const CourseDetailPage: React.FC = () => {
             </div>
 
             {actionError && (
-              <div className="p-3 rounded-[8px] bg-[#fde0ec] border border-[#ff64c8]/30 text-[#e03131] text-xs flex items-center gap-2">
+              <div className="p-3 rounded-[8px] bg-[#fde0ec] border border-[#d9480f]/30 text-[#e03131] text-xs flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 shrink-0" />
                 <span>{actionError}</span>
               </div>
@@ -967,7 +967,7 @@ export const CourseDetailPage: React.FC = () => {
             </div>
 
             {replaceError && (
-              <div className="p-3 rounded-[8px] bg-[#fde0ec] border border-[#ff64c8]/30 text-[#e03131] text-xs flex items-center gap-2">
+              <div className="p-3 rounded-[8px] bg-[#fde0ec] border border-[#d9480f]/30 text-[#e03131] text-xs flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 shrink-0" />
                 <span>{replaceError}</span>
               </div>
@@ -994,7 +994,7 @@ export const CourseDetailPage: React.FC = () => {
                 </div>
                 <div className="w-full bg-[#ede9e4] dark:bg-[#252528] rounded-full h-1.5 overflow-hidden">
                   <div
-                    className="bg-[#5645d4] h-1.5 rounded-full transition-all"
+                    className="bg-[#0f6b57] h-1.5 rounded-full transition-all"
                     style={{ width: `${replaceProgress}%` }}
                   />
                 </div>

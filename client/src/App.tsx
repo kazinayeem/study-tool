@@ -104,9 +104,9 @@ const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-[#ffffff] dark:bg-[#0f0f11]">
+      <div className="flex items-center justify-center min-h-dvh bg-[#ffffff] dark:bg-[#0f0f11]">
         <div className="flex flex-col items-center gap-3">
-          <div className="animate-spin h-8 w-8 rounded-full border-2 border-[#5645d4] border-t-transparent" />
+          <div className="animate-spin h-8 w-8 rounded-full border-2 border-[#0f6b57] border-t-transparent" />
           <span className="text-xs font-medium text-[#787671] dark:text-[#a4a097]">
             Loading your academic workspace...
           </span>
@@ -130,12 +130,16 @@ const AdminGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin h-8 w-8 rounded-full border-2 border-[#5645d4] border-t-transparent" />
+        <div className="animate-spin h-8 w-8 rounded-full border-2 border-[#0f6b57] border-t-transparent" />
       </div>
     );
   }
-  if (!user || user.role !== 'ADMIN') {
+  if (!user) {
     return <Navigate to="/login" replace state={{ error: 'admin_required', from: location }} />;
+  }
+  // Signed-in non-admins would bounce /admin -> /login -> /admin forever; send them home instead.
+  if (user.role !== 'ADMIN') {
+    return <Navigate to="/dashboard" replace />;
   }
   return <>{children}</>;
 };

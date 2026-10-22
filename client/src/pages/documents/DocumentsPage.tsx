@@ -206,7 +206,7 @@ export const DocumentsPage: React.FC = () => {
       return <FileSpreadsheet className="h-4 w-4 text-[#1aae39]" />;
     if (ext === 'js' || ext === 'ts' || ext === 'py' || ext === 'html')
       return <FileCode className="h-4 w-4 text-[#0075de]" />;
-    return <FileText className="h-4 w-4 text-[#5645d4]" />;
+    return <FileText className="h-4 w-4 text-[#0f6b57]" />;
   };
 
   const currentSemesterObj = semesters.find((s) => s.id === semesterFilter);
@@ -226,8 +226,8 @@ export const DocumentsPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#e5e3df] dark:border-[#2a2a2e] pb-6">
 
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] bg-[#e6e0f5] text-[#391c57] text-xs font-semibold mb-2 border border-[#d6b6f6]">
-            <FolderOpen className="h-3.5 w-3.5 text-[#5645d4]" />
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] bg-[#dcf0e8] text-[#0d3b30] text-xs font-semibold mb-2 border border-[#a8dcc9]">
+            <FolderOpen className="h-3.5 w-3.5 text-[#0f6b57]" />
             <span>Document Repository</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-semibold tracking-[-0.5px] text-[#1a1a1a] dark:text-white">
@@ -257,7 +257,7 @@ export const DocumentsPage: React.FC = () => {
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             placeholder="Search by title or filename..."
-            className="w-full h-[44px] rounded-[8px] border border-[#c8c4be] bg-[#f6f5f4] dark:bg-[#1c1c1f] dark:border-[#37352f] pl-10 pr-3 text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#5645d4] transition-all"
+            className="w-full h-[44px] rounded-[8px] border border-[#c8c4be] bg-[#f6f5f4] dark:bg-[#1c1c1f] dark:border-[#37352f] pl-10 pr-3 text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#0f6b57] transition-all"
           />
         </div>
 
@@ -265,7 +265,7 @@ export const DocumentsPage: React.FC = () => {
         <select
           value={categoryFilter}
           onChange={(e) => setCategoryFilter(e.target.value)}
-          className="h-[44px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs font-medium text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#5645d4] cursor-pointer"
+          className="h-[44px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs font-medium text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#0f6b57] cursor-pointer"
         >
           <option value="">All Categories</option>
           {DOCUMENT_CATEGORIES.map((cat) => (
@@ -279,7 +279,7 @@ export const DocumentsPage: React.FC = () => {
         <select
           value={courseFilter}
           onChange={(e) => setCourseFilter(e.target.value)}
-          className="h-[44px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs font-medium text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#5645d4] cursor-pointer"
+          className="h-[44px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs font-medium text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#0f6b57] cursor-pointer"
         >
           <option value="">All Courses</option>
           {courses.map((c) => (
@@ -293,7 +293,7 @@ export const DocumentsPage: React.FC = () => {
         <select
           value={semesterFilter}
           onChange={(e) => setSemesterFilter(e.target.value)}
-          className="h-[44px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs font-medium text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#5645d4] cursor-pointer"
+          className="h-[44px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs font-medium text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#0f6b57] cursor-pointer"
         >
           <option value="">All Semesters</option>
           {semesters.map((s) => (
@@ -395,7 +395,7 @@ export const DocumentsPage: React.FC = () => {
         </div>
       ) : sortedDocuments.length === 0 ? (
         <div className="rounded-[12px] border border-dashed border-[#c8c4be] dark:border-[#37352f] p-12 text-center bg-[#fbfbfa] dark:bg-[#19191c]">
-          <div className="flex h-12 w-12 items-center justify-center rounded-[8px] bg-[#e6e0f5] text-[#5645d4] mx-auto mb-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-[8px] bg-[#dcf0e8] text-[#0f6b57] mx-auto mb-3">
             <FolderOpen className="h-6 w-6" />
           </div>
           <h3 className="font-semibold text-[#1a1a1a] dark:text-white text-base">No documents found</h3>
@@ -435,7 +435,7 @@ export const DocumentsPage: React.FC = () => {
 
                 {/* Title */}
                 <Link to={`/documents/${doc.id}/view`} className="block">
-                  <h3 className="text-sm font-semibold text-[#1a1a1a] dark:text-white group-hover:text-[#5645d4] dark:group-hover:text-[#d6b6f6] transition-colors line-clamp-2">
+                  <h3 className="text-sm font-semibold text-[#1a1a1a] dark:text-white group-hover:text-[#0f6b57] dark:group-hover:text-[#a8dcc9] transition-colors line-clamp-2">
                     {doc.title}
                   </h3>
                 </Link>
@@ -472,7 +472,7 @@ export const DocumentsPage: React.FC = () => {
                   {doc._count && (doc._count.bookmarks > 0 || doc._count.annotations > 0) && (
                     <>
                       <span>•</span>
-                      <span className="text-[#5645d4] dark:text-[#d6b6f6] font-medium">
+                      <span className="text-[#0f6b57] dark:text-[#a8dcc9] font-medium">
                         {doc._count.annotations} highlights
                       </span>
                     </>
@@ -485,7 +485,7 @@ export const DocumentsPage: React.FC = () => {
                 <div className="flex items-center gap-1">
                   <button
                     onClick={() => setShareTarget(doc)}
-                    className="p-1.5 rounded-[6px] text-[#787671] hover:bg-[#f6f5f4] hover:text-[#5645d4] dark:hover:bg-[#202024] transition-colors cursor-pointer"
+                    className="p-1.5 rounded-[6px] text-[#787671] hover:bg-[#f6f5f4] hover:text-[#0f6b57] dark:hover:bg-[#202024] transition-colors cursor-pointer"
                     title="Share Document"
                   >
                     <Share2 className="h-4 w-4" />
@@ -500,7 +500,7 @@ export const DocumentsPage: React.FC = () => {
                   </a>
                   <button
                     onClick={() => setVersionHistoryDoc(doc)}
-                    className="p-1.5 rounded-[6px] text-[#787671] hover:bg-[#f6f5f4] hover:text-[#5645d4] dark:hover:bg-[#202024] transition-colors cursor-pointer"
+                    className="p-1.5 rounded-[6px] text-[#787671] hover:bg-[#f6f5f4] hover:text-[#0f6b57] dark:hover:bg-[#202024] transition-colors cursor-pointer"
                     title="Version History & Checksum"
                   >
                     <History className="h-4 w-4" />
@@ -522,7 +522,7 @@ export const DocumentsPage: React.FC = () => {
                         deleteMutation.mutate(doc.id);
                       }
                     }}
-                    className="p-1.5 rounded-[6px] text-[#787671] hover:bg-[#fde0ec] hover:text-[#e03131] dark:hover:bg-[#391c57]/30 transition-colors cursor-pointer"
+                    className="p-1.5 rounded-[6px] text-[#787671] hover:bg-[#fde0ec] hover:text-[#e03131] dark:hover:bg-[#0d3b30]/30 transition-colors cursor-pointer"
                     title="Delete document"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -531,9 +531,9 @@ export const DocumentsPage: React.FC = () => {
 
                 <Link
                   to={`/documents/${doc.id}/view`}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] bg-[#e6e0f5] text-[#391c57] text-xs font-semibold hover:bg-[#d6b6f6]/60 transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] bg-[#dcf0e8] text-[#0d3b30] text-xs font-semibold hover:bg-[#a8dcc9]/60 transition-colors cursor-pointer"
                 >
-                  <Eye className="h-3.5 w-3.5 text-[#5645d4]" />
+                  <Eye className="h-3.5 w-3.5 text-[#0f6b57]" />
                   <span>Open</span>
                 </Link>
               </div>
@@ -569,7 +569,7 @@ export const DocumentsPage: React.FC = () => {
                         <div className="min-w-0">
                           <Link
                             to={`/documents/${doc.id}/view`}
-                            className="font-semibold text-xs text-[#1a1a1a] dark:text-white group-hover:text-[#5645d4] transition-colors block truncate max-w-sm"
+                            className="font-semibold text-xs text-[#1a1a1a] dark:text-white group-hover:text-[#0f6b57] transition-colors block truncate max-w-sm"
                           >
                             {doc.title}
                           </Link>
@@ -597,7 +597,7 @@ export const DocumentsPage: React.FC = () => {
                       <div className="flex items-center justify-end gap-1">
                         <Link
                           to={`/documents/${doc.id}/view`}
-                          className="p-1.5 rounded-[6px] text-[#787671] hover:text-[#5645d4] hover:bg-[#ede9e4] dark:hover:bg-[#252528]"
+                          className="p-1.5 rounded-[6px] text-[#787671] hover:text-[#0f6b57] hover:bg-[#ede9e4] dark:hover:bg-[#252528]"
                           title="Open PDF Workspace"
                         >
                           <Eye className="h-4 w-4" />
@@ -612,14 +612,14 @@ export const DocumentsPage: React.FC = () => {
                         </a>
                         <button
                           onClick={() => setShareTarget(doc)}
-                          className="p-1.5 rounded-[6px] text-[#787671] hover:text-[#5645d4] hover:bg-[#ede9e4] dark:hover:bg-[#252528]"
+                          className="p-1.5 rounded-[6px] text-[#787671] hover:text-[#0f6b57] hover:bg-[#ede9e4] dark:hover:bg-[#252528]"
                           title="Share Link"
                         >
                           <Share2 className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => setVersionHistoryDoc(doc)}
-                          className="p-1.5 rounded-[6px] text-[#787671] hover:text-[#5645d4] hover:bg-[#ede9e4] dark:hover:bg-[#252528]"
+                          className="p-1.5 rounded-[6px] text-[#787671] hover:text-[#0f6b57] hover:bg-[#ede9e4] dark:hover:bg-[#252528]"
                           title="Versions"
                         >
                           <History className="h-4 w-4" />
@@ -630,7 +630,7 @@ export const DocumentsPage: React.FC = () => {
                               deleteMutation.mutate(doc.id);
                             }
                           }}
-                          className="p-1.5 rounded-[6px] text-[#787671] hover:text-[#e03131] hover:bg-[#fde0ec] dark:hover:bg-[#391c57]/30"
+                          className="p-1.5 rounded-[6px] text-[#787671] hover:text-[#e03131] hover:bg-[#fde0ec] dark:hover:bg-[#0d3b30]/30"
                           title="Delete"
                         >
                           <Trash2 className="h-4 w-4" />
@@ -686,7 +686,7 @@ export const DocumentsPage: React.FC = () => {
             </div>
 
             {replaceError && (
-              <div className="p-3 rounded-[8px] bg-[#fde0ec] border border-[#ff64c8]/30 text-[#e03131] text-xs flex items-center gap-2">
+              <div className="p-3 rounded-[8px] bg-[#fde0ec] border border-[#d9480f]/30 text-[#e03131] text-xs flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 shrink-0" />
                 <span>{replaceError}</span>
               </div>
@@ -713,7 +713,7 @@ export const DocumentsPage: React.FC = () => {
                 </div>
                 <div className="w-full bg-[#ede9e4] dark:bg-[#252528] rounded-full h-1.5 overflow-hidden">
                   <div
-                    className="bg-[#5645d4] h-1.5 rounded-full transition-all"
+                    className="bg-[#0f6b57] h-1.5 rounded-full transition-all"
                     style={{ width: `${replaceProgress}%` }}
                   />
                 </div>
@@ -769,7 +769,7 @@ export const DocumentsPage: React.FC = () => {
           <div className="card-notion bg-white dark:bg-[#141416] w-full max-w-xl rounded-[12px] border border-[#e5e3df] dark:border-[#2a2a2e] p-6 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-[#ede9e4] dark:border-[#252528] pb-3">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#e6e0f5] text-[#5645d4]">
+                <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#dcf0e8] text-[#0f6b57]">
                   <History className="h-4 w-4" />
                 </div>
                 <div>
@@ -794,10 +794,10 @@ export const DocumentsPage: React.FC = () => {
             </div>
 
             {/* Current Active Version Info */}
-            <div className="rounded-[8px] border border-[#d6b6f6] bg-[#e6e0f5]/50 dark:bg-[#391c57]/20 p-3 text-xs space-y-1">
+            <div className="rounded-[8px] border border-[#a8dcc9] bg-[#dcf0e8]/50 dark:bg-[#0d3b30]/20 p-3 text-xs space-y-1">
               <div className="flex items-center justify-between">
-                <span className="font-semibold text-[#391c57] dark:text-[#d6b6f6]">Current Active Copy</span>
-                <span className="text-[11px] font-bold text-[#5645d4]">
+                <span className="font-semibold text-[#0d3b30] dark:text-[#a8dcc9]">Current Active Copy</span>
+                <span className="text-[11px] font-bold text-[#0f6b57]">
                   {formatBytes(versionHistoryDoc.fileSize)}
                 </span>
               </div>
@@ -853,7 +853,7 @@ export const DocumentsPage: React.FC = () => {
                             onClick={() => {
                               navigator.clipboard.writeText(ver.checksum);
                             }}
-                            className="text-[#5645d4] hover:underline ml-2 shrink-0 cursor-pointer"
+                            className="text-[#0f6b57] hover:underline ml-2 shrink-0 cursor-pointer"
                             title="Copy Checksum"
                           >
                             <Copy className="h-3 w-3" />
@@ -870,7 +870,7 @@ export const DocumentsPage: React.FC = () => {
                           <a
                             href={`/api/documents/${versionHistoryDoc.id}/versions/${ver.id}/download${localStorage.getItem('scholarflow_token') ? `?token=${encodeURIComponent(localStorage.getItem('scholarflow_token')!)}` : ''}`}
                             download
-                            className="flex items-center gap-1 font-semibold text-[#5d5b54] hover:text-[#5645d4]"
+                            className="flex items-center gap-1 font-semibold text-[#5d5b54] hover:text-[#0f6b57]"
                           >
                             <Download className="h-3.5 w-3.5" />
                             <span>Download</span>
@@ -891,7 +891,7 @@ export const DocumentsPage: React.FC = () => {
                               }
                             }}
                             disabled={restoreVersionMutation.isPending}
-                            className="font-bold text-[#5645d4] hover:underline cursor-pointer"
+                            className="font-bold text-[#0f6b57] hover:underline cursor-pointer"
                           >
                             Restore Version
                           </button>

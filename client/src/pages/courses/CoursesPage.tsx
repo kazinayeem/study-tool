@@ -45,7 +45,7 @@ export const CoursesPage: React.FC = () => {
           <select
             value={selectedSemester}
             onChange={(e) => setSelectedSemester(e.target.value)}
-            className="rounded-[8px] border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 shadow-2xs focus:border-[#5645d4] focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
+            className="rounded-[8px] border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 shadow-2xs focus:border-[#0f6b57] focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
           >
             <option value="">All Semesters</option>
             {semesters.map((s) => (
@@ -101,7 +101,7 @@ export const CoursesPage: React.FC = () => {
 
                 {/* Course Title */}
                 <Link to={`/courses/${course.id}`} className="block">
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-[#5645d4] dark:group-hover:text-[#8070f6] transition-colors">
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-[#0f6b57] dark:group-hover:text-[#4ccba5] transition-colors">
                     {course.title}
                   </h3>
                 </Link>
@@ -132,7 +132,7 @@ export const CoursesPage: React.FC = () => {
                   </div>
                   <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-[#5645d4] rounded-full transition-all"
+                      className="h-full bg-[#0f6b57] rounded-full transition-all"
                       style={{ width: `${course.progress}%` }}
                     />
                   </div>
@@ -148,7 +148,7 @@ export const CoursesPage: React.FC = () => {
                 </div>
                 <Link
                   to={`/courses/${course.id}`}
-                  className="font-semibold text-[#5645d4] dark:text-[#8070f6] hover:underline flex items-center gap-1"
+                  className="font-semibold text-[#0f6b57] dark:text-[#4ccba5] hover:underline flex items-center gap-1"
                 >
                   Workspace <ArrowRight className="h-3.5 w-3.5" />
                 </Link>

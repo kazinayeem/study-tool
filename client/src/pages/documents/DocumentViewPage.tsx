@@ -674,7 +674,7 @@ export const DocumentViewPage: React.FC = () => {
               }}
               className={`w-full flex items-center gap-2 p-2 rounded-[8px] text-left text-xs transition-colors ${
                 sDoc.id === id
-                  ? 'bg-[#5645d4]/20 text-[#d6b6f6] font-semibold border border-[#5645d4]/40'
+                  ? 'bg-[#0f6b57]/20 text-[#a8dcc9] font-semibold border border-[#0f6b57]/40'
                   : 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'
               }`}
             >
@@ -700,7 +700,7 @@ export const DocumentViewPage: React.FC = () => {
                   onClick={() => setCurrentPage(p)}
                   className={`h-7 rounded-[6px] text-[11px] font-medium transition-colors relative ${
                     currentPage === p
-                      ? 'bg-[#5645d4] text-white font-bold'
+                      ? 'bg-[#0f6b57] text-white font-bold'
                       : 'bg-slate-800/80 text-slate-400 hover:bg-slate-700 hover:text-white'
                   }`}
                 >
@@ -809,7 +809,7 @@ export const DocumentViewPage: React.FC = () => {
               className="bg-transparent text-xs text-white placeholder:text-slate-500 focus:outline-none w-28 sm:w-36"
             />
             {searchMatches.length > 0 && (
-              <span className="text-[10px] text-indigo-400 font-semibold px-1">
+              <span className="text-[10px] text-emerald-400 font-semibold px-1">
                 {searchMatches.length} pages
               </span>
             )}
@@ -894,7 +894,7 @@ export const DocumentViewPage: React.FC = () => {
         >
           {loadingPdf && (
             <div className="flex flex-col items-center justify-center h-full min-h-[360px] text-slate-400 text-xs space-y-3 m-auto">
-              <div className="h-8 w-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+              <div className="h-8 w-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
               <span className="font-medium tracking-wide">
                 {previewKind === 'image' ? 'Loading image…' : 'Rendering PDF document…'}
               </span>
@@ -1179,7 +1179,7 @@ export const DocumentViewPage: React.FC = () => {
                     <div className="flex items-center justify-between">
                       <button
                         onClick={() => setCurrentPage(anno.pageNumber)}
-                        className="flex items-center gap-1.5 font-bold text-indigo-400 hover:underline"
+                        className="flex items-center gap-1.5 font-bold text-emerald-400 hover:underline"
                       >
                         <span
                           className="h-2 w-2 rounded-full"
@@ -1197,7 +1197,7 @@ export const DocumentViewPage: React.FC = () => {
                     </div>
 
                     {anno.selectedText && (
-                      <p className="text-slate-300 italic bg-slate-800/40 p-1.5 rounded text-[11px] border-l-2 border-indigo-500">
+                      <p className="text-slate-300 italic bg-slate-800/40 p-1.5 rounded text-[11px] border-l-2 border-emerald-500">
                         "{anno.selectedText}"
                       </p>
                     )}
@@ -1286,7 +1286,7 @@ export const DocumentViewPage: React.FC = () => {
                 <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 block">
                   Category
                 </span>
-                <p className="font-medium text-indigo-400 mt-0.5">{document?.category}</p>
+                <p className="font-medium text-emerald-400 mt-0.5">{document?.category}</p>
               </div>
 
               <div>

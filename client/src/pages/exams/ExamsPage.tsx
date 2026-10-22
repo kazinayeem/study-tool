@@ -195,7 +195,7 @@ export const ExamsPage: React.FC = () => {
         <select
           value={courseFilter}
           onChange={(e) => setCourseFilter(e.target.value)}
-          className="rounded-[8px] border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 shadow-2xs focus:border-[#5645d4] focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
+          className="rounded-[8px] border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 shadow-2xs focus:border-[#0f6b57] focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
         >
           <option value="">All Courses</option>
           {courses.map((c) => (
@@ -206,7 +206,7 @@ export const ExamsPage: React.FC = () => {
         <select
           value={examTypeFilter}
           onChange={(e) => setExamTypeFilter(e.target.value)}
-          className="rounded-[8px] border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 shadow-2xs focus:border-[#5645d4] focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
+          className="rounded-[8px] border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 shadow-2xs focus:border-[#0f6b57] focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
         >
           <option value="">All Exam Types</option>
           <option value="Quiz">Quiz</option>
@@ -273,11 +273,11 @@ export const ExamsPage: React.FC = () => {
                 {/* Date & Room */}
                 <div className="mt-2 flex flex-wrap items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
                   <span className="flex items-center gap-1 font-semibold text-slate-800 dark:text-slate-200">
-                    <Calendar className="h-3.5 w-3.5 text-[#5645d4]" />
+                    <Calendar className="h-3.5 w-3.5 text-[#0f6b57]" />
                     {formatDate(exam.examDate, 'EEEE, MMM d, yyyy • h:mm a')}
                   </span>
                   {exam.room && <span>📍 {exam.room}</span>}
-                  <span className="text-[#5645d4] dark:text-[#8070f6] font-semibold">
+                  <span className="text-[#0f6b57] dark:text-[#4ccba5] font-semibold">
                     {exam.daysRemaining === 0 ? 'Today!' : exam.daysRemaining && exam.daysRemaining > 0 ? `In ${exam.daysRemaining} days` : 'Past'}
                   </span>
                 </div>
@@ -313,9 +313,9 @@ export const ExamsPage: React.FC = () => {
                     <div
                       key={item.id}
                       onClick={() => toggleChecklistMutation.mutate({ examId: exam.id, itemId: item.id })}
-                      className="flex items-center gap-2 cursor-pointer text-xs text-slate-600 dark:text-slate-300 hover:text-[#5645d4]"
+                      className="flex items-center gap-2 cursor-pointer text-xs text-slate-600 dark:text-slate-300 hover:text-[#0f6b57]"
                     >
-                      <span className={`h-3.5 w-3.5 rounded flex items-center justify-center border ${item.isCompleted ? 'bg-[#5645d4] border-[#5645d4] text-white' : 'border-slate-300'}`}>
+                      <span className={`h-3.5 w-3.5 rounded flex items-center justify-center border ${item.isCompleted ? 'bg-[#0f6b57] border-[#0f6b57] text-white' : 'border-slate-300'}`}>
                         {item.isCompleted && <Check className="h-3 w-3" />}
                       </span>
                       <span className={item.isCompleted ? 'line-through text-slate-400' : ''}>
@@ -348,7 +348,7 @@ export const ExamsPage: React.FC = () => {
                       <Link
                         key={qp.id}
                         to={`/documents/${qp.documentId}/view`}
-                        className="flex items-center justify-between p-2 rounded-[6px] bg-[#5645d4]/10 dark:bg-[#5645d4]/20 border border-[#5645d4]/20 text-xs text-[#5645d4] dark:text-[#8070f6] hover:bg-[#5645d4]/15"
+                        className="flex items-center justify-between p-2 rounded-[6px] bg-[#0f6b57]/10 dark:bg-[#0f6b57]/20 border border-[#0f6b57]/20 text-xs text-[#0f6b57] dark:text-[#4ccba5] hover:bg-[#0f6b57]/15"
                       >
                         <span className="flex items-center gap-1.5 truncate">
                           <FileCode className="h-4 w-4 shrink-0" />
@@ -365,7 +365,7 @@ export const ExamsPage: React.FC = () => {
               <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                 <button
                   onClick={() => setShareTarget(exam)}
-                  className="text-xs text-slate-500 hover:text-[#5645d4] flex items-center gap-1.5 font-semibold transition-colors"
+                  className="text-xs text-slate-500 hover:text-[#0f6b57] flex items-center gap-1.5 font-semibold transition-colors"
                   title="Share Exam Scope & Checklist"
                 >
                   <Share2 className="h-3.5 w-3.5" /> Share Exam Hub
@@ -407,7 +407,7 @@ export const ExamsPage: React.FC = () => {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g. Midterm Examination - InfoSec"
-                  className="w-full rounded-[8px] border border-slate-300 p-2.5 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-slate-300 p-2.5 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 />
               </div>
 
@@ -418,7 +418,7 @@ export const ExamsPage: React.FC = () => {
                     required
                     value={courseId}
                     onChange={(e) => setCourseId(e.target.value)}
-                    className="w-full rounded-[8px] border border-slate-300 p-2.5 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-slate-300 p-2.5 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                   >
                     <option value="">Select course...</option>
                     {courses.map((c) => (
@@ -432,7 +432,7 @@ export const ExamsPage: React.FC = () => {
                   <select
                     value={examType}
                     onChange={(e) => setExamType(e.target.value)}
-                    className="w-full rounded-[8px] border border-slate-300 p-2.5 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-slate-300 p-2.5 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                   >
                     <option value="Quiz">Quiz</option>
                     <option value="Midterm">Midterm</option>
@@ -451,7 +451,7 @@ export const ExamsPage: React.FC = () => {
                     required
                     value={examDate}
                     onChange={(e) => setExamDate(e.target.value)}
-                    className="w-full rounded-[8px] border border-slate-300 p-2.5 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-slate-300 p-2.5 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                   />
                 </div>
 
@@ -462,7 +462,7 @@ export const ExamsPage: React.FC = () => {
                     value={room}
                     onChange={(e) => setRoom(e.target.value)}
                     placeholder="e.g. Hall B, Seat 42"
-                    className="w-full rounded-[8px] border border-slate-300 p-2.5 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-slate-300 p-2.5 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                   />
                 </div>
               </div>
@@ -474,7 +474,7 @@ export const ExamsPage: React.FC = () => {
                   value={syllabus}
                   onChange={(e) => setSyllabus(e.target.value)}
                   placeholder="Chapters, topics, discrete log calculations, AES modes..."
-                  className="w-full rounded-[8px] border border-slate-300 p-2.5 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-slate-300 p-2.5 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 />
               </div>
             </div>

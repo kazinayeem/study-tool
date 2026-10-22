@@ -190,7 +190,7 @@ export const DegreePlannerPage: React.FC = () => {
               onClick={() => setIsSetupModalOpen(true)}
               className="btn-notion-secondary text-xs px-3 py-1.5 flex items-center gap-1.5 cursor-pointer"
             >
-              <Settings className="h-3.5 w-3.5 text-[#5645d4]" />
+              <Settings className="h-3.5 w-3.5 text-[#0f6b57]" />
               <span>Program Setup & Import</span>
             </button>
             <button
@@ -217,7 +217,7 @@ export const DegreePlannerPage: React.FC = () => {
             </div>
             <button
               onClick={() => setIsSetupModalOpen(true)}
-              className="text-xs font-bold text-[#5645d4] dark:text-[#8070f6] hover:underline whitespace-nowrap cursor-pointer shrink-0"
+              className="text-xs font-bold text-[#0f6b57] dark:text-[#4ccba5] hover:underline whitespace-nowrap cursor-pointer shrink-0"
             >
               Load Curriculum Preset →
             </button>
@@ -231,7 +231,7 @@ export const DegreePlannerPage: React.FC = () => {
           onClick={() => setActiveTab('OVERVIEW')}
           className={`flex items-center gap-2 py-3 px-4 border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
             activeTab === 'OVERVIEW'
-              ? 'border-[#5645d4] text-[#5645d4] font-semibold dark:border-[#8070f6] dark:text-[#8070f6]'
+              ? 'border-[#0f6b57] text-[#0f6b57] font-semibold dark:border-[#4ccba5] dark:text-[#4ccba5]'
               : 'border-transparent text-[#787671] hover:text-[#1a1a1a] dark:text-[#a4a097]'
           }`}
         >
@@ -243,7 +243,7 @@ export const DegreePlannerPage: React.FC = () => {
           onClick={() => setActiveTab('CURRICULUM')}
           className={`flex items-center gap-2 py-3 px-4 border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
             activeTab === 'CURRICULUM'
-              ? 'border-[#5645d4] text-[#5645d4] font-semibold dark:border-[#8070f6] dark:text-[#8070f6]'
+              ? 'border-[#0f6b57] text-[#0f6b57] font-semibold dark:border-[#4ccba5] dark:text-[#4ccba5]'
               : 'border-transparent text-[#787671] hover:text-[#1a1a1a] dark:text-[#a4a097]'
           }`}
         >
@@ -255,7 +255,7 @@ export const DegreePlannerPage: React.FC = () => {
           onClick={() => setActiveTab('HISTORY')}
           className={`flex items-center gap-2 py-3 px-4 border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
             activeTab === 'HISTORY'
-              ? 'border-[#5645d4] text-[#5645d4] font-semibold dark:border-[#8070f6] dark:text-[#8070f6]'
+              ? 'border-[#0f6b57] text-[#0f6b57] font-semibold dark:border-[#4ccba5] dark:text-[#4ccba5]'
               : 'border-transparent text-[#787671] hover:text-[#1a1a1a] dark:text-[#a4a097]'
           }`}
         >
@@ -267,11 +267,11 @@ export const DegreePlannerPage: React.FC = () => {
           onClick={() => setActiveTab('PLANNER')}
           className={`flex items-center gap-2 py-3 px-4 border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
             activeTab === 'PLANNER'
-              ? 'border-[#5645d4] text-[#5645d4] font-semibold dark:border-[#8070f6] dark:text-[#8070f6]'
+              ? 'border-[#0f6b57] text-[#0f6b57] font-semibold dark:border-[#4ccba5] dark:text-[#4ccba5]'
               : 'border-transparent text-[#787671] hover:text-[#1a1a1a] dark:text-[#a4a097]'
           }`}
         >
-          <Sparkles className="h-3.5 w-3.5 text-[#5645d4]" />
+          <Sparkles className="h-3.5 w-3.5 text-[#0f6b57]" />
           <span>Next Semester Planner</span>
         </button>
       </div>
@@ -335,8 +335,8 @@ export const DegreePlannerPage: React.FC = () => {
 
             {/* 6. Estimated Remaining Semesters */}
             <div className="p-4 rounded-[12px] border border-[#e5e3df] bg-white dark:border-[#2a2a2e] dark:bg-[#141416] shadow-2xs">
-              <span className="text-[11px] font-medium text-[#5645d4]">Est. Semesters</span>
-              <div className="text-2xl font-bold text-[#5645d4] dark:text-[#8070f6] mt-1">
+              <span className="text-[11px] font-medium text-[#0f6b57]">Est. Semesters</span>
+              <div className="text-2xl font-bold text-[#0f6b57] dark:text-[#4ccba5] mt-1">
                 {graduationEstimates.estimatedRemainingSemesters}
               </div>
               <span className="text-[10px] text-[#787671]">
@@ -350,7 +350,7 @@ export const DegreePlannerPage: React.FC = () => {
             <div className="flex items-center justify-between text-xs font-semibold">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-bold text-[#1a1a1a] dark:text-white">Overall Degree Completion</span>
-                <span className="text-xs text-[#5645d4] font-bold">({credits.completionPercentage}%)</span>
+                <span className="text-xs text-[#0f6b57] font-bold">({credits.completionPercentage}%)</span>
               </div>
               <span className="text-xs text-[#787671]">
                 {credits.completed} earned + {credits.inProgress} in progress of {credits.totalRequired} total
@@ -429,7 +429,7 @@ export const DegreePlannerPage: React.FC = () => {
                           <span className="text-[11px] text-[#787671]">
                             {cat.completedCredits} / {cat.totalCredits} cr
                           </span>
-                          <span className="text-xs font-bold text-[#5645d4] dark:text-[#8070f6]">
+                          <span className="text-xs font-bold text-[#0f6b57] dark:text-[#4ccba5]">
                             {cat.completionPercentage}%
                           </span>
                         </div>
@@ -437,7 +437,7 @@ export const DegreePlannerPage: React.FC = () => {
 
                       <div className="w-full bg-[#ede9e4] dark:bg-[#252528] h-2 rounded-full overflow-hidden">
                         <div
-                          className="bg-[#5645d4] h-full rounded-full transition-all duration-500"
+                          className="bg-[#0f6b57] h-full rounded-full transition-all duration-500"
                           style={{ width: `${cat.completionPercentage}%` }}
                         />
                       </div>
@@ -451,7 +451,7 @@ export const DegreePlannerPage: React.FC = () => {
             <div className="lg:col-span-5 p-5 rounded-[12px] border border-[#e5e3df] bg-[#fbfbfa] dark:border-[#2a2a2e] dark:bg-[#141416] shadow-2xs space-y-4 flex flex-col justify-between">
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4 text-[#5645d4]" />
+                  <TrendingUp className="h-4 w-4 text-[#0f6b57]" />
                   <h3 className="text-sm font-bold text-[#1a1a1a] dark:text-white">
                     Estimated Graduation Plan
                   </h3>
@@ -472,7 +472,7 @@ export const DegreePlannerPage: React.FC = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-[#787671]">Prerequisite Critical Path:</span>
-                    <strong className="text-[#5645d4] font-semibold">
+                    <strong className="text-[#0f6b57] font-semibold">
                       {graduationEstimates.criticalPathDepth} Terms Depth
                     </strong>
                   </div>

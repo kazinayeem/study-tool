@@ -218,7 +218,7 @@ export const NotificationCenterPage: React.FC = () => {
                   type="checkbox"
                   checked={unreadOnly}
                   onChange={(e) => setUnreadOnly(e.target.checked)}
-                  className="rounded border-[#c8c4be] text-[#5645d4] focus:ring-[#5645d4]"
+                  className="rounded border-[#c8c4be] text-[#0f6b57] focus:ring-[#0f6b57]"
                 />
                 <span>Show Unread Only</span>
               </label>
@@ -254,7 +254,7 @@ export const NotificationCenterPage: React.FC = () => {
                     key={n.id}
                     className={`card-notion flex items-start justify-between rounded-[12px] border p-4 transition-all shadow-2xs ${
                       isUnread
-                        ? 'border-[#d6b6f6] bg-[#e6e0f5]/30 dark:border-[#391c57] dark:bg-[#391c57]/20'
+                        ? 'border-[#a8dcc9] bg-[#dcf0e8]/30 dark:border-[#0d3b30] dark:bg-[#0d3b30]/20'
                         : 'border-[#e5e3df] bg-white dark:border-[#2a2a2e] dark:bg-[#141416]'
                     }`}
                   >
@@ -262,7 +262,7 @@ export const NotificationCenterPage: React.FC = () => {
                       <div
                         className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px] ${
                           isUnread
-                            ? 'bg-[#5645d4] text-white'
+                            ? 'bg-[#0f6b57] text-white'
                             : 'bg-[#f0eeec] text-[#787671] dark:bg-[#252528] dark:text-[#a4a097]'
                         }`}
                       >
@@ -294,7 +294,7 @@ export const NotificationCenterPage: React.FC = () => {
                           {n.resourceType && (
                             <Link
                               to={linkPath}
-                              className="font-semibold text-[#5645d4] hover:underline dark:text-[#d6b6f6]"
+                              className="font-semibold text-[#0f6b57] hover:underline dark:text-[#a8dcc9]"
                             >
                               View {n.resourceType.toLowerCase()} →
                             </Link>
@@ -307,7 +307,7 @@ export const NotificationCenterPage: React.FC = () => {
                       {isUnread && (
                         <button
                           onClick={() => markReadMutation.mutate(n.id)}
-                          className="p-1.5 rounded-[6px] text-[#787671] hover:text-[#5645d4] hover:bg-[#ede9e4] dark:hover:bg-[#252528] text-xs font-medium cursor-pointer"
+                          className="p-1.5 rounded-[6px] text-[#787671] hover:text-[#0f6b57] hover:bg-[#ede9e4] dark:hover:bg-[#252528] text-xs font-medium cursor-pointer"
                           title="Mark as read"
                         >
                           <CheckCheck className="h-4 w-4" />
@@ -315,7 +315,7 @@ export const NotificationCenterPage: React.FC = () => {
                       )}
                       <button
                         onClick={() => deleteNotificationMutation.mutate(n.id)}
-                        className="p-1.5 rounded-[6px] text-[#787671] hover:text-[#e03131] hover:bg-[#fde0ec] dark:hover:bg-[#391c57]/40 text-xs font-medium cursor-pointer"
+                        className="p-1.5 rounded-[6px] text-[#787671] hover:text-[#e03131] hover:bg-[#fde0ec] dark:hover:bg-[#0d3b30]/40 text-xs font-medium cursor-pointer"
                         title="Delete notification"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -443,7 +443,7 @@ export const NotificationCenterPage: React.FC = () => {
                       enableInAppNotifications: e.target.checked,
                     })
                   }
-                  className="h-4 w-4 rounded border-[#c8c4be] text-[#5645d4] focus:ring-[#5645d4]"
+                  className="h-4 w-4 rounded border-[#c8c4be] text-[#0f6b57] focus:ring-[#0f6b57]"
                 />
               </div>
 
@@ -465,7 +465,7 @@ export const NotificationCenterPage: React.FC = () => {
                       enableEmailNotifications: e.target.checked,
                     })
                   }
-                  className="h-4 w-4 rounded border-[#c8c4be] text-[#5645d4] focus:ring-[#5645d4]"
+                  className="h-4 w-4 rounded border-[#c8c4be] text-[#0f6b57] focus:ring-[#0f6b57]"
                 />
               </div>
 
@@ -504,7 +504,7 @@ export const NotificationCenterPage: React.FC = () => {
                   placeholder="Recipient email (defaults to owner)"
                   value={testEmailRecipient}
                   onChange={(e) => setTestEmailRecipient(e.target.value)}
-                  className="flex-1 h-[38px] rounded-[8px] border border-[#c8c4be] bg-white px-3 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-2 focus:border-[#5645d4]"
+                  className="flex-1 h-[38px] rounded-[8px] border border-[#c8c4be] bg-white px-3 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-2 focus:border-[#0f6b57]"
                 />
                 <button
                   onClick={() => testEmailMutation.mutate(testEmailRecipient || undefined)}
@@ -521,7 +521,7 @@ export const NotificationCenterPage: React.FC = () => {
                   className={`mt-3 rounded-[6px] p-2.5 text-xs flex items-center gap-2 ${
                     testEmailResult.success
                       ? 'bg-[#d9f3e1] text-[#1aae39] border border-[#1aae39]/30'
-                      : 'bg-[#fde0ec] text-[#e03131] border border-[#ff64c8]/30'
+                      : 'bg-[#fde0ec] text-[#e03131] border border-[#d9480f]/30'
                   }`}
                 >
                   {testEmailResult.success ? (
@@ -560,7 +560,7 @@ export const NotificationCenterPage: React.FC = () => {
                   onChange={(e) =>
                     updatePrefsMutation.mutate({ notifyAssignments: e.target.checked })
                   }
-                  className="h-4 w-4 rounded border-slate-300 text-indigo-600"
+                  className="h-4 w-4 rounded border-slate-300 text-emerald-600"
                 />
               </div>
 
@@ -579,7 +579,7 @@ export const NotificationCenterPage: React.FC = () => {
                   onChange={(e) =>
                     updatePrefsMutation.mutate({ notifyExams: e.target.checked })
                   }
-                  className="h-4 w-4 rounded border-slate-300 text-indigo-600"
+                  className="h-4 w-4 rounded border-slate-300 text-emerald-600"
                 />
               </div>
 
@@ -598,7 +598,7 @@ export const NotificationCenterPage: React.FC = () => {
                   onChange={(e) =>
                     updatePrefsMutation.mutate({ notifyStudySessions: e.target.checked })
                   }
-                  className="h-4 w-4 rounded border-slate-300 text-indigo-600"
+                  className="h-4 w-4 rounded border-slate-300 text-emerald-600"
                 />
               </div>
 
@@ -617,7 +617,7 @@ export const NotificationCenterPage: React.FC = () => {
                   onChange={(e) =>
                     updatePrefsMutation.mutate({ notifyCalendarEvents: e.target.checked })
                   }
-                  className="h-4 w-4 rounded border-slate-300 text-indigo-600"
+                  className="h-4 w-4 rounded border-slate-300 text-emerald-600"
                 />
               </div>
 
@@ -629,7 +629,7 @@ export const NotificationCenterPage: React.FC = () => {
                   {['7d', '3d', '1d', '2h', 'start'].map((interval) => (
                     <span
                       key={interval}
-                      className="rounded-lg bg-indigo-50 px-2.5 py-1 text-[11px] font-bold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300"
+                      className="rounded-lg bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300"
                     >
                       ✓ {interval === '7d' ? '7 Days Before' : interval === '3d' ? '3 Days Before' : interval === '1d' ? '1 Day Before' : interval === '2h' ? '2 Hours Before' : 'At Event Start'}
                     </span>

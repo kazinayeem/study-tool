@@ -310,7 +310,7 @@ export const AddClassPhotoModal: React.FC<AddClassPhotoModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#e5e3df] dark:border-[#27272a] bg-[#fbfbfa] dark:bg-[#1e1e24] shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-[8px] bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6]">
+            <div className="p-2 rounded-[8px] bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5]">
               <Camera className="h-5 w-5" />
             </div>
             <div>
@@ -353,7 +353,7 @@ export const AddClassPhotoModal: React.FC<AddClassPhotoModalProps> = ({
                   value={selectedSemesterId}
                   onChange={(e) => setSelectedSemesterId(e.target.value)}
                   disabled={isSubmitting}
-                  className="w-full text-sm bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#5645d4]"
+                  className="w-full text-sm bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0f6b57]"
                 >
                   {semesters.map((sem) => (
                     <option key={sem.id} value={sem.id}>
@@ -371,7 +371,7 @@ export const AddClassPhotoModal: React.FC<AddClassPhotoModalProps> = ({
                   value={selectedCourseId}
                   onChange={(e) => handleCourseChange(e.target.value)}
                   disabled={isSubmitting || availableCourses.length === 0}
-                  className="w-full text-sm bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#5645d4]"
+                  className="w-full text-sm bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0f6b57]"
                 >
                   {availableCourses.length === 0 ? (
                     <option value="">No courses in this semester</option>
@@ -399,7 +399,7 @@ export const AddClassPhotoModal: React.FC<AddClassPhotoModalProps> = ({
                   value={sessionDate}
                   onChange={(e) => setSessionDate(e.target.value)}
                   disabled={isSubmitting || !!existingSession}
-                  className="w-full text-sm bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#5645d4]"
+                  className="w-full text-sm bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0f6b57]"
                 />
               </div>
             </div>
@@ -414,7 +414,7 @@ export const AddClassPhotoModal: React.FC<AddClassPhotoModalProps> = ({
                 onChange={(e) => setTopic(e.target.value)}
                 placeholder="e.g. RSA Public Key Cryptography & Theorems"
                 disabled={isSubmitting || !!existingSession}
-                className="w-full text-sm bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#5645d4]"
+                className="w-full text-sm bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0f6b57]"
               />
             </div>
           </div>
@@ -433,7 +433,7 @@ export const AddClassPhotoModal: React.FC<AddClassPhotoModalProps> = ({
                     onChange={(e) => setTeacherName(e.target.value)}
                     placeholder="e.g. Dr. Turing"
                     disabled={isSubmitting}
-                    className="w-full text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-1.5 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#5645d4]"
+                    className="w-full text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-1.5 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0f6b57]"
                   />
                 </div>
                 <div>
@@ -446,7 +446,7 @@ export const AddClassPhotoModal: React.FC<AddClassPhotoModalProps> = ({
                     onChange={(e) => setRoomNumber(e.target.value)}
                     placeholder="e.g. Lab 402"
                     disabled={isSubmitting}
-                    className="w-full text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-1.5 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#5645d4]"
+                    className="w-full text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-1.5 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0f6b57]"
                   />
                 </div>
               </div>
@@ -461,7 +461,7 @@ export const AddClassPhotoModal: React.FC<AddClassPhotoModalProps> = ({
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Key theorems written on the board, midterm reminders..."
                   disabled={isSubmitting}
-                  className="w-full text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-1.5 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#5645d4] resize-none"
+                  className="w-full text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-1.5 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0f6b57] resize-none"
                 />
               </div>
             </div>
@@ -492,7 +492,7 @@ export const AddClassPhotoModal: React.FC<AddClassPhotoModalProps> = ({
                 type="button"
                 onClick={() => setIsCameraOpen(true)}
                 disabled={isSubmitting}
-                className="flex items-center justify-center gap-2 p-3.5 rounded-[8px] border-2 border-dashed border-[#5645d4]/40 hover:border-[#5645d4] bg-[#5645d4]/5 hover:bg-[#5645d4]/10 text-[#5645d4] dark:text-[#8070f6] font-medium text-xs transition-all active:scale-[0.98]"
+                className="flex items-center justify-center gap-2 p-3.5 rounded-[8px] border-2 border-dashed border-[#0f6b57]/40 hover:border-[#0f6b57] bg-[#0f6b57]/5 hover:bg-[#0f6b57]/10 text-[#0f6b57] dark:text-[#4ccba5] font-medium text-xs transition-all active:scale-[0.98]"
               >
                 <Camera className="h-5 w-5" />
                 <span>Capture Photo with Camera</span>
@@ -566,12 +566,12 @@ export const AddClassPhotoModal: React.FC<AddClassPhotoModalProps> = ({
                         onChange={(e) => handleUpdateCaption(item.id, e.target.value)}
                         placeholder="Caption (e.g. Board section 1, Theorem proof)"
                         disabled={isSubmitting}
-                        className="w-full text-xs bg-white dark:bg-slate-800 border border-[#e5e3df] dark:border-[#27272a] rounded-[6px] px-2 py-1 text-slate-800 dark:text-slate-200 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#5645d4]"
+                        className="w-full text-xs bg-white dark:bg-slate-800 border border-[#e5e3df] dark:border-[#27272a] rounded-[6px] px-2 py-1 text-slate-800 dark:text-slate-200 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#0f6b57]"
                       />
 
                       {/* Item Status */}
                       {item.status === 'uploading' && (
-                        <div className="flex items-center gap-1.5 text-[11px] text-[#5645d4]">
+                        <div className="flex items-center gap-1.5 text-[11px] text-[#0f6b57]">
                           <Loader2 className="h-3 w-3 animate-spin" />
                           <span>Uploading...</span>
                         </div>
@@ -597,17 +597,17 @@ export const AddClassPhotoModal: React.FC<AddClassPhotoModalProps> = ({
 
           {/* Genuine Upload Progress Bar */}
           {isSubmitting && (
-            <div className="p-3.5 rounded-[8px] bg-[#5645d4]/5 border border-[#5645d4]/20 space-y-2">
-              <div className="flex items-center justify-between text-xs text-[#5645d4] font-medium">
+            <div className="p-3.5 rounded-[8px] bg-[#0f6b57]/5 border border-[#0f6b57]/20 space-y-2">
+              <div className="flex items-center justify-between text-xs text-[#0f6b57] font-medium">
                 <span className="flex items-center gap-1.5">
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
                   Saving photos to class journal...
                 </span>
                 <span className="font-mono">{uploadProgress}%</span>
               </div>
-              <div className="w-full bg-[#5645d4]/20 rounded-full h-1.5 overflow-hidden">
+              <div className="w-full bg-[#0f6b57]/20 rounded-full h-1.5 overflow-hidden">
                 <div
-                  className="bg-[#5645d4] h-1.5 rounded-full transition-all duration-200"
+                  className="bg-[#0f6b57] h-1.5 rounded-full transition-all duration-200"
                   style={{ width: `${uploadProgress}%` }}
                 />
               </div>
@@ -644,7 +644,7 @@ export const AddClassPhotoModal: React.FC<AddClassPhotoModalProps> = ({
               type="button"
               onClick={handleSubmit}
               disabled={isSubmitting || queue.length === 0}
-              className="px-4 py-2 rounded-[8px] text-xs font-semibold bg-[#5645d4] hover:bg-[#4636b8] text-white shadow-sm flex items-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 rounded-[8px] text-xs font-semibold bg-[#0f6b57] hover:bg-[#0b5645] text-white shadow-sm flex items-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <>

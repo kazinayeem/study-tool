@@ -132,8 +132,8 @@ export const AdminDashboardPage: React.FC = () => {
       {/* Admin Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] bg-[#e6e0f5] text-[#391c57] text-xs font-semibold mb-2 border border-[#d6b6f6]">
-            <Shield className="h-3.5 w-3.5 text-[#5645d4]" />
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] bg-[#dcf0e8] text-[#0d3b30] text-xs font-semibold mb-2 border border-[#a8dcc9]">
+            <Shield className="h-3.5 w-3.5 text-[#0f6b57]" />
             <span>Workspace Administration</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-semibold tracking-[-0.5px] text-[#1a1a1a] dark:text-white">
@@ -213,10 +213,10 @@ export const AdminDashboardPage: React.FC = () => {
         </div>
 
         {/* Authentication Providers: Lavender Tint */}
-        <div className="card-notion-lavender p-4 sm:p-5 rounded-[12px] border border-[#7b3ff2]/25 shadow-2xs">
+        <div className="card-notion-lavender p-4 sm:p-5 rounded-[12px] border border-[#0f6b57]/25 shadow-2xs">
           <div className="flex items-center justify-between text-[#5d5b54] text-xs font-semibold">
             <span>Google Accounts</span>
-            <span className="text-[10px] font-bold text-[#5645d4]">OAuth 2.0</span>
+            <span className="text-[10px] font-bold text-[#0f6b57]">OAuth 2.0</span>
           </div>
           <div className="mt-2 flex items-baseline gap-2">
             <span className="text-2xl sm:text-3xl font-semibold text-[#1a1a1a]">
@@ -340,7 +340,7 @@ export const AdminDashboardPage: React.FC = () => {
                   setSearchQuery(e.target.value);
                   setPage(1);
                 }}
-                className="w-full pl-10 pr-4 h-[38px] rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-[#ffffff] dark:bg-[#1c1c1f] text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#5645d4]"
+                className="w-full pl-10 pr-4 h-[38px] rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-[#ffffff] dark:bg-[#1c1c1f] text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#0f6b57]"
               />
             </div>
 
@@ -352,7 +352,7 @@ export const AdminDashboardPage: React.FC = () => {
                   setRoleFilter(e.target.value);
                   setPage(1);
                 }}
-                className="h-[38px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#5645d4] cursor-pointer"
+                className="h-[38px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#0f6b57] cursor-pointer"
               >
                 <option value="">All Roles</option>
                 <option value="ADMIN">Admin</option>
@@ -367,7 +367,7 @@ export const AdminDashboardPage: React.FC = () => {
                   setStatusFilter(e.target.value);
                   setPage(1);
                 }}
-                className="h-[38px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#5645d4] cursor-pointer"
+                className="h-[38px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#0f6b57] cursor-pointer"
               >
                 <option value="">All Statuses</option>
                 <option value="ACTIVE">Active</option>
@@ -422,7 +422,7 @@ export const AdminDashboardPage: React.FC = () => {
                                   className="h-8 w-8 rounded-full object-cover border border-[#e5e3df] dark:border-[#2a2a2e]"
                                 />
                               ) : (
-                                <div className="h-8 w-8 rounded-full bg-[#f0eeec] dark:bg-[#252528] text-[#5645d4] dark:text-[#d6b6f6] font-bold flex items-center justify-center text-xs">
+                                <div className="h-8 w-8 rounded-full bg-[#f0eeec] dark:bg-[#252528] text-[#0f6b57] dark:text-[#a8dcc9] font-bold flex items-center justify-center text-xs">
                                   {u.name?.slice(0, 2).toUpperCase() || 'ST'}
                                 </div>
                               )}
@@ -483,7 +483,7 @@ export const AdminDashboardPage: React.FC = () => {
                               className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] text-[10px] font-semibold ${
                                 u.status === 'ACTIVE'
                                   ? 'badge-notion-tag-green'
-                                  : 'bg-[#fde0ec] text-[#e03131] border border-[#ff64c8]/30'
+                                  : 'bg-[#fde0ec] text-[#e03131] border border-[#d9480f]/30'
                               }`}
                             >
                               <span
@@ -584,7 +584,7 @@ export const AdminDashboardPage: React.FC = () => {
                   setActivityEventType(e.target.value);
                   setActivityPage(1);
                 }}
-                className="h-[36px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#5645d4] cursor-pointer"
+                className="h-[36px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#0f6b57] cursor-pointer"
               >
                 <option value="">All Event Types</option>
                 <option value="SIGN_IN">Sign In</option>
@@ -610,7 +610,7 @@ export const AdminDashboardPage: React.FC = () => {
                   setActivityIsDemo(val === '' ? undefined : val === 'true');
                   setActivityPage(1);
                 }}
-                className="h-[36px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#5645d4] cursor-pointer"
+                className="h-[36px] px-3 rounded-[8px] border border-[#c8c4be] dark:border-[#37352f] bg-white dark:bg-[#1c1c1f] text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#0f6b57] cursor-pointer"
               >
                 <option value="">All Accounts (Demo & Regular)</option>
                 <option value="false">Regular User Events Only</option>
@@ -640,7 +640,7 @@ export const AdminDashboardPage: React.FC = () => {
                   className="p-3.5 rounded-[12px] bg-white dark:bg-[#141416] border border-[#e5e3df] dark:border-[#2a2a2e] shadow-2xs flex items-start justify-between gap-4 transition-all hover:border-[#c8c4be]"
                 >
                   <div className="flex items-start gap-3">
-                    <div className="h-8 w-8 rounded-[8px] bg-[#f0eeec] text-[#5645d4] dark:bg-[#252528] dark:text-[#d6b6f6] flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="h-8 w-8 rounded-[8px] bg-[#f0eeec] text-[#0f6b57] dark:bg-[#252528] dark:text-[#a8dcc9] flex items-center justify-center shrink-0 mt-0.5">
                       {evt.resourceType === 'DOCUMENT' ? (
                         <FileText className="h-4 w-4" />
                       ) : evt.resourceType === 'NOTE' ? (
@@ -729,11 +729,11 @@ export const AdminDashboardPage: React.FC = () => {
                 <div key={cat.eventType} className="space-y-1.5">
                   <div className="flex justify-between text-xs font-semibold">
                     <span className="font-mono text-[#37352f] dark:text-[#f0eeec]">{cat.eventType}</span>
-                    <span className="text-[#5645d4] dark:text-[#d6b6f6] font-bold">{cat.count} occurrences</span>
+                    <span className="text-[#0f6b57] dark:text-[#a8dcc9] font-bold">{cat.count} occurrences</span>
                   </div>
                   <div className="h-2 w-full bg-[#f0eeec] dark:bg-[#252528] rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-[#5645d4] rounded-full transition-all duration-500"
+                      className="h-full bg-[#0f6b57] rounded-full transition-all duration-500"
                       style={{ width: `${Math.max(percentage, 5)}%` }}
                     />
                   </div>
@@ -769,7 +769,7 @@ export const AdminDashboardPage: React.FC = () => {
 
               <div className="p-4 rounded-[8px] bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800">
                 <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Assignments & Tasks</p>
-                <p className="text-2xl font-black text-[#5645d4] mt-1">
+                <p className="text-2xl font-black text-[#0f6b57] mt-1">
                   {featureData?.features?.assignments ?? 0}
                 </p>
                 <p className="text-[11px] text-slate-500 mt-0.5">tasks across 7 statuses</p>
@@ -793,7 +793,7 @@ export const AdminDashboardPage: React.FC = () => {
 
               <div className="p-4 rounded-[8px] bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800">
                 <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Version History</p>
-                <p className="text-2xl font-black text-[#5645d4] dark:text-[#8070f6] mt-1">
+                <p className="text-2xl font-black text-[#0f6b57] dark:text-[#4ccba5] mt-1">
                   {featureData?.features?.documentVersions ?? 0}
                 </p>
                 <p className="text-[11px] text-slate-500 mt-0.5">document versions saved</p>
@@ -846,7 +846,7 @@ export const AdminDashboardPage: React.FC = () => {
 
               <div className="p-3.5 rounded-[8px] bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800">
                 <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Active Users (7d)</p>
-                <p className="text-xl font-black text-[#5645d4] mt-0.5">
+                <p className="text-xl font-black text-[#0f6b57] mt-0.5">
                   {engagementData?.activeUsers7d ?? 0}
                 </p>
               </div>
@@ -910,7 +910,7 @@ export const AdminDashboardPage: React.FC = () => {
                       <td className="py-2.5 px-3 font-medium text-slate-900 dark:text-white">
                         {log.actor?.email || log.actorId}
                       </td>
-                      <td className="py-2.5 px-3 font-bold text-[#5645d4] dark:text-[#8070f6]">
+                      <td className="py-2.5 px-3 font-bold text-[#0f6b57] dark:text-[#4ccba5]">
                         {log.action}
                       </td>
                       <td className="py-2.5 px-3 font-mono text-[11px] text-slate-600 dark:text-slate-300">

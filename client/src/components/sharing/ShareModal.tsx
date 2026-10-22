@@ -115,7 +115,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#e5e3df] dark:border-[#1e293b]">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-[8px] bg-[#5645d4]/10 dark:bg-[#5645d4]/20 text-[#5645d4] dark:text-[#8070f6]">
+            <div className="p-2 rounded-[8px] bg-[#0f6b57]/10 dark:bg-[#0f6b57]/20 text-[#0f6b57] dark:text-[#4ccba5]">
               <Share2 className="h-4 w-4" />
             </div>
             <div>
@@ -149,7 +149,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                 onClick={() => setVisibility('UNLISTED')}
                 className={`p-3 rounded-[8px] border flex flex-col items-center text-center gap-1.5 transition-all ${
                   visibility === 'UNLISTED'
-                    ? 'border-[#5645d4] bg-[#5645d4]/10 dark:bg-[#5645d4]/20 text-[#5645d4] dark:text-[#8070f6] font-bold'
+                    ? 'border-[#0f6b57] bg-[#0f6b57]/10 dark:bg-[#0f6b57]/20 text-[#0f6b57] dark:text-[#4ccba5] font-bold'
                     : 'border-[#e5e3df] dark:border-[#1e293b] hover:border-slate-300 dark:hover:border-slate-700 text-slate-600 dark:text-slate-400'
                 }`}
               >
@@ -163,7 +163,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                 onClick={() => setVisibility('PUBLIC')}
                 className={`p-3 rounded-[8px] border flex flex-col items-center text-center gap-1.5 transition-all ${
                   visibility === 'PUBLIC'
-                    ? 'border-[#5645d4] bg-[#5645d4]/10 dark:bg-[#5645d4]/20 text-[#5645d4] dark:text-[#8070f6] font-bold'
+                    ? 'border-[#0f6b57] bg-[#0f6b57]/10 dark:bg-[#0f6b57]/20 text-[#0f6b57] dark:text-[#4ccba5] font-bold'
                     : 'border-[#e5e3df] dark:border-[#1e293b] hover:border-slate-300 dark:hover:border-slate-700 text-slate-600 dark:text-slate-400'
                 }`}
               >
@@ -215,14 +215,14 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <label className="flex items-center gap-2 text-slate-700 dark:text-slate-300 font-medium">
-                      <Lock className="h-3.5 w-3.5 text-[#5645d4]" />
+                      <Lock className="h-3.5 w-3.5 text-[#0f6b57]" />
                       Require Password
                     </label>
                     <input
                       type="checkbox"
                       checked={isPasswordProtected}
                       onChange={(e) => setIsPasswordProtected(e.target.checked)}
-                      className="rounded-[4px] border-[#e5e3df] text-[#5645d4] focus:ring-[#5645d4] accent-[#5645d4]"
+                      className="rounded-[4px] border-[#e5e3df] text-[#0f6b57] focus:ring-[#0f6b57] accent-[#0f6b57]"
                     />
                   </div>
                   {isPasswordProtected && (
@@ -231,7 +231,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                       placeholder="Enter strong access password..."
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full rounded-[8px] border border-[#e5e3df] p-2 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
+                      className="w-full rounded-[8px] border border-[#e5e3df] p-2 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                     />
                   )}
                 </div>
@@ -241,7 +241,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                   <div className="flex items-center justify-between pt-2 border-t border-[#e5e3df] dark:border-[#1e293b]">
                     <div>
                       <span className="font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                        <Download className="h-3.5 w-3.5 text-[#5645d4]" />
+                        <Download className="h-3.5 w-3.5 text-[#0f6b57]" />
                         Allow Document Download
                       </span>
                       <p className="text-[10px] text-slate-400">
@@ -252,7 +252,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                       type="checkbox"
                       checked={allowDownload}
                       onChange={(e) => setAllowDownload(e.target.checked)}
-                      className="rounded-[4px] border-[#e5e3df] text-[#5645d4] focus:ring-[#5645d4] accent-[#5645d4]"
+                      className="rounded-[4px] border-[#e5e3df] text-[#0f6b57] focus:ring-[#0f6b57] accent-[#0f6b57]"
                     />
                   </div>
                 )}
@@ -262,7 +262,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                   <div className="flex items-center justify-between pt-2 border-t border-[#e5e3df] dark:border-[#1e293b]">
                     <div>
                       <span className="font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                        <Search className="h-3.5 w-3.5 text-[#5645d4]" />
+                        <Search className="h-3.5 w-3.5 text-[#0f6b57]" />
                         Allow Search Engine Indexing
                       </span>
                       <p className="text-[10px] text-slate-400">
@@ -273,7 +273,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                       type="checkbox"
                       checked={allowIndexing}
                       onChange={(e) => setAllowIndexing(e.target.checked)}
-                      className="rounded-[4px] border-[#e5e3df] text-[#5645d4] focus:ring-[#5645d4] accent-[#5645d4]"
+                      className="rounded-[4px] border-[#e5e3df] text-[#0f6b57] focus:ring-[#0f6b57] accent-[#0f6b57]"
                     />
                   </div>
                 )}
@@ -282,7 +282,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                 <div className="flex items-center justify-between pt-2 border-t border-[#e5e3df] dark:border-[#1e293b]">
                   <div>
                     <span className="font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-                      <Calendar className="h-3.5 w-3.5 text-[#5645d4]" />
+                      <Calendar className="h-3.5 w-3.5 text-[#0f6b57]" />
                       Optional Link Expiration
                     </span>
                     <p className="text-[10px] text-slate-400">Auto-revoke link after a specific date.</p>
@@ -291,7 +291,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                     type="datetime-local"
                     value={expiresAt}
                     onChange={(e) => setExpiresAt(e.target.value)}
-                    className="rounded-[8px] border border-[#e5e3df] p-1.5 text-slate-800 dark:border-[#1e293b] dark:bg-slate-800 dark:text-white focus:border-[#5645d4] focus:outline-none"
+                    className="rounded-[8px] border border-[#e5e3df] p-1.5 text-slate-800 dark:border-[#1e293b] dark:bg-slate-800 dark:text-white focus:border-[#0f6b57] focus:outline-none"
                   />
                 </div>
 
@@ -342,7 +342,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                                 {link.isRevoked ? 'Revoked' : isExpired ? 'Expired' : link.visibility}
                               </span>
                               {link.isPasswordProtected && (
-                                <span className="flex items-center gap-0.5 text-[10px] text-[#5645d4] dark:text-[#8070f6] font-semibold">
+                                <span className="flex items-center gap-0.5 text-[10px] text-[#0f6b57] dark:text-[#4ccba5] font-semibold">
                                   <Lock className="h-3 w-3" /> Password
                                 </span>
                               )}

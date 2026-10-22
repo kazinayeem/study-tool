@@ -145,7 +145,7 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onProfileUpdat
             className="h-7 w-7 rounded-full object-cover border border-[#e5e3df] dark:border-[#2a2a2e] shrink-0"
           />
         ) : (
-          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#5645d4] text-[11px] font-bold text-white shadow-xs">
+          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f6b57] text-[11px] font-bold text-white shadow-xs">
             {initials}
           </div>
         )}
@@ -186,7 +186,7 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onProfileUpdat
                     className="h-12 w-12 rounded-full object-cover border-2 border-[#e5e3df] dark:border-[#2a2a2e]"
                   />
                 ) : (
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#5645d4] text-sm font-bold text-white shadow-sm">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0f6b57] text-sm font-bold text-white shadow-sm">
                     {initials}
                   </div>
                 )}
@@ -208,7 +208,7 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onProfileUpdat
                       onChange={(e) => setNameInput(e.target.value)}
                       onKeyDown={handleNameKeyDown}
                       maxLength={100}
-                      className="flex-1 min-w-0 text-sm font-semibold text-[#1a1a1a] dark:text-white bg-white dark:bg-[#252528] border border-[#5645d4] rounded-[6px] px-2 py-1 outline-none ring-2 ring-[#5645d4]/20"
+                      className="flex-1 min-w-0 text-sm font-semibold text-[#1a1a1a] dark:text-white bg-white dark:bg-[#252528] border border-[#0f6b57] rounded-[6px] px-2 py-1 outline-none ring-2 ring-[#0f6b57]/20"
                       placeholder="Your full name"
                     />
                     <button
@@ -243,7 +243,7 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onProfileUpdat
                     {!isDemo && (
                       <button
                         onClick={handleStartEditName}
-                        className="p-0.5 rounded-[4px] text-[#a4a097] hover:text-[#5645d4] hover:bg-[#e6e0f5] dark:hover:bg-[#391c57]/40 transition-colors cursor-pointer shrink-0"
+                        className="p-0.5 rounded-[4px] text-[#a4a097] hover:text-[#0f6b57] hover:bg-[#dcf0e8] dark:hover:bg-[#0d3b30]/40 transition-colors cursor-pointer shrink-0"
                         title="Edit name"
                       >
                         <Pencil className="h-3 w-3" />
@@ -270,10 +270,10 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onProfileUpdat
                 <div className="flex items-center gap-1.5 mt-1.5">
                   <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold border ${
                     user.role === 'ADMIN'
-                      ? 'bg-[#fde0ec] text-[#a02e6d] border-[#ff64c8]/30 dark:bg-[#391c57]/50 dark:text-[#d6b6f6]'
+                      ? 'bg-[#fde0ec] text-[#9a3412] border-[#d9480f]/30 dark:bg-[#0d3b30]/50 dark:text-[#a8dcc9]'
                       : user.role === 'DEMO'
                       ? 'bg-[#fef7d6] text-[#793400] border-[#f5d75e]/40'
-                      : 'bg-[#e6e0f5] text-[#5645d4] border-[#5645d4]/20 dark:bg-[#391c57]/40 dark:text-[#d6b6f6]'
+                      : 'bg-[#dcf0e8] text-[#0f6b57] border-[#0f6b57]/20 dark:bg-[#0d3b30]/40 dark:text-[#a8dcc9]'
                   }`}>
                     {user.role === 'ADMIN' && <Shield className="h-2.5 w-2.5" />}
                     {user.role === 'DEMO' && <Sparkles className="h-2.5 w-2.5" />}
@@ -301,8 +301,8 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onProfileUpdat
               className="flex items-center gap-3 w-full px-3 py-2.5 rounded-[8px] text-sm text-[#37352f] dark:text-[#f0eeec] hover:bg-[#f6f5f4] dark:hover:bg-[#252528] transition-colors"
               role="menuitem"
             >
-              <div className="h-7 w-7 rounded-[6px] bg-[#e6e0f5] dark:bg-[#391c57]/50 flex items-center justify-center shrink-0">
-                <Settings className="h-3.5 w-3.5 text-[#5645d4] dark:text-[#d6b6f6]" />
+              <div className="h-7 w-7 rounded-[6px] bg-[#dcf0e8] dark:bg-[#0d3b30]/50 flex items-center justify-center shrink-0">
+                <Settings className="h-3.5 w-3.5 text-[#0f6b57] dark:text-[#a8dcc9]" />
               </div>
               <div className="text-left">
                 <span className="font-medium block text-[13px]">Preferences & Settings</span>
@@ -351,8 +351,8 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onProfileUpdat
                 className="flex items-center gap-3 w-full px-3 py-2.5 rounded-[8px] text-sm text-[#37352f] dark:text-[#f0eeec] hover:bg-[#f6f5f4] dark:hover:bg-[#252528] transition-colors"
                 role="menuitem"
               >
-                <div className="h-7 w-7 rounded-[6px] bg-[#fde0ec] dark:bg-[#a02e6d]/20 flex items-center justify-center shrink-0">
-                  <Shield className="h-3.5 w-3.5 text-[#a02e6d]" />
+                <div className="h-7 w-7 rounded-[6px] bg-[#fde0ec] dark:bg-[#9a3412]/20 flex items-center justify-center shrink-0">
+                  <Shield className="h-3.5 w-3.5 text-[#9a3412]" />
                 </div>
                 <div className="text-left">
                   <span className="font-medium block text-[13px]">Admin Dashboard</span>
@@ -367,7 +367,7 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onProfileUpdat
             <button
               id="profile-logout-btn"
               onClick={handleLogout}
-              className="flex items-center gap-3 w-full px-3 py-2.5 rounded-[8px] text-sm text-[#e03131] hover:bg-[#fde0ec] dark:hover:bg-[#391c57]/30 transition-colors cursor-pointer"
+              className="flex items-center gap-3 w-full px-3 py-2.5 rounded-[8px] text-sm text-[#e03131] hover:bg-[#fde0ec] dark:hover:bg-[#0d3b30]/30 transition-colors cursor-pointer"
               role="menuitem"
             >
               <div className="h-7 w-7 rounded-[6px] bg-[#fde0ec] dark:bg-[#e03131]/10 flex items-center justify-center shrink-0">

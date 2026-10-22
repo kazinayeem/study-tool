@@ -5,9 +5,12 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-notion-primary: #5645d4;
-  --color-notion-primary-pressed: #4534b3;
-  --color-notion-primary-deep: #3a2a99;
+  --font-sans: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-display: 'Bricolage Grotesque', 'Public Sans', sans-serif;
+
+  --color-notion-primary: #0f6b57;
+  --color-notion-primary-pressed: #0b5645;
+  --color-notion-primary-deep: #084436;
   --color-notion-brand-navy: #0a1530;
   --color-notion-brand-navy-deep: #070f24;
   --color-notion-brand-navy-mid: #1a2a52;
@@ -15,11 +18,11 @@
   --color-notion-link-blue-pressed: #005bab;
   --color-notion-orange: #dd5b00;
   --color-notion-orange-deep: #793400;
-  --color-notion-pink: #ff64c8;
-  --color-notion-pink-deep: #a02e6d;
-  --color-notion-purple: #7b3ff2;
-  --color-notion-purple-300: #d6b6f6;
-  --color-notion-purple-800: #391c57;
+  --color-notion-pink: #d9480f;
+  --color-notion-pink-deep: #9a3412;
+  --color-notion-purple: #0f6b57;
+  --color-notion-teal-300: #a8dcc9;
+  --color-notion-teal-800: #0d3b30;
   --color-notion-teal: #2a9d99;
   --color-notion-green: #1aae39;
   --color-notion-yellow: #f5d75e;
@@ -28,7 +31,7 @@
   --color-notion-tint-peach: #ffe8d4;
   --color-notion-tint-rose: #fde0ec;
   --color-notion-tint-mint: #d9f3e1;
-  --color-notion-tint-lavender: #e6e0f5;
+  --color-notion-tint-lavender: #dcf0e8;
   --color-notion-tint-sky: #dcecfa;
   --color-notion-tint-yellow: #fef7d6;
   --color-notion-tint-yellow-bold: #f9e79f;
@@ -52,7 +55,8 @@
 
 @layer base {
   :root {
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --font-sans: 'Public Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --font-display: 'Bricolage Grotesque', 'Public Sans', -apple-system, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
     --app-bg: #ffffff;
   }
@@ -77,6 +81,41 @@
     --app-bg: #0f0f11;
   }
 
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: #ffd84d;
+    color: #14201c;
+  }
+
+  :focus-visible {
+    outline: 2px solid #0f6b57;
+    outline-offset: 2px;
+  }
+  html.dark :focus-visible {
+    outline-color: #4ccba5;
+  }
+
+  button, a, [role='button'] {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:not(:disabled), [role='button'] {
+    cursor: pointer;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   html.dark body {
     color: #f0eeec;
     background-color: var(--app-bg);
@@ -85,7 +124,7 @@
 
 /* Notion Design System Components */
 .btn-notion-primary {
-  background-color: #5645d4;
+  background-color: #0f6b57;
   color: #ffffff;
   font-size: 14px;
   font-weight: 500;
@@ -100,10 +139,10 @@
   cursor: pointer;
 }
 .btn-notion-primary:hover {
-  background-color: #4534b3;
+  background-color: #0b5645;
 }
 .btn-notion-primary:active {
-  background-color: #3a2a99;
+  background-color: #084436;
 }
 .btn-notion-primary:disabled {
   background-color: #e5e3df;
@@ -228,7 +267,7 @@
   border-radius: 12px;
 }
 .card-notion-lavender {
-  background-color: #e6e0f5;
+  background-color: #dcf0e8;
   color: #37352f;
   border-radius: 12px;
 }
@@ -255,7 +294,7 @@
 
 /* Badges */
 .badge-notion-purple {
-  background-color: #5645d4;
+  background-color: #0f6b57;
   color: #ffffff;
   font-size: 13px;
   font-weight: 600;
@@ -264,8 +303,8 @@
   padding: 4px 10px;
 }
 .badge-notion-tag-purple {
-  background-color: #e6e0f5;
-  color: #391c57;
+  background-color: #dcf0e8;
+  color: #0d3b30;
   font-size: 13px;
   font-weight: 600;
   line-height: 1.40;
@@ -424,6 +463,7 @@
    ========================================================================== */
 
 .lex-editor-root {
+  container: lexroot / inline-size;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -449,7 +489,7 @@
 
 .lex-toolbar-inner {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 2px;
   padding: 6px 8px;
@@ -490,14 +530,14 @@
 }
 
 .lex-toolbar-btn:focus-visible {
-  outline: 2px solid rgba(86, 69, 212, 0.45);
+  outline: 2px solid rgba(15, 107, 87, 0.45);
   outline-offset: 1px;
 }
 
 .lex-toolbar-btn[aria-pressed='true'],
 .lex-toolbar-btn-active {
-  background: #ece8fb;
-  color: #5645d4;
+  background: #dcf0e8;
+  color: #0f6b57;
 }
 
 .lex-toolbar-btn:disabled {
@@ -544,8 +584,8 @@
 }
 .lex-select:focus-visible,
 .lex-input:focus-visible {
-  border-color: #5645d4;
-  box-shadow: 0 0 0 2px rgba(86, 69, 212, 0.18);
+  border-color: #0f6b57;
+  box-shadow: 0 0 0 2px rgba(15, 107, 87, 0.18);
 }
 .lex-input {
   width: 100%;
@@ -555,14 +595,14 @@
   font-size: 12.5px;
   font-weight: 600;
   color: #ffffff;
-  background: #5645d4;
+  background: #0f6b57;
   border: none;
   border-radius: 6px;
   padding: 6px 12px;
   cursor: pointer;
 }
 .lex-primary-btn:hover {
-  background: #4534b3;
+  background: #0b5645;
 }
 
 .lex-chip {
@@ -610,9 +650,7 @@
 }
 
 .lex-popover {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
+  position: fixed;
   z-index: 60;
   background: #ffffff;
   border: 1px solid #e5e3df;
@@ -665,7 +703,9 @@
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
-  padding: 24px 16px 64px;
+  padding: clamp(0px, 3vw, 24px) clamp(0px, 2vw, 16px) 64px;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -674,7 +714,7 @@
 .lex-page {
   width: 100%;
   max-width: 816px;
-  min-height: 1056px;
+  min-height: min(1056px, 100%);
   background: #ffffff;
   border: 1px solid #e5e3df;
   border-radius: 2px;
@@ -682,10 +722,13 @@
 }
 
 .lex-page-inner {
-  padding: 72px 84px 96px;
+  padding: clamp(28px, 7vw, 72px) clamp(20px, 9vw, 84px) clamp(48px, 8vw, 96px);
 }
 
 .lex-title {
+  display: block;
+  resize: none;
+  overflow: hidden;
   width: 100%;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: 30px;
@@ -713,7 +756,7 @@
 
 /* ---------------- Document typography ---------------- */
 .lexical-doc {
-  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.7;
   color: #1a1a1a;
@@ -734,7 +777,7 @@
 .lexical-doc .lex-h4,
 .lexical-doc .lex-h5,
 .lexical-doc .lex-h6 {
-  font-family: Inter, system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-weight: 700;
   line-height: 1.3;
   color: #111111;
@@ -750,7 +793,7 @@
 .lexical-doc .lex-quote {
   margin: 16px 0;
   padding: 4px 0 4px 16px;
-  border-left: 3px solid #5645d4;
+  border-left: 3px solid #0f6b57;
   color: #5d5b54;
   font-style: italic;
 }
@@ -791,8 +834,8 @@
   background: #ffffff;
 }
 .lexical-doc .lex-li-checked::before {
-  background: #5645d4;
-  border-color: #5645d4;
+  background: #0f6b57;
+  border-color: #0f6b57;
 }
 .lexical-doc .lex-li-checked::after {
   content: '';
@@ -811,13 +854,13 @@
 }
 
 .lexical-doc .lex-link {
-  color: #5645d4;
+  color: #0f6b57;
   text-decoration: underline;
   text-underline-offset: 2px;
   cursor: pointer;
 }
 .lexical-doc .lex-link:hover {
-  color: #3a2a99;
+  color: #084436;
 }
 
 .lexical-doc .lex-bold { font-weight: 700; }
@@ -875,7 +918,7 @@
   font-weight: 600;
 }
 .lexical-doc .lex-table-selection {
-  background: #ece8fb;
+  background: #dcf0e8;
 }
 
 .lexical-doc .lex-image-wrapper {
@@ -952,7 +995,7 @@
 .dark .lex-toolbar-btn { color: #e5e5e5; }
 .dark .lex-toolbar-btn:hover:not(:disabled) { background: #2a2a2d; }
 .dark .lex-toolbar-btn[aria-pressed='true'],
-.dark .lex-toolbar-btn-active { background: #2c2547; color: #c9bdf7; }
+.dark .lex-toolbar-btn-active { background: #12352c; color: #a8dcc9; }
 .dark .lex-divider { background: #37352f; }
 .dark .lex-select,
 .dark .lex-input,
@@ -1010,4 +1053,191 @@
     box-shadow: none;
   }
   .lex-page-inner { padding: 0; }
+}
+
+/* Graph-paper surface: the one signature motif, used on hero and auth panels. */
+.graph-paper {
+  background-color: #f7faf8;
+  background-image:
+    linear-gradient(to right, rgba(15, 107, 87, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 107, 87, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+html.dark .graph-paper {
+  background-color: #0d1512;
+  background-image:
+    linear-gradient(to right, rgba(76, 203, 165, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(76, 203, 165, 0.07) 1px, transparent 1px);
+}
+
+/* Dark-mode variants for button primitives that were light-only. */
+html.dark .btn-notion-secondary {
+  color: #f0eeec;
+  border-color: #3a3a40;
+}
+html.dark .btn-notion-secondary:hover {
+  background-color: #202024;
+  border-color: #5d5b54;
+}
+html.dark .btn-notion-primary:disabled {
+  background-color: #252528;
+  color: #5d5b54;
+}
+html.dark .btn-notion-dark {
+  background-color: #f0eeec;
+  color: #14201c;
+}
+html.dark .btn-notion-dark:hover {
+  background-color: #ffffff;
+}
+html.dark .btn-notion-link {
+  color: #4ccba5;
+}
+html.dark .card-notion {
+  background-color: #141416;
+  border-color: #2a2a2e;
+}
+
+/* ---------------- Editor ergonomics ---------------- */
+.lex-toolbar {
+  position: relative;
+  z-index: 5;
+}
+.lex-toolbar-inner {
+  scrollbar-width: none;
+}
+.lex-toolbar-inner::-webkit-scrollbar {
+  display: none;
+}
+@media (min-width: 1280px) {
+  .lex-toolbar-inner {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+}
+.lex-toolbar-inner > * {
+  flex-shrink: 0;
+}
+.lex-select-font {
+  max-width: 132px;
+}
+.lex-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #e5e3df;
+  border-radius: 6px;
+  background: #fff;
+}
+.lex-stepper-btn {
+  width: 26px;
+  height: 28px;
+  font-size: 15px;
+  line-height: 1;
+  color: #37352f;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.lex-stepper-btn:hover {
+  background: #f0eeec;
+}
+.lex-stepper-value {
+  min-width: 26px;
+  text-align: center;
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+.lex-zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.lex-zoom-value {
+  min-width: 44px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: #5d5b54;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 4px 2px;
+}
+.lex-zoom-value:hover {
+  background: #f0eeec;
+}
+.lex-chip-icon {
+  padding: 4px 6px;
+}
+.lex-chip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.lex-statusbar {
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+@container lexroot (max-width: 640px) {
+  .lex-chip-text {
+    display: none;
+  }
+}
+@media (max-width: 640px) {
+  .lex-title {
+    font-size: 24px;
+  }
+  .lexical-doc {
+    font-size: 16px;
+  }
+}
+@media (pointer: coarse) {
+  .lex-toolbar-btn {
+    padding: 9px;
+  }
+  .lex-select,
+  .lex-stepper-btn {
+    min-height: 36px;
+  }
+}
+.lexical-doc ::selection {
+  background: #bfe6d6;
+}
+
+html.dark .lex-editor-root,
+html.dark .lex-editor-overlay,
+html.dark .lex-workspace {
+  background: #0f0f11;
+  color: #f0eeec;
+}
+html.dark .lex-toolbar,
+html.dark .lex-statusbar {
+  background: #141416;
+  border-color: #2a2a2e;
+}
+html.dark .lex-toolbar-context {
+  background: #19191c;
+}
+html.dark .lex-toolbar-btn {
+  color: #f0eeec;
+}
+html.dark .lex-toolbar-btn:hover:not(:disabled) {
+  background: #202024;
+}
+html.dark .lex-toolbar-btn[aria-pressed='true'],
+html.dark .lex-toolbar-btn-active {
+  background: #0d3b30;
+  color: #4ccba5;
+}
+html.dark .lex-select,
+html.dark .lex-input,
+html.dark .lex-chip,
+html.dark .lex-stepper,
+html.dark .lex-popover {
+  background: #1c1c1f;
+  color: #f0eeec;
+  border-color: #2a2a2e;
+}
+html.dark .lex-stepper-btn,
+html.dark .lex-zoom-value {
+  color: #f0eeec;
+}
+html.dark .lex-divider {
+  background: #2a2a2e;
 }

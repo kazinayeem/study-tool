@@ -25,7 +25,7 @@ export const AcademicBreadcrumb: React.FC<AcademicBreadcrumbProps> = ({
     >
       {semesterName ? (
         <span className="flex items-center gap-1.5 text-[#37352f] dark:text-neutral-200 font-semibold bg-neutral-100 dark:bg-neutral-800/60 px-2 py-0.5 rounded-md border border-neutral-200 dark:border-neutral-700">
-          <GraduationCap className="w-3.5 h-3.5 text-[#5645d4]" />
+          <GraduationCap className="w-3.5 h-3.5 text-[#0f6b57]" />
           <span>{semesterName}</span>
         </span>
       ) : (
@@ -38,7 +38,7 @@ export const AcademicBreadcrumb: React.FC<AcademicBreadcrumbProps> = ({
 
       {courseCode || courseName ? (
         <span className="flex items-center gap-1.5 text-[#37352f] dark:text-neutral-200 font-semibold bg-neutral-100 dark:bg-neutral-800/60 px-2 py-0.5 rounded-md border border-neutral-200 dark:border-neutral-700">
-          <BookOpen className="w-3.5 h-3.5 text-[#5645d4]" />
+          <BookOpen className="w-3.5 h-3.5 text-[#0f6b57]" />
           <span>{courseCode ? `${courseCode}${courseName ? ` - ${courseName}` : ''}` : courseName}</span>
         </span>
       ) : (
@@ -49,7 +49,7 @@ export const AcademicBreadcrumb: React.FC<AcademicBreadcrumbProps> = ({
 
       <ChevronRight className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
 
-      <span className="flex items-center gap-1.5 text-[#5645d4] dark:text-purple-400 font-semibold">
+      <span className="flex items-center gap-1.5 text-[#0f6b57] dark:text-teal-400 font-semibold">
         <Layers className="w-3.5 h-3.5" />
         <span>{moduleName}</span>
       </span>

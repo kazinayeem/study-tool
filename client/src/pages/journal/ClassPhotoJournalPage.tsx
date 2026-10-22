@@ -253,7 +253,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
 
         <div>
           <div className="flex items-center gap-2">
-            <div className="p-2 rounded-[8px] bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6]">
+            <div className="p-2 rounded-[8px] bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5]">
               <Camera className="h-5 w-5" />
             </div>
             <div>
@@ -271,7 +271,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
         <div className="flex items-center gap-2.5">
           <button
             onClick={() => handleOpenAddModal()}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-[8px] bg-[#5645d4] hover:bg-[#4636b8] text-white text-xs font-semibold shadow-xs transition-all active:scale-[0.98]"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-[8px] bg-[#0f6b57] hover:bg-[#0b5645] text-white text-xs font-semibold shadow-xs transition-all active:scale-[0.98]"
           >
             <Camera className="h-4 w-4" />
             <span>+ Capture Board Photo</span>
@@ -294,7 +294,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
               }}
               className={`px-3 py-1.5 rounded-[8px] text-xs font-medium whitespace-nowrap transition-colors flex items-center gap-1.5 ${
                 selectedSemesterId === sem.id
-                  ? 'bg-[#5645d4] text-white shadow-xs'
+                  ? 'bg-[#0f6b57] text-white shadow-xs'
                   : 'bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-300'
               }`}
             >
@@ -309,7 +309,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
         {currentSemester && (
           <Link
             to={`/semesters/${currentSemester.id}`}
-            className="text-xs text-[#5645d4] hover:underline flex items-center gap-1 shrink-0 font-medium"
+            className="text-xs text-[#0f6b57] hover:underline flex items-center gap-1 shrink-0 font-medium"
           >
             <span>View {currentSemester.name} Overview</span>
             <ChevronRight className="h-3.5 w-3.5" />
@@ -329,7 +329,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="Search topic, course, caption..."
-              className="w-full pl-9 pr-3 py-2 text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#5645d4]"
+              className="w-full pl-9 pr-3 py-2 text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0f6b57]"
             />
           </div>
 
@@ -338,7 +338,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
             <select
               value={selectedCourseId}
               onChange={(e) => setSelectedCourseId(e.target.value)}
-              className="w-full py-2 px-3 text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#5645d4]"
+              className="w-full py-2 px-3 text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0f6b57]"
             >
               <option value="">All Subjects / Courses</option>
               {semesterCourses.map((c) => (
@@ -355,7 +355,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
               type="date"
               value={selectedDate}
               onChange={(e) => handleDatePick(e.target.value)}
-              className="w-full py-2 px-3 text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#5645d4]"
+              className="w-full py-2 px-3 text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0f6b57]"
             />
           </div>
 
@@ -365,7 +365,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
               onClick={() => setViewMode('sessions')}
               className={`p-2 rounded-[8px] text-xs font-medium transition-colors flex items-center gap-1.5 ${
                 viewMode === 'sessions'
-                  ? 'bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6]'
+                  ? 'bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5]'
                   : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
               title="Timeline Sessions View"
@@ -377,7 +377,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
               onClick={() => setViewMode('gallery')}
               className={`p-2 rounded-[8px] text-xs font-medium transition-colors flex items-center gap-1.5 ${
                 viewMode === 'gallery'
-                  ? 'bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6]'
+                  ? 'bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5]'
                   : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
               title="Photo Gallery Grid View"
@@ -398,7 +398,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
                 onClick={() => handleQuickFilterClick(qf)}
                 className={`px-2.5 py-1 rounded-[6px] text-xs font-medium capitalize transition-colors ${
                   quickFilter === qf && !selectedDate
-                    ? 'bg-[#5645d4] text-white shadow-xs'
+                    ? 'bg-[#0f6b57] text-white shadow-xs'
                     : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300'
                 }`}
               >
@@ -439,8 +439,8 @@ export const ClassPhotoJournalPage: React.FC = () => {
                 onClick={() => handleDatePick(badge.date)}
                 className={`px-2.5 py-1 rounded-[6px] text-xs font-mono transition-colors flex items-center gap-1.5 shrink-0 ${
                   selectedDate === badge.date
-                    ? 'bg-[#5645d4] text-white font-semibold'
-                    : 'bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6] hover:bg-[#5645d4]/20'
+                    ? 'bg-[#0f6b57] text-white font-semibold'
+                    : 'bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5] hover:bg-[#0f6b57]/20'
                 }`}
               >
                 <Calendar className="h-3 w-3" />
@@ -463,7 +463,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
       ) : sessions.length === 0 ? (
         /* Empty State */
         <div className="card-notion p-12 text-center space-y-4">
-          <div className="w-14 h-14 rounded-full bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6] flex items-center justify-center mx-auto">
+          <div className="w-14 h-14 rounded-full bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5] flex items-center justify-center mx-auto">
             <Camera className="h-7 w-7" />
           </div>
           <div className="max-w-md mx-auto space-y-1">
@@ -479,7 +479,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
           <div>
             <button
               onClick={() => handleOpenAddModal()}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-[8px] bg-[#5645d4] hover:bg-[#4636b8] text-white text-xs font-semibold shadow-xs transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-[8px] bg-[#0f6b57] hover:bg-[#0b5645] text-white text-xs font-semibold shadow-xs transition-colors"
             >
               <Camera className="h-4 w-4" />
               <span>Capture Today's Board Notes</span>
@@ -514,7 +514,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
                 <div className="absolute top-2 left-2">
                   <span
                     className="px-2 py-0.5 rounded-[4px] text-[10px] font-bold text-white shadow-xs"
-                    style={{ backgroundColor: session.course?.color || '#5645d4' }}
+                    style={{ backgroundColor: session.course?.color || '#0f6b57' }}
                   >
                     {session.course?.code}
                   </span>
@@ -546,13 +546,13 @@ export const ClassPhotoJournalPage: React.FC = () => {
                 <div className="flex items-start gap-3 min-w-0">
                   <div
                     className="w-3 self-stretch rounded-full shrink-0"
-                    style={{ backgroundColor: session.course?.color || '#5645d4' }}
+                    style={{ backgroundColor: session.course?.color || '#0f6b57' }}
                   />
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-1">
                       <span
                         className="px-2.5 py-0.5 text-xs font-bold rounded-[4px] text-white"
-                        style={{ backgroundColor: session.course?.color || '#5645d4' }}
+                        style={{ backgroundColor: session.course?.color || '#0f6b57' }}
                       >
                         {session.course?.code}
                       </span>
@@ -563,7 +563,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
 
                     <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
                       <span className="flex items-center gap-1 font-medium text-slate-700 dark:text-slate-300">
-                        <Calendar className="h-3.5 w-3.5 text-[#5645d4]" />
+                        <Calendar className="h-3.5 w-3.5 text-[#0f6b57]" />
                         {formatDate(session.sessionDate)}
                       </span>
                       {session.course?.title && (
@@ -589,7 +589,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
                 <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
                   <button
                     onClick={() => handleOpenAddModal(session)}
-                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-[6px] text-xs font-medium bg-[#5645d4]/10 text-[#5645d4] hover:bg-[#5645d4]/20 dark:bg-[#5645d4]/20 dark:text-[#8070f6] transition-colors"
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-[6px] text-xs font-medium bg-[#0f6b57]/10 text-[#0f6b57] hover:bg-[#0f6b57]/20 dark:bg-[#0f6b57]/20 dark:text-[#4ccba5] transition-colors"
                   >
                     <Plus className="h-3.5 w-3.5" />
                     <span>Add Photos</span>
@@ -633,7 +633,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
                     No photos in this session yet.{' '}
                     <button
                       onClick={() => handleOpenAddModal(session)}
-                      className="text-[#5645d4] underline font-medium"
+                      className="text-[#0f6b57] underline font-medium"
                     >
                       Click to capture/upload
                     </button>
@@ -748,7 +748,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
                   type="text"
                   value={editTopic}
                   onChange={(e) => setEditTopic(e.target.value)}
-                  className="w-full text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#5645d4]"
+                  className="w-full text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0f6b57]"
                 />
               </div>
 
@@ -761,7 +761,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
                     type="text"
                     value={editRoom}
                     onChange={(e) => setEditRoom(e.target.value)}
-                    className="w-full text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#5645d4]"
+                    className="w-full text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0f6b57]"
                   />
                 </div>
                 <div>
@@ -772,7 +772,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
                     type="text"
                     value={editTeacher}
                     onChange={(e) => setEditTeacher(e.target.value)}
-                    className="w-full text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#5645d4]"
+                    className="w-full text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0f6b57]"
                   />
                 </div>
               </div>
@@ -785,7 +785,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
                   rows={3}
                   value={editDescription}
                   onChange={(e) => setEditDescription(e.target.value)}
-                  className="w-full text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#5645d4] resize-none"
+                  className="w-full text-xs bg-white dark:bg-slate-900 border border-[#e5e3df] dark:border-[#27272a] rounded-[8px] px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0f6b57] resize-none"
                 />
               </div>
             </div>
@@ -811,7 +811,7 @@ export const ClassPhotoJournalPage: React.FC = () => {
                   });
                 }}
                 disabled={updateSessionMutation.isPending}
-                className="px-4 py-1.5 rounded-[8px] text-xs font-semibold bg-[#5645d4] hover:bg-[#4636b8] text-white"
+                className="px-4 py-1.5 rounded-[8px] text-xs font-semibold bg-[#0f6b57] hover:bg-[#0b5645] text-white"
               >
                 Save Changes
               </button>

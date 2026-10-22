@@ -311,10 +311,10 @@ export const GradesPage: React.FC = () => {
 
           <button
             onClick={() => setIsWhatIfModalOpen(true)}
-            className="btn-notion-secondary text-xs flex items-center gap-1.5 border-[#5645d4]/30 text-[#5645d4] dark:text-[#8070f6]"
+            className="btn-notion-secondary text-xs flex items-center gap-1.5 border-[#0f6b57]/30 text-[#0f6b57] dark:text-[#4ccba5]"
             title="What-If CGPA Simulator"
           >
-            <TrendingUp className="h-3.5 w-3.5 text-[#5645d4]" />
+            <TrendingUp className="h-3.5 w-3.5 text-[#0f6b57]" />
             <span>What-If Simulator</span>
           </button>
 
@@ -352,7 +352,7 @@ export const GradesPage: React.FC = () => {
         <div className="card-notion p-5">
           <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
             <span className="font-medium">Cumulative GPA (CGPA)</span>
-            <span className="rounded-[4px] bg-[#5645d4]/10 px-2 py-0.5 text-[10px] font-bold text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6]">
+            <span className="rounded-[4px] bg-[#0f6b57]/10 px-2 py-0.5 text-[10px] font-bold text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5]">
               {gradeScale?.scaleName || '4.00 Scale'}
             </span>
           </div>
@@ -374,7 +374,7 @@ export const GradesPage: React.FC = () => {
             <select
               value={selectedSemesterId}
               onChange={(e) => setSelectedSemesterId(e.target.value)}
-              className="rounded-[6px] border border-[#e5e3df] bg-white px-2 py-0.5 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:outline-none focus:border-[#5645d4]"
+              className="rounded-[6px] border border-[#e5e3df] bg-white px-2 py-0.5 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:outline-none focus:border-[#0f6b57]"
             >
               <option value="">Latest Term</option>
               {semesters.map((s) => (
@@ -383,7 +383,7 @@ export const GradesPage: React.FC = () => {
             </select>
           </div>
           <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold tracking-tight text-[#5645d4] dark:text-[#8070f6]">
+            <span className="text-3xl font-extrabold tracking-tight text-[#0f6b57] dark:text-[#4ccba5]">
               {summaryLoading ? '...' : gradeSummary?.semesterGpa.toFixed(2) ?? '0.00'}
             </span>
             <span className="text-xs text-slate-400">/ 4.00</span>
@@ -435,7 +435,7 @@ export const GradesPage: React.FC = () => {
                   updateGoalMutation.mutate(Number(val));
                 }
               }}
-              className="text-[11px] font-semibold text-[#5645d4] hover:underline"
+              className="text-[11px] font-semibold text-[#0f6b57] hover:underline"
             >
               Set Goal
             </button>
@@ -528,7 +528,7 @@ export const GradesPage: React.FC = () => {
                         </span>
                       </td>
                       <td className="py-3">
-                        <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-0.5 text-xs font-bold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+                        <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-bold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
                           {cg.letterGrade}
                         </span>
                       </td>
@@ -577,13 +577,13 @@ export const GradesPage: React.FC = () => {
                     <span className="font-semibold text-slate-800 dark:text-slate-200">
                       {sem.name}
                     </span>
-                    <span className="font-bold text-indigo-600 dark:text-indigo-400">
+                    <span className="font-bold text-emerald-600 dark:text-emerald-400">
                       {Number(semGPA || 0).toFixed(2)}
                     </span>
                   </div>
                   <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 transition-all duration-500"
+                      className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 transition-all duration-500"
                       style={{ width: `${Math.min(100, Math.max(0, pct))}%` }}
                     />
                   </div>
@@ -594,7 +594,7 @@ export const GradesPage: React.FC = () => {
 
           <div className="mt-6 rounded-xl bg-slate-50 p-4 border border-slate-100 dark:bg-slate-800/40 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
             <div className="flex items-center gap-2 font-semibold text-slate-700 dark:text-slate-300 mb-1">
-              <Info className="h-3.5 w-3.5 text-indigo-500" />
+              <Info className="h-3.5 w-3.5 text-emerald-500" />
               <span>Configured Calculation Rule</span>
             </div>
             <p className="text-[11px] leading-relaxed">
@@ -616,11 +616,11 @@ export const GradesPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex w-full min-w-0 items-center gap-2 sm:w-auto">
             <select
               value={selectedCourseId}
               onChange={(e) => setSelectedCourseId(e.target.value)}
-              className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+              className="min-w-0 max-w-full flex-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 sm:flex-none"
             >
               <option value="">All Courses</option>
               {courses.map((c) => (
@@ -652,7 +652,7 @@ export const GradesPage: React.FC = () => {
             <p>No assessments recorded for the selected filter.</p>
             <button
               onClick={handleOpenAddAssessment}
-              className="mt-2 text-indigo-600 font-semibold hover:underline"
+              className="mt-2 text-emerald-600 font-semibold hover:underline"
             >
               Record your first quiz or exam mark
             </button>
@@ -769,7 +769,7 @@ export const GradesPage: React.FC = () => {
                   placeholder="e.g. Midterm Examination, Quiz 1, Project Report"
                   value={assessmentTitle}
                   onChange={(e) => setAssessmentTitle(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 />
               </div>
 
@@ -898,7 +898,7 @@ export const GradesPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={saveAssessmentMutation.isPending}
-                  className="rounded-xl bg-indigo-600 px-5 py-2 text-xs font-semibold text-white shadow-md hover:bg-indigo-700 active:scale-95 disabled:opacity-50"
+                  className="rounded-xl bg-emerald-600 px-5 py-2 text-xs font-semibold text-white shadow-md hover:bg-emerald-700 active:scale-95 disabled:opacity-50"
                 >
                   {saveAssessmentMutation.isPending ? 'Saving...' : 'Save Assessment'}
                 </button>
@@ -963,7 +963,7 @@ export const GradesPage: React.FC = () => {
                   {Array.isArray(gradeScale.rules) &&
                     gradeScale.rules.map((r: any, idx: number) => (
                       <div key={idx} className="rounded bg-slate-50 p-1.5 dark:bg-slate-800 text-center">
-                        <span className="font-bold text-indigo-600 dark:text-indigo-400">{r.letter}</span>
+                        <span className="font-bold text-emerald-600 dark:text-emerald-400">{r.letter}</span>
                         <div className="text-[10px] text-slate-400">{r.point.toFixed(2)} ({r.minMarks}%)</div>
                       </div>
                     ))}
@@ -981,7 +981,7 @@ export const GradesPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={updateScaleMutation.isPending}
-                  className="rounded-xl bg-indigo-600 px-5 py-2 text-xs font-semibold text-white shadow-md hover:bg-indigo-700"
+                  className="rounded-xl bg-emerald-600 px-5 py-2 text-xs font-semibold text-white shadow-md hover:bg-emerald-700"
                 >
                   {updateScaleMutation.isPending ? 'Saving...' : 'Update Grading Policy'}
                 </button>
@@ -997,7 +997,7 @@ export const GradesPage: React.FC = () => {
           <div className="w-full max-w-xl card-notion p-6 shadow-xl dark:bg-slate-900 max-h-[90vh] overflow-y-auto space-y-5">
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
               <div className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-[#5645d4]" />
+                <TrendingUp className="h-5 w-5 text-[#0f6b57]" />
                 <h3 className="text-base font-bold text-slate-900 dark:text-white">
                   What-If CGPA Scenario Simulator
                 </h3>
@@ -1012,7 +1012,7 @@ export const GradesPage: React.FC = () => {
             </div>
 
             {/* Current vs Projected CGPA Overview Banner */}
-            <div className="grid grid-cols-2 gap-3 p-4 rounded-[12px] bg-[#5645d4]/10 border border-[#5645d4]/20 dark:bg-[#5645d4]/15 dark:border-[#5645d4]/30">
+            <div className="grid grid-cols-2 gap-3 p-4 rounded-[12px] bg-[#0f6b57]/10 border border-[#0f6b57]/20 dark:bg-[#0f6b57]/15 dark:border-[#0f6b57]/30">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Current Actual CGPA</span>
                 <p className="text-2xl font-black text-slate-900 dark:text-white mt-0.5">
@@ -1021,8 +1021,8 @@ export const GradesPage: React.FC = () => {
                 <span className="text-[10px] text-slate-400">{completedCredits} completed credits</span>
               </div>
               <div className="text-right">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#5645d4]">Projected Scenario CGPA</span>
-                <p className="text-2xl font-black text-[#5645d4] mt-0.5">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#0f6b57]">Projected Scenario CGPA</span>
+                <p className="text-2xl font-black text-[#0f6b57] mt-0.5">
                   {projectedCgpa.toFixed(2)}
                 </p>
                 <span className={`text-[10px] font-bold ${projectedCgpa >= currentCgpa ? 'text-emerald-600' : 'text-rose-500'}`}>
@@ -1042,7 +1042,7 @@ export const GradesPage: React.FC = () => {
                   placeholder="Course name (e.g. Distributed Systems)"
                   value={hypoCourseName}
                   onChange={(e) => setHypoCourseName(e.target.value)}
-                  className="col-span-6 rounded-[8px] border border-slate-300 p-2 text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#5645d4]"
+                  className="col-span-6 rounded-[8px] border border-slate-300 p-2 text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:outline-none focus:border-[#0f6b57]"
                 />
                 <input
                   type="number"
@@ -1088,7 +1088,7 @@ export const GradesPage: React.FC = () => {
                     ]);
                     setHypoCourseName('');
                   }}
-                  className="col-span-2 rounded-[8px] bg-[#5645d4] hover:bg-[#4534b3] text-white font-bold text-xs"
+                  className="col-span-2 rounded-[8px] bg-[#0f6b57] hover:bg-[#0b5645] text-white font-bold text-xs"
                 >
                   + Add
                 </button>
@@ -1133,7 +1133,7 @@ export const GradesPage: React.FC = () => {
                   type="button"
                   onClick={() => saveScenarioMutation.mutate(projectedCgpa)}
                   disabled={saveScenarioMutation.isPending || hypoCoursesList.length === 0}
-                  className="rounded-[8px] bg-[#5645d4] hover:bg-[#4534b3] px-4 py-2 text-xs font-semibold text-white disabled:opacity-50"
+                  className="rounded-[8px] bg-[#0f6b57] hover:bg-[#0b5645] px-4 py-2 text-xs font-semibold text-white disabled:opacity-50"
                 >
                   {saveScenarioMutation.isPending ? 'Saving...' : 'Save Scenario'}
                 </button>
@@ -1152,7 +1152,7 @@ export const GradesPage: React.FC = () => {
                       <div>
                         <p className="font-bold text-slate-900 dark:text-white">{sc.name}</p>
                         <p className="text-[11px] text-slate-400">
-                          Projected CGPA: <strong className="text-[#5645d4]">{sc.projectedCgpa?.toFixed(2)}</strong>
+                          Projected CGPA: <strong className="text-[#0f6b57]">{sc.projectedCgpa?.toFixed(2)}</strong>
                         </p>
                       </div>
                       <button
@@ -1172,7 +1172,7 @@ export const GradesPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setIsWhatIfModalOpen(false)}
-                className="rounded-[8px] bg-[#5645d4] px-5 py-2 text-xs font-semibold text-white shadow-xs"
+                className="rounded-[8px] bg-[#0f6b57] px-5 py-2 text-xs font-semibold text-white shadow-xs"
               >
                 Done
               </button>

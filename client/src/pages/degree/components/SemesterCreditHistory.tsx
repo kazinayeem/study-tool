@@ -165,7 +165,7 @@ export const SemesterCreditHistory: React.FC<SemesterCreditHistoryProps> = ({ se
 
                       {/* Expand Button */}
                       <td className="py-3 px-3 text-right">
-                        <span className="text-[11px] text-[#5645d4] hover:underline">
+                        <span className="text-[11px] text-[#0f6b57] hover:underline">
                           {isExpanded ? 'Hide' : 'View'}
                         </span>
                       </td>

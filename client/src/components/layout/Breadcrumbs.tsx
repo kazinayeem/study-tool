@@ -48,16 +48,16 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ customItems }) => {
   if (customItems && customItems.length > 0) {
     return (
       <nav aria-label="Breadcrumb" className="flex items-center space-x-1.5 text-xs text-slate-500">
-        <Link to="/" className="flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">
+        <Link to="/" className="hidden sm:flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">
           <Home className="h-3.5 w-3.5" />
         </Link>
         {customItems.map((item, idx) => {
           const isLast = idx === customItems.length - 1;
           return (
             <React.Fragment key={idx}>
-              <ChevronRight className="h-3 w-3 text-slate-300 dark:text-slate-600 shrink-0" />
+              <ChevronRight className="hidden sm:block h-3 w-3 text-slate-300 dark:text-slate-600 shrink-0" />
               {item.href && !isLast ? (
-                <Link to={item.href} className="hover:text-slate-700 dark:hover:text-slate-200 transition-colors truncate max-w-[150px]">
+                <Link to={item.href} className="hidden sm:inline hover:text-slate-700 dark:hover:text-slate-200 transition-colors truncate max-w-[150px]">
                   {item.label}
                 </Link>
               ) : (
@@ -78,7 +78,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ customItems }) => {
 
   return (
     <nav aria-label="Breadcrumb" className="flex items-center space-x-1.5 text-xs text-slate-500">
-      <Link to="/" className="flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">
+      <Link to="/" className="hidden sm:flex items-center text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">
         <Home className="h-3.5 w-3.5" />
       </Link>
       {pathSegments.map((segment, idx) => {
@@ -109,13 +109,13 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ customItems }) => {
 
         return (
           <React.Fragment key={href}>
-            <ChevronRight className="h-3 w-3 text-slate-300 dark:text-slate-600 shrink-0" />
+            <ChevronRight className="hidden sm:block h-3 w-3 text-slate-300 dark:text-slate-600 shrink-0" />
             {isLast ? (
-              <span className="font-medium text-slate-800 dark:text-slate-200 truncate max-w-[160px]">
+              <span className="font-medium text-sm sm:text-xs text-slate-800 dark:text-slate-200 truncate max-w-[40vw] sm:max-w-[160px]">
                 {label}
               </span>
             ) : (
-              <Link to={href} className="hover:text-slate-700 dark:hover:text-slate-200 transition-colors truncate max-w-[160px]">
+              <Link to={href} className="hidden sm:inline hover:text-slate-700 dark:hover:text-slate-200 transition-colors truncate max-w-[160px]">
                 {label}
               </Link>
             )}

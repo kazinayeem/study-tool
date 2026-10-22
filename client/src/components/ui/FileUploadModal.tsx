@@ -300,7 +300,7 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
         {/* Modal Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#e5e3df] dark:border-[#2a2a2e] bg-[#fbfbfa] dark:bg-[#19191c]">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#5645d4] text-white">
+            <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#0f6b57] text-white">
               <Upload className="h-4 w-4" />
             </div>
             <div>
@@ -324,15 +324,15 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
         {/* Modal Body */}
         <div className="p-6 overflow-y-auto space-y-5 flex-1">
           {globalError && (
-            <div className="p-3.5 rounded-[8px] bg-[#fde0ec] border border-[#ff64c8]/40 text-[#a02e6d] text-xs flex items-center gap-2">
+            <div className="p-3.5 rounded-[8px] bg-[#fde0ec] border border-[#d9480f]/40 text-[#9a3412] text-xs flex items-center gap-2">
               <AlertTriangle className="h-4 w-4 shrink-0" />
               <span>{globalError}</span>
             </div>
           )}
 
           {lockAcademicContext && contextLabel && (
-            <div className="flex items-center gap-2 p-3 rounded-[8px] bg-[#e6e0f5]/40 dark:bg-[#5645d4]/15 border border-[#5645d4]/25 text-xs text-[#37352f] dark:text-[#f0eeec]">
-              <FolderOpen className="h-4 w-4 shrink-0 text-[#5645d4]" />
+            <div className="flex items-center gap-2 p-3 rounded-[8px] bg-[#dcf0e8]/40 dark:bg-[#0f6b57]/15 border border-[#0f6b57]/25 text-xs text-[#37352f] dark:text-[#f0eeec]">
+              <FolderOpen className="h-4 w-4 shrink-0 text-[#0f6b57]" />
               <span>
                 Uploading directly into <span className="font-semibold">{contextLabel}</span>. This document
                 will be linked to this course and semester automatically.
@@ -348,8 +348,8 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
             onClick={() => fileInputRef.current?.click()}
             className={`border-2 border-dashed rounded-[12px] p-7 text-center cursor-pointer transition-all ${
               isDragging
-                ? 'border-[#5645d4] bg-[#e6e0f5]/30'
-                : 'border-[#c8c4be] hover:border-[#5645d4] bg-[#fbfbfa] dark:bg-[#1c1c1f] dark:border-[#37352f]'
+                ? 'border-[#0f6b57] bg-[#dcf0e8]/30'
+                : 'border-[#c8c4be] hover:border-[#0f6b57] bg-[#fbfbfa] dark:bg-[#1c1c1f] dark:border-[#37352f]'
             }`}
           >
             <input
@@ -363,12 +363,12 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
                 e.target.value = '';
               }}
             />
-            <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-[8px] bg-white dark:bg-[#252528] text-[#5645d4] border border-[#e5e3df] dark:border-[#37352f] shadow-2xs mb-3">
+            <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-[8px] bg-white dark:bg-[#252528] text-[#0f6b57] border border-[#e5e3df] dark:border-[#37352f] shadow-2xs mb-3">
               <Upload className="h-5 w-5" />
             </div>
             <p className="text-sm font-semibold text-[#1a1a1a] dark:text-white">
               Drag and drop files here, or{' '}
-              <span className="text-[#5645d4] underline">browse</span>
+              <span className="text-[#0f6b57] underline">browse</span>
             </p>
             <p className="text-xs text-[#787671] dark:text-[#a4a097] mt-1">
               Supports {allowedExtensions.join(', ')} (up to 50MB per file)
@@ -397,7 +397,7 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-center gap-2.5 min-w-0">
-                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[6px] bg-[#f6f5f4] dark:bg-[#252528] text-[#5645d4] border border-[#e5e3df] dark:border-[#37352f]">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[6px] bg-[#f6f5f4] dark:bg-[#252528] text-[#0f6b57] border border-[#e5e3df] dark:border-[#37352f]">
                           <FileText className="h-4 w-4" />
                         </div>
                         <div className="min-w-0">
@@ -418,7 +418,7 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
                           </span>
                         )}
                         {item.status === 'uploading' && (
-                          <span className="px-2 py-0.5 rounded-[4px] bg-[#e6e0f5] text-[#5645d4] text-[10px] font-bold border border-[#d6b6f6] animate-pulse">
+                          <span className="px-2 py-0.5 rounded-[4px] bg-[#dcf0e8] text-[#0f6b57] text-[10px] font-bold border border-[#a8dcc9] animate-pulse">
                             Uploading {item.progress}%
                           </span>
                         )}
@@ -434,7 +434,7 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
                           </span>
                         )}
                         {item.status === 'failed' && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-[4px] bg-[#fde0ec] text-[#e03131] text-[10px] font-bold border border-[#ff64c8]/30">
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-[4px] bg-[#fde0ec] text-[#e03131] text-[10px] font-bold border border-[#d9480f]/30">
                             <XCircle className="h-3 w-3" />
                             Failed
                           </span>
@@ -458,7 +458,7 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
                         ) : item.status === 'failed' || item.status === 'cancelled' ? (
                           <button
                             onClick={() => uploadSingleItem(item.id)}
-                            className="p-1 rounded-[4px] text-[#5645d4] hover:bg-[#e6e0f5] text-[11px] font-medium transition-colors inline-flex items-center gap-1"
+                            className="p-1 rounded-[4px] text-[#0f6b57] hover:bg-[#dcf0e8] text-[11px] font-medium transition-colors inline-flex items-center gap-1"
                             title="Retry Upload"
                           >
                             <RotateCw className="h-3 w-3" />
@@ -479,7 +479,7 @@ export const FileUploadModal: React.FC<FileUploadModalProps> = ({
                     {(item.status === 'uploading' || item.status === 'processing') && (
                       <div className="w-full bg-[#ede9e4] dark:bg-[#252528] rounded-full h-1.5 overflow-hidden">
                         <div
-                          className="bg-[#5645d4] h-1.5 rounded-full transition-all duration-150"
+                          className="bg-[#0f6b57] h-1.5 rounded-full transition-all duration-150"
                           style={{ width: `${item.progress}%` }}
                         />
                       </div>

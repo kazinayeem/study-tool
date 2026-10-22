@@ -239,7 +239,7 @@ export const SemestersPage: React.FC = () => {
               type="checkbox"
               checked={includeArchived}
               onChange={(e) => setIncludeArchived(e.target.checked)}
-              className="rounded-[4px] border-slate-300 accent-[#5645d4]"
+              className="rounded-[4px] border-slate-300 accent-[#0f6b57]"
             />
             Show Archived
           </label>
@@ -295,7 +295,7 @@ export const SemestersPage: React.FC = () => {
                         <button
                           onClick={() => setActiveMutation.mutate(sem.id)}
                           disabled={setActiveMutation.isPending}
-                          className="text-[11px] font-semibold text-[#5645d4] dark:text-[#d6b6f6] hover:bg-[#e6e0f5] dark:hover:bg-[#391c57]/40 px-2 py-0.5 rounded-[6px] border border-[#d6b6f6] dark:border-[#391c57] transition-colors cursor-pointer"
+                          className="text-[11px] font-semibold text-[#0f6b57] dark:text-[#a8dcc9] hover:bg-[#dcf0e8] dark:hover:bg-[#0d3b30]/40 px-2 py-0.5 rounded-[6px] border border-[#a8dcc9] dark:border-[#0d3b30] transition-colors cursor-pointer"
                         >
                           Set as Active
                         </button>
@@ -339,7 +339,7 @@ export const SemestersPage: React.FC = () => {
 
                   {/* Title & Dates */}
                   <Link to={`/semesters/${sem.id}`} className="block">
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white hover:text-[#5645d4] dark:hover:text-[#8070f6] transition-colors flex items-center gap-2">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white hover:text-[#0f6b57] dark:hover:text-[#4ccba5] transition-colors flex items-center gap-2">
                       <span>{sem.name}</span>
                       {sem.code && (
                         <span className="text-xs font-semibold px-1.5 py-0.5 rounded-[4px] bg-[#ede9e4] dark:bg-[#252528] text-[#5d5b54] dark:text-[#a4a097]">
@@ -424,7 +424,7 @@ export const SemestersPage: React.FC = () => {
                       <div className="flex items-center gap-2">
                         <Link
                           to={`/semesters/${sem.id}`}
-                          className="font-bold text-slate-900 dark:text-white hover:text-indigo-600 text-sm"
+                          className="font-bold text-slate-900 dark:text-white hover:text-emerald-600 text-sm"
                         >
                           {sem.name}
                         </Link>
@@ -433,7 +433,7 @@ export const SemestersPage: React.FC = () => {
                           <button
                             onClick={() => setActiveMutation.mutate(sem.id)}
                             disabled={setActiveMutation.isPending}
-                            className="text-[11px] font-semibold text-[#5645d4] dark:text-[#d6b6f6] hover:bg-[#e6e0f5] dark:hover:bg-[#391c57]/40 px-2 py-0.5 rounded-[6px] border border-[#d6b6f6] dark:border-[#391c57] transition-colors cursor-pointer"
+                            className="text-[11px] font-semibold text-[#0f6b57] dark:text-[#a8dcc9] hover:bg-[#dcf0e8] dark:hover:bg-[#0d3b30]/40 px-2 py-0.5 rounded-[6px] border border-[#a8dcc9] dark:border-[#0d3b30] transition-colors cursor-pointer"
                           >
                             Set as Active
                           </button>
@@ -496,7 +496,7 @@ export const SemestersPage: React.FC = () => {
                   value={semName}
                   onChange={(e) => setSemName(e.target.value)}
                   placeholder="e.g. Fall 2026 or Spring 2027"
-                  className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 />
               </div>
 
@@ -508,7 +508,7 @@ export const SemestersPage: React.FC = () => {
                     value={semCode}
                     onChange={(e) => setSemCode(e.target.value)}
                     placeholder="e.g. FA26"
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                   />
                 </div>
                 <div>
@@ -516,7 +516,7 @@ export const SemestersPage: React.FC = () => {
                   <select
                     value={semStatus}
                     onChange={(e) => setSemStatus(e.target.value as any)}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                   >
                     <option value="UPCOMING">Upcoming</option>
                     <option value="ACTIVE">Active (Current)</option>
@@ -534,7 +534,7 @@ export const SemestersPage: React.FC = () => {
                     required
                     value={semStart}
                     onChange={(e) => setSemStart(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                   />
                 </div>
                 <div>
@@ -544,7 +544,7 @@ export const SemestersPage: React.FC = () => {
                     required
                     value={semEnd}
                     onChange={(e) => setSemEnd(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                   />
                 </div>
               </div>
@@ -556,7 +556,7 @@ export const SemestersPage: React.FC = () => {
                   value={semDesc}
                   onChange={(e) => setSemDesc(e.target.value)}
                   placeholder="Focus areas, degree milestones, credits planned..."
-                  className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 />
               </div>
 
@@ -567,7 +567,7 @@ export const SemestersPage: React.FC = () => {
                   value={semGoals}
                   onChange={(e) => setSemGoals(e.target.value)}
                   placeholder="e.g. Maintain GPA >= 3.85 and master cryptographic engineering..."
-                  className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 />
               </div>
             </div>
@@ -612,7 +612,7 @@ export const SemestersPage: React.FC = () => {
                   required
                   value={dupName}
                   onChange={(e) => setDupName(e.target.value)}
-                  className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -622,7 +622,7 @@ export const SemestersPage: React.FC = () => {
                     type="date"
                     value={dupStart}
                     onChange={(e) => setDupStart(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                   />
                 </div>
                 <div>
@@ -631,7 +631,7 @@ export const SemestersPage: React.FC = () => {
                     type="date"
                     value={dupEnd}
                     onChange={(e) => setDupEnd(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-lg border border-slate-300 p-2.5 text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                   />
                 </div>
               </div>

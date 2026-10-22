@@ -62,7 +62,7 @@ const Spinner: React.FC = () => (
 );
 
 const schedule = [
-  { day: 'Mon', course: 'CSE 401', time: '9:00 AM', dot: '#5B45E8' },
+  { day: 'Mon', course: 'CSE 401', time: '9:00 AM', dot: '#0f6b57' },
   { day: 'Wed', course: 'MATH 214', time: '11:30 AM', dot: '#10B981' },
   { day: 'Fri', course: 'PHYS 102', time: '2:00 PM', dot: '#F59E0B' },
 ];
@@ -91,10 +91,10 @@ const timeline = [
 const AcademicVisualPanel: React.FC = () => (
   <aside
     aria-hidden="true"
-    className="relative hidden w-1/2 items-center justify-center overflow-hidden bg-[#F5F4FD] p-10 lg:flex xl:p-16"
+    className="relative hidden w-1/2 items-center justify-center overflow-hidden bg-[#f1f8f5] p-10 lg:flex xl:p-16"
   >
     <div className="w-full max-w-[560px]">
-      <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E5E7EB] bg-white px-3 py-1 text-[11px] font-medium text-[#5B45E8]">
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-[#E5E7EB] bg-white px-3 py-1 text-[11px] font-medium text-[#0f6b57]">
         <Sparkles className="h-3 w-3" />
         Stay ahead this semester
       </span>
@@ -110,12 +110,12 @@ const AcademicVisualPanel: React.FC = () => (
           <div className={CARD_CLASS}>
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#EEF0FE] text-[#5B45E8]">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#EEF0FE] text-[#0f6b57]">
                   <Calendar className="h-4 w-4" />
                 </span>
                 <span className="text-sm font-semibold text-[#111827]">This week</span>
               </div>
-              <span className="rounded-full bg-[#F5F3FF] px-2 py-0.5 text-[11px] font-medium text-[#5B45E8]">
+              <span className="rounded-full bg-[#f1f8f5] px-2 py-0.5 text-[11px] font-medium text-[#0f6b57]">
                 Week 8
               </span>
             </div>
@@ -151,7 +151,7 @@ const AcademicVisualPanel: React.FC = () => (
                   </div>
                   <div className="h-1.5 w-full rounded-full bg-[#F1F5F9]">
                     <div
-                      className="h-full rounded-full bg-[#5B45E8]"
+                      className="h-full rounded-full bg-[#0f6b57]"
                       style={{ width: `${course.value}%` }}
                     />
                   </div>
@@ -178,7 +178,7 @@ const AcademicVisualPanel: React.FC = () => (
                   cy="18"
                   r="15.9155"
                   fill="none"
-                  stroke="#5B45E8"
+                  stroke="#0f6b57"
                   strokeWidth="3.5"
                   strokeLinecap="round"
                   strokeDasharray="90 100"
@@ -200,7 +200,7 @@ const AcademicVisualPanel: React.FC = () => (
               {checklist.map((task) => (
                 <div key={task.label} className="flex items-center gap-2.5">
                   {task.done ? (
-                    <CheckCircle2 className="h-4 w-4 shrink-0 text-[#5B45E8]" />
+                    <CheckCircle2 className="h-4 w-4 shrink-0 text-[#0f6b57]" />
                   ) : (
                     <span className="h-4 w-4 shrink-0 rounded-full border border-[#CBD5E1]" />
                   )}
@@ -226,14 +226,14 @@ const AcademicVisualPanel: React.FC = () => (
         </div>
         <div className="relative">
           <div className="absolute inset-x-0 top-[5px] h-0.5 rounded-full bg-[#E5E7EB]" />
-          <div className="absolute left-0 top-[5px] h-0.5 w-1/2 rounded-full bg-[#5B45E8]" />
+          <div className="absolute left-0 top-[5px] h-0.5 w-1/2 rounded-full bg-[#0f6b57]" />
           <div className="relative flex items-start justify-between">
             {timeline.map((step) => (
               <div key={step.label} className="flex flex-col items-center gap-1.5">
                 <span
                   className={cn(
                     'h-2.5 w-2.5 rounded-full ring-4 ring-white',
-                    step.done ? 'bg-[#5B45E8]' : 'bg-[#CBD5E1]'
+                    step.done ? 'bg-[#0f6b57]' : 'bg-[#CBD5E1]'
                   )}
                 />
                 <span className="text-[10px] font-medium text-[#64748B]">{step.label}</span>
@@ -340,12 +340,12 @@ export const LoginPage: React.FC = () => {
   const isBusy = pending !== null || isLoading;
 
   return (
-    <div className="flex min-h-screen w-full bg-white font-sans text-[#111827] selection:bg-[#5B45E8] selection:text-white">
+    <div className="flex min-h-screen w-full bg-white font-sans text-[#111827] selection:bg-[#0f6b57] selection:text-white">
       <main className="flex w-full flex-col lg:h-screen lg:w-1/2 lg:overflow-y-auto">
         <div className="flex flex-1 flex-col px-6 py-8 sm:px-10 lg:px-14">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#5B45E8] text-white shadow-[0_8px_20px_-8px_rgba(91,69,232,0.9)]">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0f6b57] text-white shadow-[0_8px_20px_-8px_rgba(15,107,87,0.9)]">
                 <GraduationCap className="h-5 w-5" strokeWidth={2.2} />
               </span>
               <span className="text-lg font-semibold tracking-tight text-[#111827]">
@@ -354,7 +354,7 @@ export const LoginPage: React.FC = () => {
             </div>
             <Link
               to="/"
-              className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-[13px] font-medium text-[#64748B] transition-colors hover:text-[#111827] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/30"
+              className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-[13px] font-medium text-[#64748B] transition-colors hover:text-[#111827] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               Home
@@ -363,7 +363,7 @@ export const LoginPage: React.FC = () => {
 
           <div className="flex flex-1 flex-col justify-center py-10 sm:py-12">
             <div className="mx-auto w-full max-w-[400px]">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#5B45E8]">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0f6b57]">
                 Your academic space
               </span>
               <h1 className="mt-3 text-[30px] font-semibold leading-tight tracking-[-0.02em] text-[#111827]">
@@ -406,7 +406,7 @@ export const LoginPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setNotice(null)}
-                      className="mt-1.5 text-[12px] font-medium text-[#5B45E8] underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/30"
+                      className="mt-1.5 text-[12px] font-medium text-[#0f6b57] underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
                     >
                       Dismiss
                     </button>
@@ -419,7 +419,7 @@ export const LoginPage: React.FC = () => {
                 id="google-login-btn"
                 onClick={handleGoogleLogin}
                 disabled={isBusy}
-                className="mt-6 flex h-11 w-full items-center justify-center gap-3 rounded-xl border border-[#E5E7EB] bg-white text-sm font-medium text-[#111827] transition-colors hover:border-[#CBD5E1] hover:bg-[#F8FAFC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/30 disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-6 flex h-11 w-full items-center justify-center gap-3 rounded-xl border border-[#E5E7EB] bg-white text-sm font-medium text-[#111827] transition-colors hover:border-[#CBD5E1] hover:bg-[#F8FAFC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <GoogleMark className="h-4 w-4 shrink-0" />
                 Continue with Google
@@ -452,7 +452,7 @@ export const LoginPage: React.FC = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="you@university.edu"
-                      className="h-11 w-full rounded-xl border border-[#E5E7EB] bg-white pl-10 pr-3 text-sm text-[#111827] transition-colors placeholder:text-[#9CA3AF] focus:border-[#5B45E8] focus:outline-none focus:ring-2 focus:ring-[#5B45E8]/20"
+                      className="h-11 w-full rounded-xl border border-[#E5E7EB] bg-white pl-10 pr-3 text-sm text-[#111827] transition-colors placeholder:text-[#9CA3AF] focus:border-[#0f6b57] focus:outline-none focus:ring-2 focus:ring-[#0f6b57]/20"
                     />
                   </div>
                 </div>
@@ -468,7 +468,7 @@ export const LoginPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={handleForgotPassword}
-                      className="rounded text-[12px] font-medium text-[#5B45E8] underline-offset-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/30"
+                      className="rounded text-[12px] font-medium text-[#0f6b57] underline-offset-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
                     >
                       Forgot password?
                     </button>
@@ -484,14 +484,14 @@ export const LoginPage: React.FC = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Enter your password"
-                      className="h-11 w-full rounded-xl border border-[#E5E7EB] bg-white pl-10 pr-11 text-sm text-[#111827] transition-colors placeholder:text-[#9CA3AF] focus:border-[#5B45E8] focus:outline-none focus:ring-2 focus:ring-[#5B45E8]/20"
+                      className="h-11 w-full rounded-xl border border-[#E5E7EB] bg-white pl-10 pr-11 text-sm text-[#111827] transition-colors placeholder:text-[#9CA3AF] focus:border-[#0f6b57] focus:outline-none focus:ring-2 focus:ring-[#0f6b57]/20"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword((v) => !v)}
                       aria-label={showPassword ? 'Hide password' : 'Show password'}
                       aria-pressed={showPassword}
-                      className="absolute right-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-[#94A3B8] transition-colors hover:bg-[#F1F5F9] hover:text-[#5B45E8] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/30"
+                      className="absolute right-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-[#94A3B8] transition-colors hover:bg-[#F1F5F9] hover:text-[#0f6b57] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
                     >
                       {showPassword ? (
                         <EyeOff className="h-4 w-4" />
@@ -505,7 +505,7 @@ export const LoginPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isBusy}
-                  className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#5B45E8] text-sm font-medium text-white transition-colors hover:bg-[#4F3AD9] active:bg-[#4331C4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-70"
+                  className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#0f6b57] text-sm font-medium text-white transition-colors hover:bg-[#0f6b57] active:bg-[#0b5645] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {pending === 'password' ? (
                     <>
@@ -531,19 +531,19 @@ export const LoginPage: React.FC = () => {
                 id="demo-student-login-btn"
                 onClick={handleDemoLogin}
                 disabled={isBusy}
-                className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-[#E5E7EB] bg-white text-sm font-medium text-[#111827] transition-colors hover:border-[#CBD5E1] hover:bg-[#F8FAFC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/30 disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-5 flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-[#E5E7EB] bg-white text-sm font-medium text-[#111827] transition-colors hover:border-[#CBD5E1] hover:bg-[#F8FAFC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {pending === 'demo' ? (
                   <>
                     <span
-                      className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-[#5B45E8]/30 border-t-[#5B45E8]"
+                      className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-[#0f6b57]/30 border-t-[#0f6b57]"
                       aria-hidden="true"
                     />
                     Opening demo…
                   </>
                 ) : (
                   <>
-                    <Sparkles className="h-4 w-4 text-[#5B45E8]" />
+                    <Sparkles className="h-4 w-4 text-[#0f6b57]" />
                     Explore demo student account
                   </>
                 )}
@@ -554,7 +554,7 @@ export const LoginPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleGoogleLogin}
-                  className="rounded font-medium text-[#5B45E8] underline-offset-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/30"
+                  className="rounded font-medium text-[#0f6b57] underline-offset-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
                 >
                   Create an account
                 </button>

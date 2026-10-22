@@ -248,7 +248,7 @@ export const SettingsPage: React.FC = () => {
       <div className="border-b border-[#e5e3df] pb-4 dark:border-[#1e293b] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2.5">
-            <Settings className="h-6 w-6 text-[#5645d4] dark:text-[#8070f6]" />
+            <Settings className="h-6 w-6 text-[#0f6b57] dark:text-[#4ccba5]" />
             Workspace & Notification Settings
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
@@ -263,18 +263,18 @@ export const SettingsPage: React.FC = () => {
           className="btn-notion-secondary text-xs flex items-center gap-1.5 shrink-0"
           title="Manually process due notification jobs immediately"
         >
-          <RefreshCw className={`h-3.5 w-3.5 ${triggerSchedulerMutation.isPending ? 'animate-spin text-[#5645d4]' : ''}`} />
+          <RefreshCw className={`h-3.5 w-3.5 ${triggerSchedulerMutation.isPending ? 'animate-spin text-[#0f6b57]' : ''}`} />
           Run Scheduler Now
         </button>
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-[#e5e3df] dark:border-[#1e293b] text-xs">
+      <div className="flex overflow-x-auto border-b border-[#e5e3df] dark:border-[#1e293b] text-xs [&>button]:shrink-0 [&>button]:whitespace-nowrap">
         <button
           onClick={() => setActiveTab('PROFILE')}
           className={`pb-3 px-4 font-semibold border-b-2 flex items-center gap-2 transition-all ${
             activeTab === 'PROFILE'
-              ? 'border-[#5645d4] text-[#5645d4] dark:border-[#8070f6] dark:text-[#8070f6]'
+              ? 'border-[#0f6b57] text-[#0f6b57] dark:border-[#4ccba5] dark:text-[#4ccba5]'
               : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
           }`}
         >
@@ -285,7 +285,7 @@ export const SettingsPage: React.FC = () => {
           onClick={() => setActiveTab('NOTIFICATIONS')}
           className={`pb-3 px-4 font-semibold border-b-2 flex items-center gap-2 transition-all ${
             activeTab === 'NOTIFICATIONS'
-              ? 'border-[#5645d4] text-[#5645d4] dark:border-[#8070f6] dark:text-[#8070f6]'
+              ? 'border-[#0f6b57] text-[#0f6b57] dark:border-[#4ccba5] dark:text-[#4ccba5]'
               : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
           }`}
         >
@@ -296,7 +296,7 @@ export const SettingsPage: React.FC = () => {
           onClick={() => setActiveTab('HISTORY')}
           className={`pb-3 px-4 font-semibold border-b-2 flex items-center gap-2 transition-all ${
             activeTab === 'HISTORY'
-              ? 'border-[#5645d4] text-[#5645d4] dark:border-[#8070f6] dark:text-[#8070f6]'
+              ? 'border-[#0f6b57] text-[#0f6b57] dark:border-[#4ccba5] dark:text-[#4ccba5]'
               : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
           }`}
         >
@@ -307,7 +307,7 @@ export const SettingsPage: React.FC = () => {
           onClick={() => setActiveTab('BACKUP')}
           className={`pb-3 px-4 font-semibold border-b-2 flex items-center gap-2 transition-all ${
             activeTab === 'BACKUP'
-              ? 'border-[#5645d4] text-[#5645d4] dark:border-[#8070f6] dark:text-[#8070f6]'
+              ? 'border-[#0f6b57] text-[#0f6b57] dark:border-[#4ccba5] dark:text-[#4ccba5]'
               : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
           }`}
         >
@@ -333,7 +333,7 @@ export const SettingsPage: React.FC = () => {
                   type="text"
                   value={studentName}
                   onChange={(e) => setStudentName(e.target.value)}
-                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                 />
               </div>
 
@@ -342,7 +342,7 @@ export const SettingsPage: React.FC = () => {
                 <select
                   value={currentSemesterId}
                   onChange={(e) => setCurrentSemesterId(e.target.value)}
-                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                 >
                   <option value="">Auto-detect active term</option>
                   {semesters.map((s) => (
@@ -360,7 +360,7 @@ export const SettingsPage: React.FC = () => {
                   value={degree}
                   onChange={(e) => setDegree(e.target.value)}
                   placeholder="e.g. B.S. in Computer Science & Engineering"
-                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                 />
               </div>
 
@@ -371,7 +371,7 @@ export const SettingsPage: React.FC = () => {
                   value={universityName}
                   onChange={(e) => setUniversityName(e.target.value)}
                   placeholder="e.g. Department of CSE"
-                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                 />
               </div>
             </div>
@@ -385,7 +385,7 @@ export const SettingsPage: React.FC = () => {
                 onClick={() => setTheme('light')}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-[8px] border transition-all ${
                   theme === 'light'
-                    ? 'border-[#5645d4] bg-[#5645d4]/10 text-[#5645d4] font-semibold'
+                    ? 'border-[#0f6b57] bg-[#0f6b57]/10 text-[#0f6b57] font-semibold'
                     : 'border-[#e5e3df] text-slate-700 hover:bg-slate-50 dark:border-[#1e293b] dark:text-slate-300'
                 }`}
               >
@@ -397,7 +397,7 @@ export const SettingsPage: React.FC = () => {
                 onClick={() => setTheme('dark')}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-[8px] border transition-all ${
                   theme === 'dark'
-                    ? 'border-[#5645d4] bg-[#5645d4]/20 text-[#8070f6] font-semibold'
+                    ? 'border-[#0f6b57] bg-[#0f6b57]/20 text-[#4ccba5] font-semibold'
                     : 'border-[#e5e3df] text-slate-700 hover:bg-slate-50 dark:border-[#1e293b] dark:text-slate-300'
                 }`}
               >
@@ -430,7 +430,7 @@ export const SettingsPage: React.FC = () => {
           {/* 1. Global SMTP & Recipient Settings */}
           <div className="card-notion p-6 space-y-4">
             <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Mail className="h-5 w-5 text-[#5645d4] dark:text-[#8070f6]" />
+              <Mail className="h-5 w-5 text-[#0f6b57] dark:text-[#4ccba5]" />
               Recipient & Timezone Configuration
             </h2>
 
@@ -444,7 +444,7 @@ export const SettingsPage: React.FC = () => {
                   value={recipientEmail}
                   onChange={(e) => setRecipientEmail(e.target.value)}
                   placeholder="student@example.com"
-                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                 />
                 <p className="text-[11px] text-slate-400 mt-1">
                   All scheduled reminders will be transmitted to this email address.
@@ -458,7 +458,7 @@ export const SettingsPage: React.FC = () => {
                 <select
                   value={timezone}
                   onChange={(e) => setTimezone(e.target.value)}
-                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-[#e5e3df] p-2.5 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
                 >
                   {TIMEZONES.map((tz) => (
                     <option key={tz.value} value={tz.value}>
@@ -486,7 +486,7 @@ export const SettingsPage: React.FC = () => {
                 type="checkbox"
                 checked={emailEnabled}
                 onChange={(e) => setEmailEnabled(e.target.checked)}
-                className="h-5 w-5 rounded-[4px] border-[#e5e3df] text-[#5645d4] focus:ring-[#5645d4] accent-[#5645d4]"
+                className="h-5 w-5 rounded-[4px] border-[#e5e3df] text-[#0f6b57] focus:ring-[#0f6b57] accent-[#0f6b57]"
               />
             </div>
           </div>
@@ -494,7 +494,7 @@ export const SettingsPage: React.FC = () => {
           {/* 2. SMTP Diagnostic & Test Email */}
           <div className="card-notion p-6 space-y-4">
             <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Send className="h-5 w-5 text-[#5645d4] dark:text-[#8070f6]" />
+              <Send className="h-5 w-5 text-[#0f6b57] dark:text-[#4ccba5]" />
               SMTP Connectivity & Test Email
             </h2>
 
@@ -525,7 +525,7 @@ export const SettingsPage: React.FC = () => {
                 placeholder="Send test email to address..."
                 value={testEmailRecipient}
                 onChange={(e) => setTestEmailRecipient(e.target.value)}
-                className="w-full sm:flex-1 rounded-[8px] border border-[#e5e3df] p-2.5 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
+                className="w-full sm:flex-1 rounded-[8px] border border-[#e5e3df] p-2.5 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-[#1e293b] dark:bg-slate-800 dark:text-white"
               />
               <button
                 type="button"
@@ -561,7 +561,7 @@ export const SettingsPage: React.FC = () => {
                   type="checkbox"
                   checked={notifyAssignments}
                   onChange={(e) => setNotifyAssignments(e.target.checked)}
-                  className="h-4 w-4 rounded-[4px] border-[#e5e3df] text-[#5645d4] focus:ring-[#5645d4] accent-[#5645d4]"
+                  className="h-4 w-4 rounded-[4px] border-[#e5e3df] text-[#0f6b57] focus:ring-[#0f6b57] accent-[#0f6b57]"
                 />
               </div>
 
@@ -574,7 +574,7 @@ export const SettingsPage: React.FC = () => {
                       onClick={() => toggleInterval(assignmentIntervals, setAssignmentIntervals, inv.id)}
                       className={`px-3 py-1.5 rounded-[8px] border font-medium transition-all ${
                         assignmentIntervals.includes(inv.id)
-                          ? 'border-[#5645d4] bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6] font-semibold'
+                          ? 'border-[#0f6b57] bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5] font-semibold'
                           : 'border-[#e5e3df] text-slate-500 hover:border-slate-300 dark:border-[#1e293b] dark:text-slate-400'
                       }`}
                     >
@@ -596,7 +596,7 @@ export const SettingsPage: React.FC = () => {
                   type="checkbox"
                   checked={notifyQuizzes}
                   onChange={(e) => setNotifyQuizzes(e.target.checked)}
-                  className="h-4 w-4 rounded-[4px] border-[#e5e3df] text-[#5645d4] focus:ring-[#5645d4] accent-[#5645d4]"
+                  className="h-4 w-4 rounded-[4px] border-[#e5e3df] text-[#0f6b57] focus:ring-[#0f6b57] accent-[#0f6b57]"
                 />
               </div>
 
@@ -609,7 +609,7 @@ export const SettingsPage: React.FC = () => {
                       onClick={() => toggleInterval(quizIntervals, setQuizIntervals, inv.id)}
                       className={`px-3 py-1.5 rounded-[8px] border font-medium transition-all ${
                         quizIntervals.includes(inv.id)
-                          ? 'border-[#5645d4] bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6] font-semibold'
+                          ? 'border-[#0f6b57] bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5] font-semibold'
                           : 'border-[#e5e3df] text-slate-500 hover:border-slate-300 dark:border-[#1e293b] dark:text-slate-400'
                       }`}
                     >
@@ -631,7 +631,7 @@ export const SettingsPage: React.FC = () => {
                   type="checkbox"
                   checked={notifyMidterms}
                   onChange={(e) => setNotifyMidterms(e.target.checked)}
-                  className="h-4 w-4 rounded-[4px] border-[#e5e3df] text-[#5645d4] focus:ring-[#5645d4] accent-[#5645d4]"
+                  className="h-4 w-4 rounded-[4px] border-[#e5e3df] text-[#0f6b57] focus:ring-[#0f6b57] accent-[#0f6b57]"
                 />
               </div>
 
@@ -644,7 +644,7 @@ export const SettingsPage: React.FC = () => {
                       onClick={() => toggleInterval(midtermIntervals, setMidtermIntervals, inv.id)}
                       className={`px-3 py-1.5 rounded-[8px] border font-medium transition-all ${
                         midtermIntervals.includes(inv.id)
-                          ? 'border-[#5645d4] bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6] font-semibold'
+                          ? 'border-[#0f6b57] bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5] font-semibold'
                           : 'border-[#e5e3df] text-slate-500 hover:border-slate-300 dark:border-[#1e293b] dark:text-slate-400'
                       }`}
                     >
@@ -666,7 +666,7 @@ export const SettingsPage: React.FC = () => {
                   type="checkbox"
                   checked={notifyFinals}
                   onChange={(e) => setNotifyFinals(e.target.checked)}
-                  className="h-4 w-4 rounded-[4px] border-[#e5e3df] text-[#5645d4] focus:ring-[#5645d4] accent-[#5645d4]"
+                  className="h-4 w-4 rounded-[4px] border-[#e5e3df] text-[#0f6b57] focus:ring-[#0f6b57] accent-[#0f6b57]"
                 />
               </div>
 
@@ -679,7 +679,7 @@ export const SettingsPage: React.FC = () => {
                       onClick={() => toggleInterval(finalIntervals, setFinalIntervals, inv.id)}
                       className={`px-3 py-1.5 rounded-[8px] border font-medium transition-all ${
                         finalIntervals.includes(inv.id)
-                          ? 'border-[#5645d4] bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6] font-semibold'
+                          ? 'border-[#0f6b57] bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5] font-semibold'
                           : 'border-[#e5e3df] text-slate-500 hover:border-slate-300 dark:border-[#1e293b] dark:text-slate-400'
                       }`}
                     >
@@ -701,7 +701,7 @@ export const SettingsPage: React.FC = () => {
                   type="checkbox"
                   checked={notifyProjects}
                   onChange={(e) => setNotifyProjects(e.target.checked)}
-                  className="h-4 w-4 rounded-[4px] border-[#e5e3df] text-[#5645d4] focus:ring-[#5645d4] accent-[#5645d4]"
+                  className="h-4 w-4 rounded-[4px] border-[#e5e3df] text-[#0f6b57] focus:ring-[#0f6b57] accent-[#0f6b57]"
                 />
               </div>
 
@@ -714,7 +714,7 @@ export const SettingsPage: React.FC = () => {
                       onClick={() => toggleInterval(projectIntervals, setProjectIntervals, inv.id)}
                       className={`px-3 py-1.5 rounded-[8px] border font-medium transition-all ${
                         projectIntervals.includes(inv.id)
-                          ? 'border-[#5645d4] bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6] font-semibold'
+                          ? 'border-[#0f6b57] bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5] font-semibold'
                           : 'border-[#e5e3df] text-slate-500 hover:border-slate-300 dark:border-[#1e293b] dark:text-slate-400'
                       }`}
                     >
@@ -736,7 +736,7 @@ export const SettingsPage: React.FC = () => {
                   type="checkbox"
                   checked={notifyCustomEvents}
                   onChange={(e) => setNotifyCustomEvents(e.target.checked)}
-                  className="h-4 w-4 rounded-[4px] border-[#e5e3df] text-[#5645d4] focus:ring-[#5645d4] accent-[#5645d4]"
+                  className="h-4 w-4 rounded-[4px] border-[#e5e3df] text-[#0f6b57] focus:ring-[#0f6b57] accent-[#0f6b57]"
                 />
               </div>
 
@@ -749,7 +749,7 @@ export const SettingsPage: React.FC = () => {
                       onClick={() => toggleInterval(customEventIntervals, setCustomEventIntervals, inv.id)}
                       className={`px-3 py-1.5 rounded-[8px] border font-medium transition-all ${
                         customEventIntervals.includes(inv.id)
-                          ? 'border-[#5645d4] bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6] font-semibold'
+                          ? 'border-[#0f6b57] bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5] font-semibold'
                           : 'border-[#e5e3df] text-slate-500 hover:border-slate-300 dark:border-[#1e293b] dark:text-slate-400'
                       }`}
                     >
@@ -782,7 +782,7 @@ export const SettingsPage: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <History className="h-5 w-5 text-[#5645d4] dark:text-[#8070f6]" />
+                  <History className="h-5 w-5 text-[#0f6b57] dark:text-[#4ccba5]" />
                   Email & Notification Delivery History
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
@@ -809,7 +809,7 @@ export const SettingsPage: React.FC = () => {
                     setHistoryStatusFilter(e.target.value);
                     setHistoryPage(1);
                   }}
-                  className="rounded-[8px] border border-[#e5e3df] bg-white px-2.5 py-1 text-slate-800 dark:border-[#1e293b] dark:bg-slate-800 dark:text-white focus:border-[#5645d4] focus:outline-none"
+                  className="rounded-[8px] border border-[#e5e3df] bg-white px-2.5 py-1 text-slate-800 dark:border-[#1e293b] dark:bg-slate-800 dark:text-white focus:border-[#0f6b57] focus:outline-none"
                 >
                   <option value="ALL">All Statuses</option>
                   <option value="Sent">Sent</option>
@@ -827,7 +827,7 @@ export const SettingsPage: React.FC = () => {
                     setHistoryTypeFilter(e.target.value);
                     setHistoryPage(1);
                   }}
-                  className="rounded-[8px] border border-[#e5e3df] bg-white px-2.5 py-1 text-slate-800 dark:border-[#1e293b] dark:bg-slate-800 dark:text-white focus:border-[#5645d4] focus:outline-none"
+                  className="rounded-[8px] border border-[#e5e3df] bg-white px-2.5 py-1 text-slate-800 dark:border-[#1e293b] dark:bg-slate-800 dark:text-white focus:border-[#0f6b57] focus:outline-none"
                 >
                   <option value="ALL">All Event Types</option>
                   <option value="ASSIGNMENT">Assignment</option>
@@ -887,7 +887,7 @@ export const SettingsPage: React.FC = () => {
                               log.status === 'Sent'
                                 ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
                                 : log.status === 'Pending'
-                                ? 'bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6]'
+                                ? 'bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5]'
                                 : log.status === 'Skipped'
                                 ? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
                                 : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300'
@@ -917,7 +917,7 @@ export const SettingsPage: React.FC = () => {
         <div className="space-y-6">
           <div className="card-notion p-6 space-y-4">
             <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Database className="h-5 w-5 text-[#5645d4] dark:text-[#8070f6]" />
+              <Database className="h-5 w-5 text-[#0f6b57] dark:text-[#4ccba5]" />
               Academic Database Backup & Integrity
             </h2>
 
@@ -950,7 +950,7 @@ export const SettingsPage: React.FC = () => {
                   </span>
                   <button
                     onClick={() => refetchIntegrity()}
-                    className="text-xs font-semibold text-[#5645d4] hover:underline flex items-center gap-1"
+                    className="text-xs font-semibold text-[#0f6b57] hover:underline flex items-center gap-1"
                   >
                     <RefreshCw className={`h-3.5 w-3.5 ${checkingIntegrity ? 'animate-spin' : ''}`} /> Run Check
                   </button>

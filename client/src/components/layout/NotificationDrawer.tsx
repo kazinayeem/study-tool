@@ -78,7 +78,7 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({ isOpen, 
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-[#e5e3df] dark:border-[#1e293b]">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-[8px] bg-[#5645d4]/10 dark:bg-[#5645d4]/20 text-[#5645d4] dark:text-[#8070f6]">
+            <div className="p-1.5 rounded-[8px] bg-[#0f6b57]/10 dark:bg-[#0f6b57]/20 text-[#0f6b57] dark:text-[#4ccba5]">
               <Bell className="h-4 w-4" />
             </div>
             <div>
@@ -93,7 +93,7 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({ isOpen, 
               <button
                 onClick={() => markAllReadMutation.mutate()}
                 disabled={markAllReadMutation.isPending}
-                className="px-2.5 py-1 text-[11px] font-semibold text-[#5645d4] hover:text-[#4534b3] dark:text-[#8070f6] hover:bg-[#5645d4]/10 rounded-[8px] flex items-center gap-1 transition-colors"
+                className="px-2.5 py-1 text-[11px] font-semibold text-[#0f6b57] hover:text-[#0b5645] dark:text-[#4ccba5] hover:bg-[#0f6b57]/10 rounded-[8px] flex items-center gap-1 transition-colors"
                 title="Mark all as read"
               >
                 <CheckCheck className="h-3.5 w-3.5" /> Mark all read
@@ -114,7 +114,7 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({ isOpen, 
             onClick={() => setActiveTab('IN_APP')}
             className={`pb-2 px-3 font-semibold transition-all border-b-2 flex items-center gap-1.5 ${
               activeTab === 'IN_APP'
-                ? 'border-[#5645d4] text-[#5645d4] dark:border-[#8070f6] dark:text-[#8070f6]'
+                ? 'border-[#0f6b57] text-[#0f6b57] dark:border-[#4ccba5] dark:text-[#4ccba5]'
                 : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
@@ -130,7 +130,7 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({ isOpen, 
             onClick={() => setActiveTab('SCHEDULED')}
             className={`pb-2 px-3 font-semibold transition-all border-b-2 flex items-center gap-1.5 ${
               activeTab === 'SCHEDULED'
-                ? 'border-[#5645d4] text-[#5645d4] dark:border-[#8070f6] dark:text-[#8070f6]'
+                ? 'border-[#0f6b57] text-[#0f6b57] dark:border-[#4ccba5] dark:text-[#4ccba5]'
                 : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
@@ -155,7 +155,7 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({ isOpen, 
                     key={n.id}
                     className={`p-3.5 rounded-[8px] border transition-all text-xs ${
                       !n.isRead
-                        ? 'border-[#5645d4]/30 dark:border-[#5645d4]/40 bg-[#5645d4]/5 dark:bg-[#5645d4]/10'
+                        ? 'border-[#0f6b57]/30 dark:border-[#0f6b57]/40 bg-[#0f6b57]/5 dark:bg-[#0f6b57]/10'
                         : 'border-[#e5e3df] dark:border-[#1e293b] bg-white dark:bg-slate-900'
                     }`}
                   >
@@ -166,7 +166,7 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({ isOpen, 
                             {n.category}
                           </span>
                           {!n.isRead && (
-                            <span className="h-1.5 w-1.5 rounded-full bg-[#5645d4] dark:bg-[#8070f6]" />
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#0f6b57] dark:bg-[#4ccba5]" />
                           )}
                         </div>
                         <h4 className="font-semibold text-slate-900 dark:text-white">{n.title}</h4>
@@ -178,7 +178,7 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({ isOpen, 
                       {!n.isRead && (
                         <button
                           onClick={() => markReadMutation.mutate(n.id)}
-                          className="p-1 rounded-[8px] text-slate-400 hover:text-[#5645d4] dark:hover:text-[#8070f6] transition-colors"
+                          className="p-1 rounded-[8px] text-slate-400 hover:text-[#0f6b57] dark:hover:text-[#4ccba5] transition-colors"
                           title="Mark as read"
                         >
                           <CheckCircle className="h-4 w-4" />
@@ -192,7 +192,7 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({ isOpen, 
                         <Link
                           to={n.linkUrl}
                           onClick={onClose}
-                          className="font-semibold text-[#5645d4] hover:underline dark:text-[#8070f6] flex items-center gap-1"
+                          className="font-semibold text-[#0f6b57] hover:underline dark:text-[#4ccba5] flex items-center gap-1"
                         >
                           Open Details <ExternalLink className="h-3 w-3" />
                         </Link>
@@ -216,11 +216,11 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({ isOpen, 
                 reminders.map((event: any) => (
                   <div
                     key={event.id}
-                    className="p-3.5 rounded-[8px] border border-[#e5e3df] dark:border-[#1e293b] bg-slate-50/50 dark:bg-slate-850 hover:border-[#5645d4]/40 transition-all text-xs"
+                    className="p-3.5 rounded-[8px] border border-[#e5e3df] dark:border-[#1e293b] bg-slate-50/50 dark:bg-slate-850 hover:border-[#0f6b57]/40 transition-all text-xs"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <span className="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-[4px] bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6] mb-1">
+                        <span className="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-[4px] bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5] mb-1">
                           {event.category}
                         </span>
                         <h4 className="font-semibold text-slate-900 dark:text-white">{event.title}</h4>
@@ -255,7 +255,7 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({ isOpen, 
           <Link
             to="/settings"
             onClick={onClose}
-            className="flex items-center gap-1.5 font-semibold text-slate-600 dark:text-slate-300 hover:text-[#5645d4] dark:hover:text-[#8070f6] transition-colors"
+            className="flex items-center gap-1.5 font-semibold text-slate-600 dark:text-slate-300 hover:text-[#0f6b57] dark:hover:text-[#4ccba5] transition-colors"
           >
             <Settings className="h-3.5 w-3.5" />
             Notification Preferences
@@ -263,7 +263,7 @@ export const NotificationDrawer: React.FC<NotificationDrawerProps> = ({ isOpen, 
           <Link
             to="/calendar"
             onClick={onClose}
-            className="font-semibold text-[#5645d4] dark:text-[#8070f6] hover:underline"
+            className="font-semibold text-[#0f6b57] dark:text-[#4ccba5] hover:underline"
           >
             Full Calendar &rarr;
           </Link>

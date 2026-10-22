@@ -61,7 +61,7 @@ export const PublicShareViewer: React.FC = () => {
     return (
       <div className="min-h-screen bg-[#ffffff] dark:bg-[#0f0f11] flex flex-col items-center justify-center p-4 text-[#37352f] dark:text-[#f0eeec]">
         <div className="card-notion w-full max-w-md rounded-[12px] bg-white dark:bg-[#141416] border border-[#e5e3df] dark:border-[#2a2a2e] p-8 shadow-2xs text-center space-y-4">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-[8px] bg-[#fde0ec] text-[#e03131] border border-[#ff64c8]/30">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-[8px] bg-[#fde0ec] text-[#e03131] border border-[#d9480f]/30">
             <AlertCircle className="h-6 w-6" />
           </div>
           <h2 className="text-xl font-semibold text-[#1a1a1a] dark:text-white">Resource Unavailable</h2>
@@ -82,7 +82,7 @@ export const PublicShareViewer: React.FC = () => {
       <div className="min-h-screen bg-[#ffffff] dark:bg-[#0f0f11] flex flex-col items-center justify-center p-4 text-[#37352f] dark:text-[#f0eeec]">
         <div className="card-notion w-full max-w-md rounded-[12px] bg-white dark:bg-[#141416] border border-[#e5e3df] dark:border-[#2a2a2e] p-8 shadow-2xs space-y-5">
           <div className="text-center space-y-2">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-[8px] bg-[#e6e0f5] text-[#5645d4] border border-[#d6b6f6]">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-[8px] bg-[#dcf0e8] text-[#0f6b57] border border-[#a8dcc9]">
               <Lock className="h-5 w-5" />
             </div>
             <h2 className="text-lg font-semibold text-[#1a1a1a] dark:text-white">Password Protected Resource</h2>
@@ -92,7 +92,7 @@ export const PublicShareViewer: React.FC = () => {
           </div>
 
           {passwordError && (
-            <div className="p-3 rounded-[8px] bg-[#fde0ec] border border-[#ff64c8]/30 text-[#e03131] text-xs flex items-center gap-2">
+            <div className="p-3 rounded-[8px] bg-[#fde0ec] border border-[#d9480f]/30 text-[#e03131] text-xs flex items-center gap-2">
               <AlertCircle className="h-4 w-4 shrink-0" />
               <span>{passwordError}</span>
             </div>
@@ -109,7 +109,7 @@ export const PublicShareViewer: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter password to unlock..."
-                className="w-full h-[44px] rounded-[8px] border border-[#c8c4be] bg-white dark:bg-[#1c1c1f] dark:border-[#37352f] px-3 text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#5645d4]"
+                className="w-full h-[44px] rounded-[8px] border border-[#c8c4be] bg-white dark:bg-[#1c1c1f] dark:border-[#37352f] px-3 text-xs text-[#1a1a1a] dark:text-white focus:outline-none focus:border-2 focus:border-[#0f6b57]"
               />
             </div>
             <button
@@ -197,7 +197,7 @@ export const PublicShareViewer: React.FC = () => {
               </span>
             )}
             {resource.examDate && (
-              <span className="flex items-center gap-1.5 font-medium text-[#5645d4] dark:text-[#d6b6f6]">
+              <span className="flex items-center gap-1.5 font-medium text-[#0f6b57] dark:text-[#a8dcc9]">
                 <Calendar className="h-4 w-4" /> Exam: {formatDate(resource.examDate, 'PPP p')}
               </span>
             )}
@@ -215,7 +215,7 @@ export const PublicShareViewer: React.FC = () => {
           <div className="card-notion bg-white dark:bg-[#141416] rounded-[12px] border border-[#e5e3df] dark:border-[#2a2a2e] overflow-hidden shadow-2xs">
             <div className="p-4 border-b border-[#ede9e4] dark:border-[#252528] bg-[#fbfbfa] dark:bg-[#19191c] flex items-center justify-between text-xs">
               <span className="font-semibold text-[#1a1a1a] dark:text-white flex items-center gap-2">
-                <FileText className="h-4 w-4 text-[#5645d4]" />
+                <FileText className="h-4 w-4 text-[#0f6b57]" />
                 {resource.originalFilename || 'Document Preview'}
               </span>
               <span className="text-[#787671]">

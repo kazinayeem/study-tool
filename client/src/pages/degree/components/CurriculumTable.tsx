@@ -104,7 +104,7 @@ export const CurriculumTable: React.FC<CurriculumTableProps> = ({
       case 'CORE':
         return 'bg-[#dcecfa] text-[#0075de] dark:bg-[#102a45] dark:text-[#64b5f6]';
       case 'ELECTIVE':
-        return 'bg-[#e6e0f5] text-[#5645d4] dark:bg-[#251545] dark:text-[#b39ddb]';
+        return 'bg-[#dcf0e8] text-[#0f6b57] dark:bg-[#0a2a22] dark:text-[#4ccba5]';
       case 'GENERAL_EDUCATION':
         return 'bg-[#d9f3e1] text-[#1aae39] dark:bg-[#13331c] dark:text-[#81c784]';
       case 'BASIC_SCIENCE':
@@ -133,7 +133,7 @@ export const CurriculumTable: React.FC<CurriculumTableProps> = ({
       case 'PLANNED':
         return {
           label: 'Planned',
-          className: 'bg-[#e6e0f5] text-[#5645d4] border border-[#5645d4]/30 dark:bg-[#251545] dark:text-[#b39ddb]',
+          className: 'bg-[#dcf0e8] text-[#0f6b57] border border-[#0f6b57]/30 dark:bg-[#0a2a22] dark:text-[#4ccba5]',
         };
       case 'ELIGIBLE':
         return {
@@ -166,7 +166,7 @@ export const CurriculumTable: React.FC<CurriculumTableProps> = ({
               placeholder="Search code or title..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-[8px] border border-[#c8c4be] bg-white pl-8 pr-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+              className="w-full rounded-[8px] border border-[#c8c4be] bg-white pl-8 pr-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
             />
           </div>
 
@@ -239,7 +239,7 @@ export const CurriculumTable: React.FC<CurriculumTableProps> = ({
               setStatusFilter('ALL');
               setRequirementFilter('ALL');
             }}
-            className="text-[11px] text-[#5645d4] dark:text-[#8070f6] hover:underline cursor-pointer"
+            className="text-[11px] text-[#0f6b57] dark:text-[#4ccba5] hover:underline cursor-pointer"
           >
             Clear Filters
           </button>
@@ -312,7 +312,7 @@ export const CurriculumTable: React.FC<CurriculumTableProps> = ({
                     <p className="text-xs font-medium">No curriculum courses matched your filter criteria.</p>
                     <button
                       onClick={onAddCourse}
-                      className="mt-1 text-xs text-[#5645d4] hover:underline font-semibold"
+                      className="mt-1 text-xs text-[#0f6b57] hover:underline font-semibold"
                     >
                       + Add a course to your curriculum
                     </button>
@@ -335,7 +335,7 @@ export const CurriculumTable: React.FC<CurriculumTableProps> = ({
                         <span>{c.code}</span>
                         {c.isRequired && (
                           <span
-                            className="h-1.5 w-1.5 rounded-full bg-[#5645d4]"
+                            className="h-1.5 w-1.5 rounded-full bg-[#0f6b57]"
                             title="Required Core Requirement"
                           />
                         )}

@@ -46,7 +46,7 @@ export const SemesterDetailPage: React.FC = () => {
   const [courseCredits, setCourseCredits] = useState(3.0);
   const [courseTeacher, setCourseTeacher] = useState('');
   const [courseRoom, setCourseRoom] = useState('');
-  const [courseColor, setCourseColor] = useState('#5645d4');
+  const [courseColor, setCourseColor] = useState('#0f6b57');
 
   const queryClient = useQueryClient();
 
@@ -191,7 +191,7 @@ export const SemesterDetailPage: React.FC = () => {
                   Active Semester
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1 rounded-full bg-[#e6e0f5] px-2.5 py-0.5 text-xs font-semibold text-[#5645d4] dark:bg-[#391c57]/50 dark:text-[#d6b6f6] border border-[#d6b6f6]/50">
+                <span className="inline-flex items-center gap-1 rounded-full bg-[#dcf0e8] px-2.5 py-0.5 text-xs font-semibold text-[#0f6b57] dark:bg-[#0d3b30]/50 dark:text-[#a8dcc9] border border-[#a8dcc9]/50">
                   {semester.status}
                 </span>
               )}
@@ -203,7 +203,7 @@ export const SemesterDetailPage: React.FC = () => {
               )}
 
               <span className="text-xs text-[#787671] flex items-center gap-1">
-                <CalendarDays className="h-3.5 w-3.5 text-[#5645d4]" />
+                <CalendarDays className="h-3.5 w-3.5 text-[#0f6b57]" />
                 {formatDate(semester.startDate, 'MMM d, yyyy')} – {formatDate(semester.endDate, 'MMM d, yyyy')}
               </span>
             </div>
@@ -224,7 +224,7 @@ export const SemesterDetailPage: React.FC = () => {
               <button
                 onClick={() => setActiveMutation.mutate()}
                 disabled={setActiveMutation.isPending}
-                className="btn-notion-secondary text-xs h-[34px] px-3 gap-1.5 text-[#5645d4]"
+                className="btn-notion-secondary text-xs h-[34px] px-3 gap-1.5 text-[#0f6b57]"
                 title="Make this your active academic semester"
               >
                 <Check className="h-3.5 w-3.5" />
@@ -236,7 +236,7 @@ export const SemesterDetailPage: React.FC = () => {
               onClick={() => setIsAddPhotoOpen(true)}
               className="btn-notion-secondary text-xs h-[34px] px-3 gap-1.5"
             >
-              <Camera className="h-3.5 w-3.5 text-[#5645d4]" />
+              <Camera className="h-3.5 w-3.5 text-[#0f6b57]" />
               <span>Capture Photo</span>
             </button>
 
@@ -260,7 +260,7 @@ export const SemesterDetailPage: React.FC = () => {
               </div>
               <div className="w-full bg-[#ede9e4] dark:bg-[#252528] h-1.5 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#5645d4] rounded-full transition-all duration-700"
+                  className="h-full bg-[#0f6b57] rounded-full transition-all duration-700"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
@@ -269,7 +269,7 @@ export const SemesterDetailPage: React.FC = () => {
 
           {semester.academicGoals && (
             <div className="text-xs p-2 rounded-[6px] bg-[#fbfbfa] dark:bg-[#19191c] border border-[#ede9e4] dark:border-[#2a2a2e] flex items-center gap-1.5">
-              <span className="font-semibold text-[#5645d4] shrink-0">🎯 Goal:</span>
+              <span className="font-semibold text-[#0f6b57] shrink-0">🎯 Goal:</span>
               <span className="text-[#5d5b54] dark:text-[#a4a097] truncate">{semester.academicGoals}</span>
             </div>
           )}
@@ -294,7 +294,7 @@ export const SemesterDetailPage: React.FC = () => {
                 onClick={() => setTab(t.id as any)}
                 className={`flex items-center gap-1.5 border-b-2 pb-2.5 transition-colors cursor-pointer shrink-0 ${
                   tab === t.id
-                    ? 'border-[#5645d4] text-[#5645d4] dark:border-[#d6b6f6] dark:text-[#d6b6f6]'
+                    ? 'border-[#0f6b57] text-[#0f6b57] dark:border-[#a8dcc9] dark:text-[#a8dcc9]'
                     : 'border-transparent text-[#787671] hover:text-[#1a1a1a] dark:text-[#a4a097] dark:hover:text-white'
                 }`}
               >
@@ -357,10 +357,10 @@ export const SemesterDetailPage: React.FC = () => {
             <div className="card-notion p-5 bg-white dark:bg-[#141416] border border-[#e5e3df] dark:border-[#2a2a2e] rounded-[12px] space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-semibold text-[#1a1a1a] dark:text-white flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-[#5645d4]" />
+                  <Clock className="h-4 w-4 text-[#0f6b57]" />
                   Upcoming Assignments & Exams
                 </h3>
-                <button onClick={() => setTab('assignments')} className="text-xs text-[#5645d4] hover:underline font-medium">
+                <button onClick={() => setTab('assignments')} className="text-xs text-[#0f6b57] hover:underline font-medium">
                   View All
                 </button>
               </div>
@@ -393,7 +393,7 @@ export const SemesterDetailPage: React.FC = () => {
                         <span className="font-semibold text-[#1a1a1a] dark:text-white block">[{e.examType}] {e.title}</span>
                         <span className="text-[10px] text-[#787671]">{e.course?.code || 'Course'} • {formatDate(e.examDate, 'MMM d, h:mm a')}</span>
                       </div>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-[4px] bg-[#e6e0f5] text-[#5645d4]">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-[4px] bg-[#dcf0e8] text-[#0f6b57]">
                         Exam
                       </span>
                     </div>
@@ -406,10 +406,10 @@ export const SemesterDetailPage: React.FC = () => {
             <div className="card-notion p-5 bg-white dark:bg-[#141416] border border-[#e5e3df] dark:border-[#2a2a2e] rounded-[12px] space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-semibold text-[#1a1a1a] dark:text-white flex items-center gap-2">
-                  <Camera className="h-4 w-4 text-[#5645d4]" />
+                  <Camera className="h-4 w-4 text-[#0f6b57]" />
                   Recent Class Board Photos
                 </h3>
-                <button onClick={() => setTab('journal')} className="text-xs text-[#5645d4] hover:underline font-medium">
+                <button onClick={() => setTab('journal')} className="text-xs text-[#0f6b57] hover:underline font-medium">
                   Open Journal
                 </button>
               </div>
@@ -419,7 +419,7 @@ export const SemesterDetailPage: React.FC = () => {
                   <p className="text-xs">No whiteboard photos captured yet.</p>
                   <button
                     onClick={() => setIsAddPhotoOpen(true)}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#5645d4] mt-2 hover:underline"
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#0f6b57] mt-2 hover:underline"
                   >
                     + Capture board photo
                   </button>
@@ -452,10 +452,10 @@ export const SemesterDetailPage: React.FC = () => {
               <div className="pt-2 border-t border-[#ede9e4] dark:border-[#252528]">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-semibold text-[#1a1a1a] dark:text-white flex items-center gap-1.5">
-                    <FolderOpen className="h-3.5 w-3.5 text-[#5645d4]" />
+                    <FolderOpen className="h-3.5 w-3.5 text-[#0f6b57]" />
                     Semester Documents ({documents.length})
                   </span>
-                  <button onClick={() => setTab('documents')} className="text-[11px] text-[#5645d4] hover:underline">
+                  <button onClick={() => setTab('documents')} className="text-[11px] text-[#0f6b57] hover:underline">
                     All Files
                   </button>
                 </div>
@@ -499,7 +499,7 @@ export const SemesterDetailPage: React.FC = () => {
               <p className="text-sm font-semibold text-[#1a1a1a] dark:text-white">No courses in this semester yet</p>
               <button
                 onClick={() => setIsCreateCourseOpen(true)}
-                className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[#5645d4] hover:underline"
+                className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[#0f6b57] hover:underline"
               >
                 + Add your first course
               </button>
@@ -515,7 +515,7 @@ export const SemesterDetailPage: React.FC = () => {
                     <div className="flex items-center justify-between mb-2">
                       <span
                         className="text-xs font-bold px-2 py-0.5 rounded-[4px] text-white"
-                        style={{ backgroundColor: course.color || '#5645d4' }}
+                        style={{ backgroundColor: course.color || '#0f6b57' }}
                       >
                         {course.code}
                       </span>
@@ -523,7 +523,7 @@ export const SemesterDetailPage: React.FC = () => {
                     </div>
                     <Link
                       to={`/courses/${course.id}`}
-                      className="font-bold text-[#1a1a1a] dark:text-white hover:text-[#5645d4] text-sm block"
+                      className="font-bold text-[#1a1a1a] dark:text-white hover:text-[#0f6b57] text-sm block"
                     >
                       {course.title || course.name}
                     </Link>
@@ -543,7 +543,7 @@ export const SemesterDetailPage: React.FC = () => {
                       <span>•</span>
                       <Link
                         to={`/journal?semesterId=${id}&courseId=${course.id}`}
-                        className="hover:text-[#5645d4] flex items-center gap-1 font-medium transition-colors"
+                        className="hover:text-[#0f6b57] flex items-center gap-1 font-medium transition-colors"
                       >
                         <Camera className="h-3 w-3" />
                         <span>
@@ -556,7 +556,7 @@ export const SemesterDetailPage: React.FC = () => {
                     </div>
                     <Link
                       to={`/courses/${course.id}`}
-                      className="text-xs font-semibold text-[#5645d4] hover:underline flex items-center gap-1"
+                      className="text-xs font-semibold text-[#0f6b57] hover:underline flex items-center gap-1"
                     >
                       Workspace <ArrowRight className="h-3 w-3" />
                     </Link>
@@ -579,7 +579,7 @@ export const SemesterDetailPage: React.FC = () => {
             </h3>
             <Link
               to={`/semesters/${id}/assignments`}
-              className="text-xs font-semibold text-[#5645d4] hover:underline flex items-center gap-1"
+              className="text-xs font-semibold text-[#0f6b57] hover:underline flex items-center gap-1"
             >
               <span>Full Assignments Board</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -630,7 +630,7 @@ export const SemesterDetailPage: React.FC = () => {
             </h3>
             <Link
               to={`/semesters/${id}/exams`}
-              className="text-xs font-semibold text-[#5645d4] hover:underline flex items-center gap-1"
+              className="text-xs font-semibold text-[#0f6b57] hover:underline flex items-center gap-1"
             >
               <span>Full Exams Board</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -648,7 +648,7 @@ export const SemesterDetailPage: React.FC = () => {
                 >
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-[4px] bg-[#e6e0f5] text-[#5645d4]">
+                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-[4px] bg-[#dcf0e8] text-[#0f6b57]">
                         {e.examType}
                       </span>
                       <span className="font-semibold text-[#1a1a1a] dark:text-white">{e.title}</span>
@@ -658,7 +658,7 @@ export const SemesterDetailPage: React.FC = () => {
                     </span>
                   </div>
                   <div className="text-right shrink-0">
-                    <span className="text-[11px] font-semibold text-[#5645d4] block">
+                    <span className="text-[11px] font-semibold text-[#0f6b57] block">
                       {formatRelativeDeadline(e.examDate)}
                     </span>
                   </div>
@@ -677,7 +677,7 @@ export const SemesterDetailPage: React.FC = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 card-notion bg-white dark:bg-[#141416] border border-[#e5e3df] dark:border-[#2a2a2e] rounded-[12px]">
             <div>
               <h3 className="text-sm font-bold text-[#1a1a1a] dark:text-white flex items-center gap-2">
-                <Camera className="h-4 w-4 text-[#5645d4]" />
+                <Camera className="h-4 w-4 text-[#0f6b57]" />
                 Class Board Photo Archive ({totalBoardPhotos} photos)
               </h3>
               <p className="text-xs text-[#787671]">
@@ -713,7 +713,7 @@ export const SemesterDetailPage: React.FC = () => {
               </p>
               <button
                 onClick={() => setIsAddPhotoOpen(true)}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5645d4] hover:underline"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0f6b57] hover:underline"
               >
                 + Capture your first board photo
               </button>
@@ -729,7 +729,7 @@ export const SemesterDetailPage: React.FC = () => {
                     <div className="flex items-center gap-2">
                       <span
                         className="px-2 py-0.5 text-[11px] font-bold rounded-[4px] text-white"
-                        style={{ backgroundColor: session.course?.color || '#5645d4' }}
+                        style={{ backgroundColor: session.course?.color || '#0f6b57' }}
                       >
                         {session.course?.code}
                       </span>
@@ -788,7 +788,7 @@ export const SemesterDetailPage: React.FC = () => {
             </h3>
             <Link
               to={`/semesters/${id}/documents`}
-              className="text-xs font-semibold text-[#5645d4] hover:underline flex items-center gap-1"
+              className="text-xs font-semibold text-[#0f6b57] hover:underline flex items-center gap-1"
             >
               <span>Document Drive</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -806,7 +806,7 @@ export const SemesterDetailPage: React.FC = () => {
                       PDF
                     </div>
                     <div className="truncate">
-                      <Link to={`/documents/${doc.id}/view`} className="text-xs font-semibold text-[#1a1a1a] dark:text-white hover:text-[#5645d4] truncate block">
+                      <Link to={`/documents/${doc.id}/view`} className="text-xs font-semibold text-[#1a1a1a] dark:text-white hover:text-[#0f6b57] truncate block">
                         {doc.title}
                       </Link>
                       <span className="text-[10px] text-[#787671]">
@@ -816,7 +816,7 @@ export const SemesterDetailPage: React.FC = () => {
                   </div>
                   <Link
                     to={`/documents/${doc.id}/view`}
-                    className="text-xs font-semibold text-[#5645d4] hover:underline shrink-0"
+                    className="text-xs font-semibold text-[#0f6b57] hover:underline shrink-0"
                   >
                     Open Viewer →
                   </Link>
@@ -838,7 +838,7 @@ export const SemesterDetailPage: React.FC = () => {
             </h3>
             <Link
               to={`/notes`}
-              className="text-xs font-semibold text-[#5645d4] hover:underline flex items-center gap-1"
+              className="text-xs font-semibold text-[#0f6b57] hover:underline flex items-center gap-1"
             >
               <span>All Notes</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -875,7 +875,7 @@ export const SemesterDetailPage: React.FC = () => {
             </h3>
             <Link
               to={`/semesters/${id}/grades`}
-              className="text-xs font-semibold text-[#5645d4] hover:underline flex items-center gap-1"
+              className="text-xs font-semibold text-[#0f6b57] hover:underline flex items-center gap-1"
             >
               <span>Grades & CGPA Calculator</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -888,7 +888,7 @@ export const SemesterDetailPage: React.FC = () => {
               <p className="text-sm font-semibold text-[#1a1a1a] dark:text-white">No grade assessments recorded for this semester</p>
               <Link
                 to={`/semesters/${id}/grades`}
-                className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[#5645d4] hover:underline"
+                className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[#0f6b57] hover:underline"
               >
                 + Record course grade assessment
               </Link>
@@ -928,7 +928,7 @@ export const SemesterDetailPage: React.FC = () => {
                     value={courseCode}
                     onChange={(e) => setCourseCode(e.target.value)}
                     placeholder="e.g. CSE443"
-                    className="w-full rounded-[8px] border border-[#c8c4be] p-2.5 text-[#1a1a1a] focus:border-[#5645d4] focus:outline-none dark:border-[#37352f] dark:bg-[#19191c] dark:text-white"
+                    className="w-full rounded-[8px] border border-[#c8c4be] p-2.5 text-[#1a1a1a] focus:border-[#0f6b57] focus:outline-none dark:border-[#37352f] dark:bg-[#19191c] dark:text-white"
                   />
                 </div>
                 <div>
@@ -938,7 +938,7 @@ export const SemesterDetailPage: React.FC = () => {
                     step="0.5"
                     value={courseCredits}
                     onChange={(e) => setCourseCredits(parseFloat(e.target.value) || 3.0)}
-                    className="w-full rounded-[8px] border border-[#c8c4be] p-2.5 text-[#1a1a1a] focus:border-[#5645d4] focus:outline-none dark:border-[#37352f] dark:bg-[#19191c] dark:text-white"
+                    className="w-full rounded-[8px] border border-[#c8c4be] p-2.5 text-[#1a1a1a] focus:border-[#0f6b57] focus:outline-none dark:border-[#37352f] dark:bg-[#19191c] dark:text-white"
                   />
                 </div>
               </div>
@@ -950,7 +950,7 @@ export const SemesterDetailPage: React.FC = () => {
                   value={courseTitle}
                   onChange={(e) => setCourseTitle(e.target.value)}
                   placeholder="e.g. Information System Security"
-                  className="w-full rounded-[8px] border border-[#c8c4be] p-2.5 text-[#1a1a1a] focus:border-[#5645d4] focus:outline-none dark:border-[#37352f] dark:bg-[#19191c] dark:text-white"
+                  className="w-full rounded-[8px] border border-[#c8c4be] p-2.5 text-[#1a1a1a] focus:border-[#0f6b57] focus:outline-none dark:border-[#37352f] dark:bg-[#19191c] dark:text-white"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -961,7 +961,7 @@ export const SemesterDetailPage: React.FC = () => {
                     value={courseTeacher}
                     onChange={(e) => setCourseTeacher(e.target.value)}
                     placeholder="e.g. Dr. Alan Vance"
-                    className="w-full rounded-[8px] border border-[#c8c4be] p-2.5 text-[#1a1a1a] focus:border-[#5645d4] focus:outline-none dark:border-[#37352f] dark:bg-[#19191c] dark:text-white"
+                    className="w-full rounded-[8px] border border-[#c8c4be] p-2.5 text-[#1a1a1a] focus:border-[#0f6b57] focus:outline-none dark:border-[#37352f] dark:bg-[#19191c] dark:text-white"
                   />
                 </div>
                 <div>
@@ -971,7 +971,7 @@ export const SemesterDetailPage: React.FC = () => {
                     value={courseRoom}
                     onChange={(e) => setCourseRoom(e.target.value)}
                     placeholder="e.g. Lab 4B"
-                    className="w-full rounded-[8px] border border-[#c8c4be] p-2.5 text-[#1a1a1a] focus:border-[#5645d4] focus:outline-none dark:border-[#37352f] dark:bg-[#19191c] dark:text-white"
+                    className="w-full rounded-[8px] border border-[#c8c4be] p-2.5 text-[#1a1a1a] focus:border-[#0f6b57] focus:outline-none dark:border-[#37352f] dark:bg-[#19191c] dark:text-white"
                   />
                 </div>
               </div>

@@ -129,7 +129,7 @@ export const BackupPage: React.FC = () => {
       {/* Top Header */}
       <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-sky-600 to-indigo-600 text-white shadow-md shadow-sky-500/20">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-sky-600 to-emerald-600 text-white shadow-md shadow-sky-500/20">
             <Archive className="h-5 w-5" />
           </div>
           <div>
@@ -178,7 +178,7 @@ export const BackupPage: React.FC = () => {
           className={`mb-6 rounded-[8px] p-4 text-xs shadow-2xs flex items-start justify-between ${
             restoreMessage.success
               ? 'bg-[#d9f3e1] text-[#1aae39] border border-[#1aae39]/30'
-              : 'bg-[#fde0ec] text-[#e03131] border border-[#ff64c8]/30'
+              : 'bg-[#fde0ec] text-[#e03131] border border-[#d9480f]/30'
           }`}
         >
           <div className="flex items-start gap-3">
@@ -211,7 +211,7 @@ export const BackupPage: React.FC = () => {
         <div className="card-notion rounded-[12px] border border-[#e5e3df] bg-white p-5 shadow-2xs dark:border-[#2a2a2e] dark:bg-[#141416]">
           <div className="flex items-center justify-between text-xs text-[#787671]">
             <span className="font-medium">Active Database State</span>
-            <Database className="h-4 w-4 text-[#5645d4]" />
+            <Database className="h-4 w-4 text-[#0f6b57]" />
           </div>
           <div className="mt-2 flex items-baseline gap-2">
             <span className="text-xl font-semibold text-[#1a1a1a] dark:text-white">
@@ -308,7 +308,7 @@ export const BackupPage: React.FC = () => {
                   <tr key={r.id} className="hover:bg-slate-50/70 dark:hover:bg-slate-800/40">
                     <td className="py-3 font-semibold text-slate-900 dark:text-white">
                       <div className="flex items-center gap-2">
-                        <Archive className="h-4 w-4 text-indigo-500 shrink-0" />
+                        <Archive className="h-4 w-4 text-emerald-500 shrink-0" />
                         <span className="font-mono text-xs">{r.filename}</span>
                       </div>
                     </td>
@@ -390,7 +390,7 @@ export const BackupPage: React.FC = () => {
             onClick={() => handleExportJson('courses')}
             className="flex items-center gap-2.5 rounded-xl border border-slate-200 p-3 text-left hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800/60"
           >
-            <FileText className="h-4 w-4 text-indigo-500" />
+            <FileText className="h-4 w-4 text-emerald-500" />
             <div>
               <div className="text-xs font-bold text-slate-900 dark:text-white">Courses & Terms</div>
               <div className="text-[10px] text-slate-400">Structured JSON</div>

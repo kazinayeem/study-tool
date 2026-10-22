@@ -176,7 +176,7 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
         <div className="flex items-center gap-3 min-w-0">
           <span
             className="px-2.5 py-1 text-xs font-semibold rounded-[6px] text-white shrink-0 shadow-xs"
-            style={{ backgroundColor: session.course?.color || '#5645d4' }}
+            style={{ backgroundColor: session.course?.color || '#0f6b57' }}
           >
             {session.course?.code || 'COURSE'}
           </span>
@@ -293,7 +293,7 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
         {/* Loading Spinner */}
         {!imageLoaded && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-[#5645d4]" />
+            <Loader2 className="h-8 w-8 animate-spin text-[#0f6b57]" />
           </div>
         )}
 
@@ -351,7 +351,7 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
                   value={captionInput}
                   onChange={(e) => setCaptionInput(e.target.value)}
                   placeholder="Enter a caption for this board photo..."
-                  className="flex-1 bg-white/10 border border-white/20 rounded-[6px] px-3 py-1.5 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-[#5645d4]"
+                  className="flex-1 bg-white/10 border border-white/20 rounded-[6px] px-3 py-1.5 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-[#0f6b57]"
                   autoFocus
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') handleSaveCaption();
@@ -361,7 +361,7 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
                 <button
                   onClick={handleSaveCaption}
                   disabled={isSavingCaption}
-                  className="px-3 py-1.5 bg-[#5645d4] hover:bg-[#4636b8] text-white text-xs font-medium rounded-[6px] flex items-center gap-1 transition-colors"
+                  className="px-3 py-1.5 bg-[#0f6b57] hover:bg-[#0b5645] text-white text-xs font-medium rounded-[6px] flex items-center gap-1 transition-colors"
                 >
                   {isSavingCaption ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Check className="h-3.5 w-3.5" />}
                   Save
@@ -413,7 +413,7 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
                   onClick={() => setCurrentIndex(idx)}
                   className={`relative w-12 h-10 rounded-[4px] overflow-hidden border-2 shrink-0 transition-all ${
                     idx === currentIndex
-                      ? 'border-[#5645d4] scale-105 shadow-md'
+                      ? 'border-[#0f6b57] scale-105 shadow-md'
                       : 'border-white/20 opacity-60 hover:opacity-100'
                   }`}
                 >

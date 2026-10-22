@@ -226,7 +226,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#e5e3df] dark:border-[#27272a] bg-[#fbfbfa] dark:bg-[#1e1e24] shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-[8px] bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6]">
+            <div className="p-2 rounded-[8px] bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5]">
               <Camera className="h-4 w-4" />
             </div>
             <div>
@@ -297,7 +297,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
                 type="button"
                 onClick={handleCapture}
                 disabled={status !== 'ready'}
-                className="px-5 py-2.5 rounded-[8px] text-xs font-semibold bg-[#5645d4] hover:bg-[#4636b8] text-white shadow-sm flex items-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-5 py-2.5 rounded-[8px] text-xs font-semibold bg-[#0f6b57] hover:bg-[#0b5645] text-white shadow-sm flex items-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Camera className="h-4 w-4" />
                 Capture Photo
@@ -327,7 +327,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
               <button
                 type="button"
                 onClick={handleSave}
-                className="px-5 py-2.5 rounded-[8px] text-xs font-semibold bg-[#5645d4] hover:bg-[#4636b8] text-white shadow-sm flex items-center gap-2 transition-all active:scale-[0.98]"
+                className="px-5 py-2.5 rounded-[8px] text-xs font-semibold bg-[#0f6b57] hover:bg-[#0b5645] text-white shadow-sm flex items-center gap-2 transition-all active:scale-[0.98]"
               >
                 <CheckCircle2 className="h-4 w-4" />
                 Use This Photo
@@ -348,7 +348,7 @@ export const CameraCaptureModal: React.FC<CameraCaptureModalProps> = ({
             <button
               type="button"
               onClick={() => fallbackInputRef.current?.click()}
-              className="text-[11px] font-medium text-[#5645d4] dark:text-[#8070f6] hover:underline inline-flex items-center gap-1.5"
+              className="text-[11px] font-medium text-[#0f6b57] dark:text-[#4ccba5] hover:underline inline-flex items-center gap-1.5"
             >
               <ImageIcon className="h-3.5 w-3.5" />
               Trouble with the camera? Upload a photo instead

@@ -143,12 +143,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
       {/* Brand Header */}
       <div className="flex h-16 items-center justify-between px-4 border-b border-[#e5e3df] dark:border-[#2a2a2e]">
         <Link to="/" className="flex items-center gap-2.5 overflow-hidden">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] bg-[#0a1530] text-white font-bold text-base shadow-xs">
-            <span>N</span>
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] bg-[#0f6b57] text-white">
+            <BookOpen className="h-5 w-5" />
           </div>
           {!collapsed && (
             <div className="flex flex-col truncate">
-              <span className="font-semibold tracking-[-0.3px] text-[#1a1a1a] dark:text-white text-sm">ScholarFlow</span>
+              <span className="font-[family-name:var(--font-display)] font-bold tracking-[-0.01em] text-[#14201c] dark:text-white text-base">ScholarFlow</span>
               <span className="text-[11px] text-[#787671] dark:text-[#a4a097]">Academic Workspace</span>
             </div>
           )}
@@ -167,7 +167,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
         <button
           onClick={onOpenQuickAdd}
           className={cn(
-            'flex w-full items-center justify-center gap-2 rounded-[8px] bg-[#5645d4] hover:bg-[#4534b3] active:bg-[#3a2a99] px-3 py-2 font-medium text-white shadow-2xs transition-all cursor-pointer text-xs',
+            'flex w-full items-center justify-center gap-2 rounded-[8px] bg-[#0f6b57] hover:bg-[#0b5645] active:bg-[#084436] px-3 py-2 font-medium text-white shadow-2xs transition-all cursor-pointer text-xs',
             collapsed ? 'px-0' : ''
           )}
           title="Quick Create"
@@ -241,7 +241,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
                 <p className="text-[11px] font-medium text-[#523410] dark:text-[#f5d75e]">No Active Semester</p>
                 <Link
                   to="/semesters"
-                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#5645d4] dark:text-[#8070f6] hover:underline"
+                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#0f6b57] dark:text-[#4ccba5] hover:underline"
                 >
                   <span>+ Select Semester</span>
                 </Link>
@@ -276,7 +276,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
                   <div className="flex items-center justify-between">
                     <Link
                       to={`/semesters/${activeSemester.id}`}
-                      className="text-xs font-semibold text-[#1a1a1a] hover:text-[#5645d4] dark:text-white dark:hover:text-[#d6b6f6] truncate block flex-1"
+                      className="text-xs font-semibold text-[#1a1a1a] hover:text-[#0f6b57] dark:text-white dark:hover:text-[#a8dcc9] truncate block flex-1"
                       title={activeSemester.name}
                     >
                       {activeSemester.name}
@@ -324,7 +324,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
                         <Icon className="h-3.5 w-3.5 shrink-0 transition-transform group-hover:scale-105" />
                         {!collapsed && <span className="truncate flex-1">{child.label}</span>}
                         {!collapsed && child.count !== undefined && child.count > 0 && (
-                          <span className="ml-auto rounded-full bg-[#ff64c8] px-1.5 py-0.2 text-[9px] font-bold text-white shadow-2xs">
+                          <span className="ml-auto rounded-full bg-[#d9480f] px-1.5 py-0.2 text-[9px] font-bold text-white shadow-2xs">
                             {child.count}
                           </span>
                         )}
@@ -363,7 +363,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed, onOpe
                   <Icon className="h-4 w-4 shrink-0 transition-transform group-hover:scale-105" />
                   {!collapsed && <span className="truncate flex-1">{item.label}</span>}
                   {!collapsed && item.count !== undefined && item.count > 0 && (
-                    <span className="ml-auto rounded-full bg-[#5645d4] px-1.5 py-0.5 text-[9px] font-bold text-white shadow-2xs">
+                    <span className="ml-auto rounded-full bg-[#0f6b57] px-1.5 py-0.5 text-[9px] font-bold text-white shadow-2xs">
                       {item.count}
                     </span>
                   )}

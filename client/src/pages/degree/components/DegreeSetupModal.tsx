@@ -191,7 +191,7 @@ MAT120, Calculus I, 3, BASIC_SCIENCE, true, 2, MAT116`;
             onClick={() => { setActiveTab('PROGRAM'); setStatusMessage(null); }}
             className={`py-2.5 px-3 border-b-2 transition-colors cursor-pointer ${
               activeTab === 'PROGRAM'
-                ? 'border-[#5645d4] text-[#5645d4] font-semibold dark:border-[#8070f6] dark:text-[#8070f6]'
+                ? 'border-[#0f6b57] text-[#0f6b57] font-semibold dark:border-[#4ccba5] dark:text-[#4ccba5]'
                 : 'border-transparent text-[#787671] hover:text-[#1a1a1a] dark:text-[#a4a097]'
             }`}
           >
@@ -202,7 +202,7 @@ MAT120, Calculus I, 3, BASIC_SCIENCE, true, 2, MAT116`;
             onClick={() => { setActiveTab('IMPORT'); setStatusMessage(null); }}
             className={`py-2.5 px-3 border-b-2 transition-colors cursor-pointer ${
               activeTab === 'IMPORT'
-                ? 'border-[#5645d4] text-[#5645d4] font-semibold dark:border-[#8070f6] dark:text-[#8070f6]'
+                ? 'border-[#0f6b57] text-[#0f6b57] font-semibold dark:border-[#4ccba5] dark:text-[#4ccba5]'
                 : 'border-transparent text-[#787671] hover:text-[#1a1a1a] dark:text-[#a4a097]'
             }`}
           >
@@ -253,7 +253,7 @@ MAT120, Calculus I, 3, BASIC_SCIENCE, true, 2, MAT116`;
                     value={universityName}
                     onChange={(e) => setUniversityName(e.target.value)}
                     placeholder="e.g. Stanford University"
-                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
                     required
                   />
                 </div>
@@ -267,7 +267,7 @@ MAT120, Calculus I, 3, BASIC_SCIENCE, true, 2, MAT116`;
                     value={programName}
                     onChange={(e) => setProgramName(e.target.value)}
                     placeholder="e.g. B.S. in Computer Science"
-                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
                     required
                   />
                 </div>
@@ -283,7 +283,7 @@ MAT120, Calculus I, 3, BASIC_SCIENCE, true, 2, MAT116`;
                     value={department}
                     onChange={(e) => setDepartment(e.target.value)}
                     placeholder="e.g. Computer Science & Engineering"
-                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   />
                 </div>
 
@@ -296,7 +296,7 @@ MAT120, Calculus I, 3, BASIC_SCIENCE, true, 2, MAT116`;
                     value={curriculumYear}
                     onChange={(e) => setCurriculumYear(e.target.value)}
                     placeholder="e.g. 2024-2025"
-                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   />
                 </div>
               </div>
@@ -313,7 +313,7 @@ MAT120, Calculus I, 3, BASIC_SCIENCE, true, 2, MAT116`;
                     step="0.5"
                     value={totalCreditsRequired}
                     onChange={(e) => setTotalCreditsRequired(parseFloat(e.target.value) || 0)}
-                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs font-bold text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs font-bold text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
                     required
                   />
                 </div>
@@ -328,7 +328,7 @@ MAT120, Calculus I, 3, BASIC_SCIENCE, true, 2, MAT116`;
                     max="16"
                     value={requiredSemesters}
                     onChange={(e) => setRequiredSemesters(parseInt(e.target.value, 10) || 8)}
-                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   />
                 </div>
 
@@ -343,7 +343,7 @@ MAT120, Calculus I, 3, BASIC_SCIENCE, true, 2, MAT116`;
                     max="8"
                     value={degreeDurationYears}
                     onChange={(e) => setDegreeDurationYears(parseFloat(e.target.value) || 4.0)}
-                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   />
                 </div>
               </div>
@@ -360,7 +360,7 @@ MAT120, Calculus I, 3, BASIC_SCIENCE, true, 2, MAT116`;
                     max="30"
                     value={minCreditsPerSemester}
                     onChange={(e) => setMinCreditsPerSemester(parseFloat(e.target.value) || 0)}
-                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   />
                 </div>
 
@@ -375,7 +375,7 @@ MAT120, Calculus I, 3, BASIC_SCIENCE, true, 2, MAT116`;
                     max="35"
                     value={maxCreditsPerSemester}
                     onChange={(e) => setMaxCreditsPerSemester(parseFloat(e.target.value) || 0)}
-                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   />
                 </div>
               </div>
@@ -390,7 +390,7 @@ MAT120, Calculus I, 3, BASIC_SCIENCE, true, 2, MAT116`;
                     value={startSemesterName}
                     onChange={(e) => setStartSemesterName(e.target.value)}
                     placeholder="e.g. Fall 2023"
-                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   />
                 </div>
 
@@ -402,7 +402,7 @@ MAT120, Calculus I, 3, BASIC_SCIENCE, true, 2, MAT116`;
                     type="date"
                     value={targetGraduationDate}
                     onChange={(e) => setTargetGraduationDate(e.target.value)}
-                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                    className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   />
                 </div>
               </div>
@@ -425,7 +425,7 @@ MAT120, Calculus I, 3, BASIC_SCIENCE, true, 2, MAT116`;
               {/* Option A: Preset Template */}
               <div className="p-4 rounded-[10px] border border-[#e5e3df] dark:border-[#2a2a2e] bg-[#fbfbfa] dark:bg-[#141416] space-y-3">
                 <div className="flex items-center gap-2">
-                  <BookOpen className="h-4 w-4 text-[#5645d4]" />
+                  <BookOpen className="h-4 w-4 text-[#0f6b57]" />
                   <h4 className="text-xs font-bold text-[#1a1a1a] dark:text-white">
                     Option A: University Curriculum Preset Template
                   </h4>
@@ -473,7 +473,7 @@ MAT120, Calculus I, 3, BASIC_SCIENCE, true, 2, MAT116`;
                   value={csvText}
                   onChange={(e) => setCsvText(e.target.value)}
                   placeholder={sampleCsvExample}
-                  className="w-full font-mono rounded-[8px] border border-[#c8c4be] bg-white p-2.5 text-[11px] text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                  className="w-full font-mono rounded-[8px] border border-[#c8c4be] bg-white p-2.5 text-[11px] text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
                 />
 
                 <div className="flex items-center justify-between">
@@ -482,7 +482,7 @@ MAT120, Calculus I, 3, BASIC_SCIENCE, true, 2, MAT116`;
                       type="checkbox"
                       checked={clearBeforeImport}
                       onChange={(e) => setClearBeforeImport(e.target.checked)}
-                      className="rounded border-[#c8c4be] text-[#5645d4]"
+                      className="rounded border-[#c8c4be] text-[#0f6b57]"
                     />
                     <span>Clear existing catalog before import</span>
                   </label>

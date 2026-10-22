@@ -143,37 +143,37 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <button
                   onClick={() => handleQuickAction('document')}
-                  className="flex items-center gap-2.5 rounded-[8px] p-2.5 text-left text-slate-700 hover:bg-[#5645d4]/10 dark:text-slate-200 dark:hover:bg-slate-800 transition-colors"
+                  className="flex items-center gap-2.5 rounded-[8px] p-2.5 text-left text-slate-700 hover:bg-[#0f6b57]/10 dark:text-slate-200 dark:hover:bg-slate-800 transition-colors"
                 >
-                  <PlusCircle className="h-4 w-4 text-[#5645d4]" />
+                  <PlusCircle className="h-4 w-4 text-[#0f6b57]" />
                   <span>Upload PDF Document</span>
                 </button>
                 <button
                   onClick={() => handleQuickAction('note')}
-                  className="flex items-center gap-2.5 rounded-[8px] p-2.5 text-left text-slate-700 hover:bg-[#5645d4]/10 dark:text-slate-200 dark:hover:bg-slate-800 transition-colors"
+                  className="flex items-center gap-2.5 rounded-[8px] p-2.5 text-left text-slate-700 hover:bg-[#0f6b57]/10 dark:text-slate-200 dark:hover:bg-slate-800 transition-colors"
                 >
                   <FileText className="h-4 w-4 text-emerald-500" />
                   <span>Create Study Note</span>
                 </button>
                 <button
                   onClick={() => handleQuickAction('assignment')}
-                  className="flex items-center gap-2.5 rounded-[8px] p-2.5 text-left text-slate-700 hover:bg-[#5645d4]/10 dark:text-slate-200 dark:hover:bg-slate-800 transition-colors"
+                  className="flex items-center gap-2.5 rounded-[8px] p-2.5 text-left text-slate-700 hover:bg-[#0f6b57]/10 dark:text-slate-200 dark:hover:bg-slate-800 transition-colors"
                 >
                   <CheckSquare className="h-4 w-4 text-amber-500" />
                   <span>Add Assignment Deadline</span>
                 </button>
                 <button
                   onClick={() => handleQuickAction('event')}
-                  className="flex items-center gap-2.5 rounded-[8px] p-2.5 text-left text-slate-700 hover:bg-[#5645d4]/10 dark:text-slate-200 dark:hover:bg-slate-800 transition-colors"
+                  className="flex items-center gap-2.5 rounded-[8px] p-2.5 text-left text-slate-700 hover:bg-[#0f6b57]/10 dark:text-slate-200 dark:hover:bg-slate-800 transition-colors"
                 >
-                  <Calendar className="h-4 w-4 text-[#5645d4]" />
+                  <Calendar className="h-4 w-4 text-[#0f6b57]" />
                   <span>Schedule Study Session</span>
                 </button>
                 <button
                   onClick={() => handleSelect('/journal')}
-                  className="flex items-center gap-2.5 rounded-[8px] p-2.5 text-left text-slate-700 hover:bg-[#5645d4]/10 dark:text-slate-200 dark:hover:bg-slate-800 transition-colors"
+                  className="flex items-center gap-2.5 rounded-[8px] p-2.5 text-left text-slate-700 hover:bg-[#0f6b57]/10 dark:text-slate-200 dark:hover:bg-slate-800 transition-colors"
                 >
-                  <Camera className="h-4 w-4 text-[#5645d4]" />
+                  <Camera className="h-4 w-4 text-[#0f6b57]" />
                   <span>Class Photo Journal (Board Notes)</span>
                 </button>
               </div>
@@ -198,12 +198,12 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
                     <div
                       key={doc.id}
                       onClick={() => handleSelect(`/documents/${doc.id}/view`)}
-                      className="group flex items-center justify-between p-2 rounded-[8px] hover:bg-[#5645d4]/10 dark:hover:bg-slate-800/80 cursor-pointer transition-colors"
+                      className="group flex items-center justify-between p-2 rounded-[8px] hover:bg-[#0f6b57]/10 dark:hover:bg-slate-800/80 cursor-pointer transition-colors"
                     >
                       <div className="flex items-center gap-3 truncate">
-                        <FileCode className="h-4 w-4 text-[#5645d4] shrink-0" />
+                        <FileCode className="h-4 w-4 text-[#0f6b57] shrink-0" />
                         <div className="truncate">
-                          <p className="text-sm font-medium text-slate-800 dark:text-slate-200 group-hover:text-[#5645d4] dark:group-hover:text-[#8070f6] truncate">
+                          <p className="text-sm font-medium text-slate-800 dark:text-slate-200 group-hover:text-[#0f6b57] dark:group-hover:text-[#4ccba5] truncate">
                             {doc.title}
                           </p>
                           <p className="text-xs text-slate-400">
@@ -227,12 +227,12 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
                     <div
                       key={course.id}
                       onClick={() => handleSelect(`/courses/${course.id}`)}
-                      className="group flex items-center justify-between p-2 rounded-[8px] hover:bg-[#5645d4]/10 dark:hover:bg-slate-800/80 cursor-pointer transition-colors"
+                      className="group flex items-center justify-between p-2 rounded-[8px] hover:bg-[#0f6b57]/10 dark:hover:bg-slate-800/80 cursor-pointer transition-colors"
                     >
                       <div className="flex items-center gap-3 truncate">
                         <GraduationCap className="h-4 w-4 text-sky-500 shrink-0" />
                         <div className="truncate">
-                          <p className="text-sm font-medium text-slate-800 dark:text-slate-200 group-hover:text-[#5645d4] dark:group-hover:text-[#8070f6] truncate">
+                          <p className="text-sm font-medium text-slate-800 dark:text-slate-200 group-hover:text-[#0f6b57] dark:group-hover:text-[#4ccba5] truncate">
                             {course.code} - {course.title}
                           </p>
                           <p className="text-xs text-slate-400">
@@ -256,12 +256,12 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
                     <div
                       key={note.id}
                       onClick={() => handleSelect(`/notes?id=${note.id}`)}
-                      className="group flex items-center justify-between p-2 rounded-[8px] hover:bg-[#5645d4]/10 dark:hover:bg-slate-800/80 cursor-pointer transition-colors"
+                      className="group flex items-center justify-between p-2 rounded-[8px] hover:bg-[#0f6b57]/10 dark:hover:bg-slate-800/80 cursor-pointer transition-colors"
                     >
                       <div className="flex items-center gap-3 truncate">
                         <FileText className="h-4 w-4 text-emerald-500 shrink-0" />
                         <div className="truncate">
-                          <p className="text-sm font-medium text-slate-800 dark:text-slate-200 group-hover:text-[#5645d4] dark:group-hover:text-[#8070f6] truncate">
+                          <p className="text-sm font-medium text-slate-800 dark:text-slate-200 group-hover:text-[#0f6b57] dark:group-hover:text-[#4ccba5] truncate">
                             {note.title}
                           </p>
                           <p className="text-xs text-slate-400">
@@ -285,12 +285,12 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
                     <div
                       key={exam.id}
                       onClick={() => handleSelect(`/exams`)}
-                      className="group flex items-center justify-between p-2 rounded-[8px] hover:bg-[#5645d4]/10 dark:hover:bg-slate-800/80 cursor-pointer transition-colors"
+                      className="group flex items-center justify-between p-2 rounded-[8px] hover:bg-[#0f6b57]/10 dark:hover:bg-slate-800/80 cursor-pointer transition-colors"
                     >
                       <div className="flex items-center gap-3 truncate">
                         <Award className="h-4 w-4 text-rose-500 shrink-0" />
                         <div className="truncate">
-                          <p className="text-sm font-medium text-slate-800 dark:text-slate-200 group-hover:text-[#5645d4] dark:group-hover:text-[#8070f6] truncate">
+                          <p className="text-sm font-medium text-slate-800 dark:text-slate-200 group-hover:text-[#0f6b57] dark:group-hover:text-[#4ccba5] truncate">
                             {exam.title} ({exam.examType})
                           </p>
                           <p className="text-xs text-slate-400">
@@ -314,10 +314,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
                     <div
                       key={sem.id}
                       onClick={() => handleSelect(`/semesters/${sem.id}`)}
-                      className="group flex items-center justify-between p-2 rounded-[8px] hover:bg-[#5645d4]/10 dark:hover:bg-slate-800/80 cursor-pointer transition-colors"
+                      className="group flex items-center justify-between p-2 rounded-[8px] hover:bg-[#0f6b57]/10 dark:hover:bg-slate-800/80 cursor-pointer transition-colors"
                     >
                       <div className="flex items-center gap-3 truncate">
-                        <CalendarDays className="h-4 w-4 text-[#5645d4] shrink-0" />
+                        <CalendarDays className="h-4 w-4 text-[#0f6b57] shrink-0" />
                         <div className="truncate">
                           <p className="text-sm font-medium text-slate-800 dark:text-slate-200 truncate">
                             {sem.name}

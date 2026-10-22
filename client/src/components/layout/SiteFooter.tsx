@@ -28,7 +28,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({ withTopBorder = false, c
           href={BORNOSOFT_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded font-medium text-[#5d5b54] underline-offset-2 transition-colors hover:text-[#5645d4] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5645d4]/30"
+          className="rounded font-medium text-[#5d5b54] underline-offset-2 transition-colors hover:text-[#0f6b57] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/30"
         >
           Bornosoft
         </a>

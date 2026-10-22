@@ -122,7 +122,7 @@ export const NextSemesterPlanner: React.FC<NextSemesterPlannerProps> = ({ data, 
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-[10px] px-2 py-0.5 rounded-[4px] bg-[#e6e0f5] text-[#5645d4] dark:bg-[#251545] dark:text-[#b39ddb] font-bold uppercase tracking-wider">
+              <span className="text-[10px] px-2 py-0.5 rounded-[4px] bg-[#dcf0e8] text-[#0f6b57] dark:bg-[#0a2a22] dark:text-[#4ccba5] font-bold uppercase tracking-wider">
                 Term Planning
               </span>
               <span className="text-xs text-[#787671] dark:text-[#a4a097]">
@@ -134,7 +134,7 @@ export const NextSemesterPlanner: React.FC<NextSemesterPlannerProps> = ({ data, 
             </h2>
             <p className="text-xs text-[#5d5b54] dark:text-[#a4a097] mt-0.5">
               Recommended load is{' '}
-              <strong className="text-[#5645d4] dark:text-[#8070f6]">
+              <strong className="text-[#0f6b57] dark:text-[#4ccba5]">
                 {data.suggestedCreditLoad} credits
               </strong>{' '}
               based on remaining degree requirements ({data.assumptions.remainingCredits} credits remaining)
@@ -179,7 +179,7 @@ export const NextSemesterPlanner: React.FC<NextSemesterPlannerProps> = ({ data, 
                   ? 'bg-[#e03131]'
                   : currentTotalCredits < data.minCreditsLimit
                   ? 'bg-[#f59e0b]'
-                  : 'bg-[#5645d4]'
+                  : 'bg-[#0f6b57]'
               }`}
               style={{ width: `${meterPercentage}%` }}
             />
@@ -243,7 +243,7 @@ export const NextSemesterPlanner: React.FC<NextSemesterPlannerProps> = ({ data, 
                 onClick={() => setActiveCategoryTab('BLOCKERS')}
                 className={`px-3 py-1.5 rounded-t-[6px] font-semibold whitespace-nowrap cursor-pointer transition-colors ${
                   activeCategoryTab === 'BLOCKERS'
-                    ? 'border-b-2 border-[#5645d4] text-[#5645d4] bg-[#e6e0f5]/50 dark:bg-[#251545]/40'
+                    ? 'border-b-2 border-[#0f6b57] text-[#0f6b57] bg-[#dcf0e8]/50 dark:bg-[#0a2a22]/40'
                     : 'text-[#787671] hover:text-[#1a1a1a]'
                 }`}
               >
@@ -255,7 +255,7 @@ export const NextSemesterPlanner: React.FC<NextSemesterPlannerProps> = ({ data, 
               onClick={() => setActiveCategoryTab('RECOMMENDED')}
               className={`px-3 py-1.5 rounded-t-[6px] font-semibold whitespace-nowrap cursor-pointer transition-colors ${
                 activeCategoryTab === 'RECOMMENDED'
-                  ? 'border-b-2 border-[#5645d4] text-[#5645d4] bg-[#e6e0f5]/50 dark:bg-[#251545]/40'
+                  ? 'border-b-2 border-[#0f6b57] text-[#0f6b57] bg-[#dcf0e8]/50 dark:bg-[#0a2a22]/40'
                   : 'text-[#787671] hover:text-[#1a1a1a]'
               }`}
             >
@@ -336,14 +336,14 @@ export const NextSemesterPlanner: React.FC<NextSemesterPlannerProps> = ({ data, 
                     key={c.id}
                     className={`p-3 rounded-[8px] border transition-all flex items-center justify-between ${
                       isSelected
-                        ? 'border-[#5645d4] bg-[#e6e0f5]/30 dark:bg-[#251545]/30'
+                        ? 'border-[#0f6b57] bg-[#dcf0e8]/30 dark:bg-[#0a2a22]/30'
                         : 'border-[#e5e3df] bg-white dark:border-[#2a2a2e] dark:bg-[#141416] hover:border-[#c8c4be]'
                     }`}
                   >
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-xs text-[#5645d4]">{c.code}</span>
-                        <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#e6e0f5] text-[#5645d4] font-semibold">
+                        <span className="font-bold text-xs text-[#0f6b57]">{c.code}</span>
+                        <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#dcf0e8] text-[#0f6b57] font-semibold">
                           Unlocks {c.downstreamUnlockCount} Courses
                         </span>
                         <span className="text-xs font-semibold text-[#1a1a1a] dark:text-white">{c.title}</span>
@@ -357,8 +357,8 @@ export const NextSemesterPlanner: React.FC<NextSemesterPlannerProps> = ({ data, 
                       onClick={() => toggleSelectCourse(c.id)}
                       className={`text-xs px-2.5 py-1 rounded-[6px] font-medium transition-colors cursor-pointer ${
                         isSelected
-                          ? 'bg-[#5645d4] text-white'
-                          : 'btn-notion-secondary text-[#5645d4]'
+                          ? 'bg-[#0f6b57] text-white'
+                          : 'btn-notion-secondary text-[#0f6b57]'
                       }`}
                     >
                       {isSelected ? '✓ Added' : '+ Add'}
@@ -380,7 +380,7 @@ export const NextSemesterPlanner: React.FC<NextSemesterPlannerProps> = ({ data, 
                       key={c.id}
                       className={`p-3 rounded-[8px] border transition-all flex items-center justify-between ${
                         isSelected
-                          ? 'border-[#5645d4] bg-[#e6e0f5]/30 dark:bg-[#251545]/30'
+                          ? 'border-[#0f6b57] bg-[#dcf0e8]/30 dark:bg-[#0a2a22]/30'
                           : 'border-[#e5e3df] bg-white dark:border-[#2a2a2e] dark:bg-[#141416] hover:border-[#c8c4be]'
                       }`}
                     >
@@ -398,8 +398,8 @@ export const NextSemesterPlanner: React.FC<NextSemesterPlannerProps> = ({ data, 
                         onClick={() => toggleSelectCourse(c.id)}
                         className={`text-xs px-2.5 py-1 rounded-[6px] font-medium transition-colors cursor-pointer ${
                           isSelected
-                            ? 'bg-[#5645d4] text-white'
-                            : 'btn-notion-secondary text-[#5645d4]'
+                            ? 'bg-[#0f6b57] text-white'
+                            : 'btn-notion-secondary text-[#0f6b57]'
                         }`}
                       >
                         {isSelected ? '✓ Added' : '+ Add'}
@@ -481,7 +481,7 @@ export const NextSemesterPlanner: React.FC<NextSemesterPlannerProps> = ({ data, 
             <h3 className="text-sm font-bold text-[#1a1a1a] dark:text-white">
               Proposed Schedule ({selectedCourseIds.length})
             </h3>
-            <span className="text-xs font-semibold text-[#5645d4] dark:text-[#8070f6]">
+            <span className="text-xs font-semibold text-[#0f6b57] dark:text-[#4ccba5]">
               {currentTotalCredits} Credits Total
             </span>
           </div>
@@ -507,7 +507,7 @@ export const NextSemesterPlanner: React.FC<NextSemesterPlannerProps> = ({ data, 
                       <div>
                         <div className="flex items-center gap-1.5">
                           <span className="font-bold text-[#1a1a1a] dark:text-white">{c?.code}</span>
-                          <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#e6e0f5] text-[#5645d4] font-semibold">
+                          <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#dcf0e8] text-[#0f6b57] font-semibold">
                             {c?.credits} cr
                           </span>
                         </div>
@@ -534,7 +534,7 @@ export const NextSemesterPlanner: React.FC<NextSemesterPlannerProps> = ({ data, 
               <div className="pt-3 border-t border-[#e5e3df] dark:border-[#2a2a2e] space-y-2">
                 <div className="flex items-center justify-between text-xs font-semibold text-[#1a1a1a] dark:text-white">
                   <span>Total Planned Load:</span>
-                  <span className="text-sm font-bold text-[#5645d4] dark:text-[#8070f6]">
+                  <span className="text-sm font-bold text-[#0f6b57] dark:text-[#4ccba5]">
                     {currentTotalCredits} Credits
                   </span>
                 </div>

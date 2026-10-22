@@ -31,15 +31,14 @@ import { useAuth } from '../../context/AuthContext';
 import { SiteFooter } from '../../components/layout/SiteFooter';
 import { cn } from '../../lib/utils';
 
-const BRAND = '#5B45E8';
-const BRAND_TINT = '#F3F0FF';
-const INK = '#111827';
+const BRAND = '#0f6b57';
+const BRAND_TINT = '#eef8f4';
 const CURRENT_YEAR = new Date().getFullYear();
 
 const BTN_PRIMARY =
-  'inline-flex items-center justify-center gap-2 rounded-xl bg-[#5B45E8] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_1px_2px_rgba(16,24,40,0.08)] transition-colors hover:bg-[#4F3AD9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white';
+  'inline-flex items-center justify-center gap-2 rounded-xl bg-[#0f6b57] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_1px_2px_rgba(16,24,40,0.08)] transition-colors hover:bg-[#0f6b57] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white';
 const BTN_SECONDARY =
-  'inline-flex items-center justify-center gap-2 rounded-xl border border-[#E5E7EB] bg-white px-5 py-2.5 text-sm font-semibold text-[#111827] transition-colors hover:bg-[#F8FAFC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white';
+  'inline-flex items-center justify-center gap-2 rounded-xl border border-[#E5E7EB] bg-white px-5 py-2.5 text-sm font-semibold text-[#111827] transition-colors hover:bg-[#F8FAFC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white';
 
 /* ───────────────────────── Data ───────────────────────── */
 
@@ -244,7 +243,7 @@ const BrandMark: React.FC<{ className?: string; markClassName?: string }> = ({
   <Link to="/" className={cn('flex items-center gap-2.5', className)} aria-label="ScholarFlow home">
     <span
       className={cn(
-        'flex h-9 w-9 items-center justify-center rounded-[10px] text-white shadow-[0_6px_16px_-8px_rgba(91,69,232,0.9)]',
+        'flex h-9 w-9 items-center justify-center rounded-[10px] text-white shadow-[0_6px_16px_-8px_rgba(15,107,87,0.9)]',
         markClassName
       )}
       style={{ backgroundColor: BRAND }}
@@ -261,7 +260,7 @@ const Eyebrow: React.FC<{ children: React.ReactNode; className?: string }> = ({
 }) => (
   <span
     className={cn(
-      'inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em]',
+      'inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold',
       className
     )}
     style={{ backgroundColor: BRAND_TINT, color: BRAND }}
@@ -311,6 +310,14 @@ const Reveal: React.FC<{ children: React.ReactNode; className?: string; delay?: 
 
 /* ───────────────────────── App preview chrome ───────────────────────── */
 
+const TinyBar: React.FC<{ value: number; color?: string }> = ({ value, color = BRAND }) => (
+  <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#F1F5F9]">
+    <div className="h-full rounded-full" style={{ width: `${value}%`, backgroundColor: color }} />
+  </div>
+);
+
+/* ───────────────────────── Hero preview (large dashboard) ───────────────────────── */
+
 const AppWindow: React.FC<{
   children: React.ReactNode;
   className?: string;
@@ -342,210 +349,114 @@ const AppWindow: React.FC<{
   </div>
 );
 
-const PreviewSidebar: React.FC = () => {
-  const items = [
-    { icon: LayoutDashboard, label: 'Dashboard', active: true },
-    { icon: CalendarDays, label: 'Semesters' },
-    { icon: GraduationCap, label: 'Courses' },
-    { icon: ListChecks, label: 'Assignments' },
-    { icon: Award, label: 'Exams' },
-    { icon: Calculator, label: 'Grades' },
-    { icon: FileText, label: 'Knowledge Base' },
-  ];
-  return (
-    <div className="hidden w-[168px] shrink-0 flex-col gap-1 border-r border-[#E5E7EB] bg-[#FBFBFA] p-3 sm:flex">
-      <div className="mb-2 flex items-center gap-2 px-1.5">
-        <span
-          className="flex h-6 w-6 items-center justify-center rounded-md text-white"
-          style={{ backgroundColor: BRAND }}
-        >
-          <GraduationCap className="h-3.5 w-3.5" strokeWidth={2.4} />
-        </span>
-        <span className="text-[12px] font-semibold text-[#111827]">ScholarFlow</span>
-      </div>
-      {items.map((item) => (
-        <div
-          key={item.label}
-          className={cn(
-            'flex items-center gap-2 rounded-lg px-2 py-1.5 text-[12px]',
-            item.active ? 'bg-[#F3F0FF] font-semibold text-[#111827]' : 'text-[#64748B]'
-          )}
-        >
-          <item.icon
-            className="h-3.5 w-3.5"
-            strokeWidth={2.2}
-            style={item.active ? { color: BRAND } : undefined}
-            aria-hidden="true"
-          />
-          {item.label}
-        </div>
-      ))}
-    </div>
-  );
-};
-
-/** A small labelled metric used across previews. */
-const MiniStat: React.FC<{ label: string; value: string; tone?: string }> = ({
-  label,
-  value,
-  tone,
-}) => (
-  <div className="rounded-xl border border-[#E5E7EB] bg-white px-3 py-2.5">
-    <p className="text-[10px] font-semibold uppercase tracking-wider text-[#94A3B8]">{label}</p>
-    <p className="mt-1 text-[15px] font-bold" style={{ color: tone || INK }}>
-      {value}
-    </p>
-  </div>
-);
-
-const TinyBar: React.FC<{ value: number; color?: string }> = ({ value, color = BRAND }) => (
-  <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#F1F5F9]">
-    <div className="h-full rounded-full" style={{ width: `${value}%`, backgroundColor: color }} />
-  </div>
-);
-
-/* ───────────────────────── Hero preview (large dashboard) ───────────────────────── */
-
 const HeroPreview: React.FC = () => {
   const deadlines = [
-    { name: 'Problem Set 4 — Graph Algorithms', course: 'CSE 311', due: 'Due tomorrow', urgent: true },
-    { name: 'Lab Report — Page Tables', course: 'CSE 332', due: 'Due Friday', urgent: false },
-    { name: 'Linear Algebra Quiz 3', course: 'MATH 308', due: 'Next Tuesday', urgent: false },
+    { name: 'Problem Set 4', detail: 'Graph Algorithms', course: 'CSE 311', due: 'Tomorrow', urgent: true },
+    { name: 'Lab Report', detail: 'Page Tables', course: 'CSE 332', due: 'Friday', urgent: false },
+    { name: 'Quiz 3', detail: 'Linear Algebra', course: 'MATH 308', due: 'Tuesday', urgent: false },
   ];
   const courses = [
-    { code: 'CSE 311', name: 'Algorithms', progress: 72, tone: '#F3F0FF', color: BRAND },
-    { code: 'CSE 332', name: 'Operating Systems', progress: 58, tone: '#ECFDF5', color: '#16A34A' },
-    { code: 'MATH 308', name: 'Linear Algebra', progress: 64, tone: '#FEF3C7', color: '#B45309' },
+    { code: 'CSE 311', name: 'Algorithms', progress: 72, color: BRAND },
+    { code: 'CSE 332', name: 'Operating Systems', progress: 58, color: '#2f9e75' },
+    { code: 'MATH 308', name: 'Linear Algebra', progress: 64, color: '#b7791f' },
   ];
 
   return (
-    <Reveal className="relative">
-      <div
-        aria-hidden="true"
-        className="absolute -inset-4 -z-10 rounded-[32px] bg-[#F3F0FF]"
-      />
-      <AppWindow>
-        <div className="flex">
-          <PreviewSidebar />
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center justify-between gap-3 border-b border-[#E5E7EB] px-4 py-3">
-              <div className="flex items-center gap-2">
-                <span className="text-[13px] font-semibold text-[#111827]">Fall 2026</span>
-                <span
-                  className="rounded-full px-2 py-0.5 text-[10px] font-semibold"
-                  style={{ backgroundColor: '#ECFDF5', color: '#16A34A' }}
-                >
-                  Active semester
-                </span>
-              </div>
-              <div className="hidden items-center gap-1.5 rounded-lg border border-[#E5E7EB] px-2.5 py-1 text-[11px] text-[#94A3B8] md:flex">
-                <Search className="h-3 w-3" aria-hidden="true" />
-                Search
-              </div>
-            </div>
-
-            <div className="space-y-3 p-4">
-              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-                <MiniStat label="GPA" value="3.82" tone={BRAND} />
-                <MiniStat label="Credits" value="84/130" />
-                <MiniStat label="Deadlines" value="3" />
-                <MiniStat label="Study" value="6.5h" />
-              </div>
-
-              <div className="grid grid-cols-1 gap-3 md:grid-cols-5">
-                <div className="rounded-xl border border-[#E5E7EB] p-3.5 md:col-span-3">
-                  <div className="mb-2.5 flex items-center justify-between">
-                    <span className="text-[11px] font-semibold uppercase tracking-wider text-[#64748B]">
-                      Upcoming
-                    </span>
-                    <span className="text-[10px] text-[#94A3B8]">This week</span>
-                  </div>
-                  <ul className="space-y-2.5">
-                    {deadlines.map((item) => (
-                      <li key={item.name} className="flex items-start gap-2.5">
-                        <span
-                          className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full"
-                          style={{ backgroundColor: item.urgent ? '#DC2626' : BRAND }}
-                          aria-hidden="true"
-                        />
-                        <div className="min-w-0 flex-1">
-                          <p className="truncate text-[12.5px] font-medium text-[#111827]">
-                            {item.name}
-                          </p>
-                          <p className="text-[11px] text-[#64748B]">
-                            {item.course} · {item.due}
-                          </p>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="rounded-xl border border-[#E5E7EB] p-3.5 md:col-span-2">
-                  <span className="text-[11px] font-semibold uppercase tracking-wider text-[#64748B]">
-                    Degree progress
-                  </span>
-                  <div className="mt-2.5 flex items-center gap-3">
-                    <div className="relative h-14 w-14 shrink-0">
-                      <svg viewBox="0 0 36 36" className="h-14 w-14 -rotate-90" aria-hidden="true">
-                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="#F1F5F9" strokeWidth="3.5" />
-                        <circle
-                          cx="18"
-                          cy="18"
-                          r="15.9"
-                          fill="none"
-                          stroke={BRAND}
-                          strokeWidth="3.5"
-                          strokeLinecap="round"
-                          strokeDasharray="65 100"
-                        />
-                      </svg>
-                      <span className="absolute inset-0 flex items-center justify-center text-[12px] font-bold text-[#111827]">
-                        65%
-                      </span>
-                    </div>
-                    <div className="space-y-1 text-[11px] text-[#64748B]">
-                      <p>
-                        <span className="font-semibold text-[#111827]">84</span> credits completed
-                      </p>
-                      <p>
-                        <span className="font-semibold text-[#111827]">46</span> remaining
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-xl border border-[#E5E7EB] p-3.5">
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-[#64748B]">
-                  Courses
-                </span>
-                <div className="mt-2.5 space-y-2.5">
-                  {courses.map((course) => (
-                    <div key={course.code} className="flex items-center gap-3">
-                      <span
-                        className="shrink-0 rounded-md px-2 py-0.5 text-[10px] font-bold"
-                        style={{ backgroundColor: course.tone, color: course.color }}
-                      >
-                        {course.code}
-                      </span>
-                      <span className="min-w-0 flex-1 truncate text-[12px] text-[#111827]">
-                        {course.name}
-                      </span>
-                      <span className="hidden w-24 sm:block">
-                        <TinyBar value={course.progress} color={course.color} />
-                      </span>
-                      <span className="w-8 text-right text-[11px] text-[#64748B]">
-                        {course.progress}%
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+    <Reveal className="relative w-full min-w-0">
+      <div className="overflow-hidden rounded-2xl border border-[#cfe5db] bg-white shadow-[0_24px_60px_-28px_rgba(13,42,34,0.35)]">
+        {/* Header */}
+        <div className="flex items-center justify-between gap-3 border-b border-[#e3efe9] bg-[#f4faf7] px-4 py-3 sm:px-5">
+          <div className="flex min-w-0 items-center gap-2.5">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0f6b57] text-white">
+              <GraduationCap className="h-4 w-4" aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <p className="font-[family-name:var(--font-display)] text-[15px] font-bold leading-tight text-[#0d2a22]">
+                Fall 2026
+              </p>
+              <p className="text-xs text-[#5d6f68]">Week 8 of 16</p>
             </div>
           </div>
+          <span className="shrink-0 rounded-full bg-[#ffd84d] px-2.5 py-1 text-xs font-semibold text-[#3d2f00]">
+            Active semester
+          </span>
         </div>
-      </AppWindow>
+
+        <div className="space-y-5 p-4 sm:p-5">
+          {/* Key numbers */}
+          <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {[
+              { label: 'GPA', value: '3.82', accent: true },
+              { label: 'Credits', value: '84/130' },
+              { label: 'Due soon', value: '3' },
+              { label: 'Study', value: '6.5h' },
+            ].map((m) => (
+              <div key={m.label} className="rounded-xl bg-[#f4faf7] px-3.5 py-3">
+                <dt className="text-xs text-[#5d6f68]">{m.label}</dt>
+                <dd
+                  className={cn(
+                    'mt-0.5 font-[family-name:var(--font-display)] text-xl font-bold tabular-nums',
+                    m.accent ? 'text-[#0f6b57]' : 'text-[#0d2a22]'
+                  )}
+                >
+                  {m.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          {/* Deadlines */}
+          <section aria-label="Upcoming deadlines">
+            <h3 className="mb-2 text-sm font-semibold text-[#0d2a22]">Coming up this week</h3>
+            <ul className="divide-y divide-[#e3efe9] rounded-xl border border-[#e3efe9]">
+              {deadlines.map((item) => (
+                <li key={item.name} className="flex items-center gap-3 px-3.5 py-2.5">
+                  <span
+                    className={cn(
+                      'h-2 w-2 shrink-0 rounded-full',
+                      item.urgent ? 'bg-[#d9480f]' : 'bg-[#0f6b57]'
+                    )}
+                    aria-hidden="true"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-medium text-[#0d2a22]">{item.name}</p>
+                    <p className="text-xs text-[#5d6f68]">
+                      {item.course} · {item.detail}
+                    </p>
+                  </div>
+                  <span
+                    className={cn(
+                      'shrink-0 text-xs font-semibold',
+                      item.urgent ? 'text-[#d9480f]' : 'text-[#5d6f68]'
+                    )}
+                  >
+                    {item.due}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* Course progress */}
+          <section aria-label="Course progress">
+            <h3 className="mb-2 text-sm font-semibold text-[#0d2a22]">Course progress</h3>
+            <ul className="space-y-3">
+              {courses.map((course) => (
+                <li key={course.code}>
+                  <div className="mb-1 flex items-baseline justify-between gap-3 text-xs">
+                    <span className="min-w-0 text-[#0d2a22]">
+                      <span className="font-semibold">{course.code}</span>
+                      <span className="text-[#5d6f68]"> · {course.name}</span>
+                    </span>
+                    <span className="shrink-0 tabular-nums text-[#5d6f68]">{course.progress}%</span>
+                  </div>
+                  <TinyBar value={course.progress} color={course.color} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+      </div>
     </Reveal>
   );
 };
@@ -555,7 +466,7 @@ const HeroPreview: React.FC = () => {
 const SemesterPreview: React.FC = () => {
   const tabs = ['Overview', 'Courses', 'Assignments', 'Exams', 'Notes'];
   const courses = [
-    { code: 'CSE 311', name: 'Algorithms', instructor: 'Dr. Rehman', credits: 4, progress: 72, color: BRAND, tone: '#F3F0FF' },
+    { code: 'CSE 311', name: 'Algorithms', instructor: 'Dr. Rehman', credits: 4, progress: 72, color: BRAND, tone: '#eef8f4' },
     { code: 'CSE 332', name: 'Operating Systems', instructor: 'Dr. Ahmed', credits: 4, progress: 58, color: '#16A34A', tone: '#ECFDF5' },
     { code: 'MATH 308', name: 'Linear Algebra', instructor: 'Prof. Karim', credits: 3, progress: 64, color: '#B45309', tone: '#FEF3C7' },
   ];
@@ -652,7 +563,7 @@ const SemesterPreview: React.FC = () => {
 
 const MaterialsPreview: React.FC = () => {
   const docs = [
-    { name: 'OS — Lecture 14.pdf', pages: '24 pp', tone: '#F3F0FF', color: BRAND },
+    { name: 'OS — Lecture 14.pdf', pages: '24 pp', tone: '#eef8f4', color: BRAND },
     { name: 'Algorithms — Slides 09.pdf', pages: '31 pp', tone: '#ECFDF5', color: '#16A34A' },
     { name: 'MATH 308 — Handout.pdf', pages: '6 pp', tone: '#FEF3C7', color: '#B45309' },
   ];
@@ -916,7 +827,7 @@ const FaqItem: React.FC<{
           onClick={() => onToggle(index)}
           aria-expanded={isOpen}
           aria-controls={panelId}
-          className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-[15px] font-semibold text-[#111827] transition-colors hover:bg-[#F8FAFC] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#5B45E8]/40"
+          className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-[15px] font-semibold text-[#111827] transition-colors hover:bg-[#F8FAFC] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0f6b57]/40"
         >
           {faq.q}
           <ChevronDown
@@ -980,10 +891,10 @@ export const LandingPage: React.FC = () => {
   }, [mobileOpen]);
 
   return (
-    <div className="min-h-screen w-full bg-white text-[#111827] antialiased selection:bg-[#5B45E8] selection:text-white">
+    <div className="min-h-screen w-full bg-white text-[#111827] antialiased selection:bg-[#0f6b57] selection:text-white">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[#111827] focus:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/40"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[#111827] focus:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/40"
       >
         Skip to content
       </a>
@@ -999,7 +910,7 @@ export const LandingPage: React.FC = () => {
                 key={link.id}
                 href={`#${link.id}`}
                 onClick={(e) => handleAnchor(e, link.id)}
-                className="rounded text-[13.5px] font-medium text-[#64748B] transition-colors hover:text-[#111827] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/40"
+                className="rounded text-[13.5px] font-medium text-[#64748B] transition-colors hover:text-[#111827] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/40"
               >
                 {link.label}
               </a>
@@ -1016,7 +927,7 @@ export const LandingPage: React.FC = () => {
               <>
                 <Link
                   to="/login"
-                  className="rounded-lg px-3.5 py-2 text-sm font-medium text-[#111827] transition-colors hover:bg-[#F8FAFC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/40"
+                  className="rounded-lg px-3.5 py-2 text-sm font-medium text-[#111827] transition-colors hover:bg-[#F8FAFC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/40"
                 >
                   Sign In
                 </Link>
@@ -1030,7 +941,7 @@ export const LandingPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setMobileOpen((v) => !v)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-[#111827] transition-colors hover:bg-[#F8FAFC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/40 md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-[#111827] transition-colors hover:bg-[#F8FAFC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/40 md:hidden"
             aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={mobileOpen}
             aria-controls="mobile-nav"
@@ -1077,15 +988,11 @@ export const LandingPage: React.FC = () => {
 
       <main id="main">
         {/* ───────────────────────── HERO ───────────────────────── */}
-        <section className="relative overflow-hidden bg-white">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -right-40 -top-40 h-[420px] w-[420px] rounded-full bg-[#F3F0FF] blur-3xl"
-          />
+        <section className="graph-paper relative overflow-hidden border-b border-[#dcf0e8]">
           <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-4 pb-16 pt-14 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:pb-24 lg:pt-20">
             <div>
               <Eyebrow>Your Academic Workspace</Eyebrow>
-              <h1 className="mt-5 text-[34px] font-bold leading-[1.08] tracking-[-0.025em] text-[#111827] sm:text-5xl lg:text-[54px]">
+              <h1 className="mt-5 text-[34px] font-bold leading-[1.08] tracking-[-0.03em] text-[#0d2a22] font-[family-name:var(--font-display)] sm:text-5xl lg:text-[56px]">
                 Your entire academic life. Finally, in one place.
               </h1>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-[#64748B] sm:text-[17px]">
@@ -1381,7 +1288,7 @@ export const LandingPage: React.FC = () => {
         <section className="bg-white pb-20 lg:pb-24">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <Reveal>
-              <div className="relative overflow-hidden rounded-3xl border border-[#E5E7EB] bg-[#F3F0FF] px-6 py-14 text-center sm:px-12">
+              <div className="relative overflow-hidden rounded-3xl border border-[#E5E7EB] bg-[#eef8f4] px-6 py-14 text-center sm:px-12">
                 <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-[#111827] sm:text-4xl">
                   Make your next semester your most organized one.
                 </h2>
@@ -1430,7 +1337,7 @@ export const LandingPage: React.FC = () => {
                     <a
                       href={`#${link.id}`}
                       onClick={(e) => handleAnchor(e, link.id)}
-                      className="rounded text-sm text-[#64748B] transition-colors hover:text-[#111827] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/40"
+                      className="rounded text-sm text-[#64748B] transition-colors hover:text-[#111827] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/40"
                     >
                       {link.label}
                     </a>
@@ -1447,7 +1354,7 @@ export const LandingPage: React.FC = () => {
                 <li>
                   <Link
                     to="/login"
-                    className="rounded text-sm text-[#64748B] transition-colors hover:text-[#111827] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/40"
+                    className="rounded text-sm text-[#64748B] transition-colors hover:text-[#111827] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/40"
                   >
                     Sign In
                   </Link>
@@ -1455,7 +1362,7 @@ export const LandingPage: React.FC = () => {
                 <li>
                   <Link
                     to="/login"
-                    className="rounded text-sm text-[#64748B] transition-colors hover:text-[#111827] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/40"
+                    className="rounded text-sm text-[#64748B] transition-colors hover:text-[#111827] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/40"
                   >
                     Create Account
                   </Link>
@@ -1464,7 +1371,7 @@ export const LandingPage: React.FC = () => {
                   <li>
                     <Link
                       to="/dashboard"
-                      className="rounded text-sm text-[#64748B] transition-colors hover:text-[#111827] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B45E8]/40"
+                      className="rounded text-sm text-[#64748B] transition-colors hover:text-[#111827] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0f6b57]/40"
                     >
                       Dashboard
                     </Link>

@@ -146,7 +146,7 @@ export const AddCourseModal: React.FC<AddCourseModalProps> = ({
                 placeholder="e.g. CSE215"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs font-semibold uppercase text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs font-semibold uppercase text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
                 required
               />
             </div>
@@ -159,7 +159,7 @@ export const AddCourseModal: React.FC<AddCourseModalProps> = ({
                 placeholder="e.g. Object Oriented Programming"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
                 required
               />
             </div>
@@ -177,7 +177,7 @@ export const AddCourseModal: React.FC<AddCourseModalProps> = ({
                 max="12"
                 value={credits}
                 onChange={(e) => setCredits(parseFloat(e.target.value) || 0)}
-                className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
                 required
               />
             </div>
@@ -189,7 +189,7 @@ export const AddCourseModal: React.FC<AddCourseModalProps> = ({
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
               >
                 <option value="CORE">Core</option>
                 <option value="ELECTIVE">Elective</option>
@@ -212,7 +212,7 @@ export const AddCourseModal: React.FC<AddCourseModalProps> = ({
                 placeholder="e.g. 3"
                 value={recommendedSemester}
                 onChange={(e) => setRecommendedSemester(e.target.value === '' ? '' : parseInt(e.target.value, 10))}
-                className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
               />
             </div>
           </div>
@@ -223,7 +223,7 @@ export const AddCourseModal: React.FC<AddCourseModalProps> = ({
                 type="checkbox"
                 checked={isRequired}
                 onChange={(e) => setIsRequired(e.target.checked)}
-                className="rounded border-[#c8c4be] text-[#5645d4] focus:ring-[#5645d4]"
+                className="rounded border-[#c8c4be] text-[#0f6b57] focus:ring-[#0f6b57]"
               />
               <span>Mandatory Requirement (Core Degree)</span>
             </label>
@@ -263,7 +263,7 @@ export const AddCourseModal: React.FC<AddCourseModalProps> = ({
                       key={ac.id}
                       className={`flex items-center justify-between px-2.5 py-1.5 rounded-[6px] text-xs cursor-pointer transition-colors ${
                         isChecked
-                          ? 'bg-[#e6e0f5] text-[#5645d4] font-medium dark:bg-[#2a1a45]'
+                          ? 'bg-[#dcf0e8] text-[#0f6b57] font-medium dark:bg-[#0a2a22]'
                           : 'hover:bg-[#f0eeec] dark:hover:bg-[#252528] text-[#5d5b54] dark:text-[#a4a097]'
                       }`}
                     >
@@ -272,7 +272,7 @@ export const AddCourseModal: React.FC<AddCourseModalProps> = ({
                           type="checkbox"
                           checked={isChecked}
                           onChange={() => togglePrereq(ac.code)}
-                          className="rounded text-[#5645d4] focus:ring-[#5645d4]"
+                          className="rounded text-[#0f6b57] focus:ring-[#0f6b57]"
                         />
                         <span className="font-semibold">{ac.code}</span>
                         <span className="text-[11px] truncate max-w-[200px]">{ac.title}</span>
@@ -294,7 +294,7 @@ export const AddCourseModal: React.FC<AddCourseModalProps> = ({
               placeholder="Course description or special graduation policy remarks..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#5645d4]"
+              className="w-full rounded-[8px] border border-[#c8c4be] bg-white px-3 py-1.5 text-xs text-[#1a1a1a] dark:border-[#37352f] dark:bg-[#141416] dark:text-white focus:outline-none focus:border-[#0f6b57]"
             />
           </div>
 

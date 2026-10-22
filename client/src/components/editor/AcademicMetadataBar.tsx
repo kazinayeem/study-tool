@@ -85,6 +85,23 @@ export const AcademicMetadataBar: React.FC<AcademicMetadataBarProps> = ({
   };
 
   const [tagInput, setTagInput] = React.useState('');
+  const [expanded, setExpanded] = React.useState(() => {
+    try {
+      return localStorage.getItem('scholarflow_note_details') === 'open';
+    } catch {
+      return false;
+    }
+  });
+  const toggleExpanded = () => {
+    setExpanded((prev) => {
+      try {
+        localStorage.setItem('scholarflow_note_details', prev ? 'closed' : 'open');
+      } catch {
+        /* storage unavailable */
+      }
+      return !prev;
+    });
+  };
 
   const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' || e.key === ',') {
@@ -102,18 +119,21 @@ export const AcademicMetadataBar: React.FC<AcademicMetadataBarProps> = ({
   };
 
   return (
-    <div className="bg-[#fbfbfa] dark:bg-neutral-900 border-b border-[#e5e3df] dark:border-neutral-800 px-4 py-2.5 transition-colors">
+    <div className="shrink-0 bg-[#fbfbfa] dark:bg-neutral-900 border-b border-[#e5e3df] dark:border-neutral-800 px-3 sm:px-4 py-1.5 transition-colors">
       {/* Top row: Academic Breadcrumb + Save Status Indicator */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-2.5">
+      <div className="flex items-center justify-between gap-3 min-h-8">
+        <div className="hidden min-w-0 2xl:block overflow-hidden">
         <AcademicBreadcrumb
           semesterName={currentSemester?.name}
           courseCode={currentCourse?.code}
           courseName={currentCourse?.title}
           moduleName="Knowledge Base"
         />
+        </div>
 
         {/* Save State & Timestamp */}
-        <div className="flex items-center gap-2 text-xs">
+        <div className="flex w-full sm:w-auto items-center justify-between sm:justify-end gap-2 text-xs">
+         <div className="flex items-center gap-2">
           {saveStatus === 'saving' && (
             <span className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400 font-medium">
               <RefreshCw className="w-3.5 h-3.5 animate-spin" />
@@ -164,14 +184,27 @@ export const AcademicMetadataBar: React.FC<AcademicMetadataBarProps> = ({
               </span>
             </span>
           )}
+         </div>
+          <button
+            type="button"
+            onClick={toggleExpanded}
+            aria-expanded={expanded}
+            className="flex h-8 items-center gap-1.5 rounded-md border border-[#e5e3df] bg-white px-2.5 font-medium text-[#37352f] hover:bg-[#f6f5f4] dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200"
+          >
+            <span className="max-w-[9rem] truncate">
+              {currentCourse?.code || currentSemester?.name || 'Details'}
+            </span>
+            <ChevronDown className={`h-3.5 w-3.5 transition-transform ${expanded ? 'rotate-180' : ''}`} />
+          </button>
         </div>
       </div>
 
-      {/* Bottom row: Relationship selectors */}
-      <div className="flex flex-wrap items-center gap-2 text-xs">
+      {/* Relationship selectors (collapsed by default to give the page room) */}
+      {expanded && (
+      <div className="flex flex-wrap items-center gap-2 text-xs pt-2 pb-1">
         {/* Semester selector */}
         <div className="flex items-center bg-white dark:bg-neutral-800 rounded-md border border-[#e5e3df] dark:border-neutral-700 px-2 py-1 shadow-xs">
-          <GraduationCap className="w-3.5 h-3.5 text-[#5645d4] mr-1.5 shrink-0" />
+          <GraduationCap className="w-3.5 h-3.5 text-[#0f6b57] mr-1.5 shrink-0" />
           <span className="text-[#787774] dark:text-neutral-400 font-medium mr-1.5">Semester:</span>
           <select
             value={selectedSemesterId || ''}
@@ -189,7 +222,7 @@ export const AcademicMetadataBar: React.FC<AcademicMetadataBarProps> = ({
 
         {/* Course selector (Strictly filtered) */}
         <div className="flex items-center bg-white dark:bg-neutral-800 rounded-md border border-[#e5e3df] dark:border-neutral-700 px-2 py-1 shadow-xs">
-          <BookOpen className="w-3.5 h-3.5 text-[#5645d4] mr-1.5 shrink-0" />
+          <BookOpen className="w-3.5 h-3.5 text-[#0f6b57] mr-1.5 shrink-0" />
           <span className="text-[#787774] dark:text-neutral-400 font-medium mr-1.5">Course:</span>
           <select
             value={selectedCourseId || ''}
@@ -234,13 +267,13 @@ export const AcademicMetadataBar: React.FC<AcademicMetadataBarProps> = ({
           {tags.map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center gap-1 bg-purple-50 dark:bg-purple-950/40 text-[#5645d4] dark:text-purple-300 text-[11px] px-1.5 py-0.5 rounded font-medium"
+              className="inline-flex items-center gap-1 bg-teal-50 dark:bg-teal-950/40 text-[#0f6b57] dark:text-teal-300 text-[11px] px-1.5 py-0.5 rounded font-medium"
             >
               #{tag}
               <button
                 type="button"
                 onClick={() => handleRemoveTag(tag)}
-                className="hover:text-purple-900 dark:hover:text-purple-100"
+                className="hover:text-teal-900 dark:hover:text-teal-100"
               >
                 <X className="w-2.5 h-2.5" />
               </button>
@@ -256,6 +289,7 @@ export const AcademicMetadataBar: React.FC<AcademicMetadataBarProps> = ({
           />
         </div>
       </div>
+      )}
     </div>
   );
 };

@@ -26,6 +26,7 @@ import {
   ArrowUpDown,
   X,
   RotateCcw,
+  ChevronLeft,
 } from 'lucide-react';
 import { api, ApiError } from '../../lib/api';
 import { formatDate } from '../../lib/utils';
@@ -34,6 +35,7 @@ import { Note, Course, Semester, NoteFolder, NoteRevision } from '../../types';
 import { ShareModal } from '../../components/sharing/ShareModal';
 import { useActiveSemester } from '../../hooks/useActiveSemester';
 import { AcademicMetadataBar } from '../../components/editor/AcademicMetadataBar';
+import { htmlToPlainText } from '../../lib/noteContent';
 import { WordEditor } from '../../components/editor/WordEditor';
 
 type NoteLoadStatus =
@@ -651,7 +653,9 @@ export const NotesPage: React.FC = () => {
   return (
     <div
       className={`flex w-full overflow-hidden bg-[#f4f3f0] dark:bg-[#121212] ${
-        isFullScreen ? 'fixed inset-0 z-50 h-screen' : 'h-[calc(100vh-4rem)]'
+        isFullScreen
+          ? 'fixed inset-0 z-50 h-dvh'
+          : 'absolute inset-x-0 top-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] md:bottom-0'
       }`}
     >
       {/* =========================================================================
@@ -659,14 +663,14 @@ export const NotesPage: React.FC = () => {
       ========================================================================= */}
       <aside
         className={`${
-          isFullScreen ? 'hidden' : 'flex'
-        } w-80 md:w-88 flex-col border-r border-[#e5e3df] dark:border-neutral-800 bg-white dark:bg-neutral-900 shrink-0`}
+          isFullScreen ? 'hidden' : requestedNoteId ? 'hidden md:flex' : 'flex'
+        } w-full md:w-72 xl:w-80 flex-col border-r border-[#e5e3df] dark:border-neutral-800 bg-white dark:bg-neutral-900 shrink-0`}
       >
         {/* Header & Create Note button */}
         <div className="p-3.5 border-b border-[#e5e3df] dark:border-neutral-800 flex items-center justify-between">
           <div>
             <h2 className="text-sm font-bold text-[#37352f] dark:text-white flex items-center gap-1.5">
-              <FileText className="w-4 h-4 text-[#5645d4]" />
+              <FileText className="w-4 h-4 text-[#0f6b57]" />
               <span>Knowledge Base</span>
             </h2>
             <p className="text-[11px] text-[#787774] dark:text-neutral-400">
@@ -692,7 +696,7 @@ export const NotesPage: React.FC = () => {
               onClick={() => setViewArchived(false)}
               className={`flex-1 py-1 rounded text-center font-medium transition-colors ${
                 !viewArchived
-                  ? 'bg-white dark:bg-neutral-700 text-[#5645d4] dark:text-purple-300 shadow-2xs'
+                  ? 'bg-white dark:bg-neutral-700 text-[#0f6b57] dark:text-teal-300 shadow-2xs'
                   : 'text-[#787774] dark:text-neutral-400 hover:text-[#37352f]'
               }`}
             >
@@ -703,7 +707,7 @@ export const NotesPage: React.FC = () => {
               onClick={() => setViewArchived(true)}
               className={`flex-1 py-1 rounded text-center font-medium transition-colors ${
                 viewArchived
-                  ? 'bg-white dark:bg-neutral-700 text-[#5645d4] dark:text-purple-300 shadow-2xs'
+                  ? 'bg-white dark:bg-neutral-700 text-[#0f6b57] dark:text-teal-300 shadow-2xs'
                   : 'text-[#787774] dark:text-neutral-400 hover:text-[#37352f]'
               }`}
             >
@@ -722,7 +726,7 @@ export const NotesPage: React.FC = () => {
             }}
             className={`rounded px-2 py-0.5 text-[11px] font-medium whitespace-nowrap transition-colors ${
               !selectedFolderId && !orphanOnly
-                ? 'bg-purple-100 text-[#5645d4] dark:bg-purple-950/60 dark:text-purple-300'
+                ? 'bg-teal-100 text-[#0f6b57] dark:bg-teal-950/60 dark:text-teal-300'
                 : 'text-[#787774] hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800'
             }`}
           >
@@ -738,7 +742,7 @@ export const NotesPage: React.FC = () => {
               }}
               className={`flex items-center gap-1 rounded px-2 py-0.5 text-[11px] font-medium whitespace-nowrap transition-colors ${
                 selectedFolderId === f.id
-                  ? 'bg-purple-100 text-[#5645d4] dark:bg-purple-950/60 dark:text-purple-300'
+                  ? 'bg-teal-100 text-[#0f6b57] dark:bg-teal-950/60 dark:text-teal-300'
                   : 'text-[#787774] hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800'
               }`}
             >
@@ -749,7 +753,7 @@ export const NotesPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setIsNewFolderModalOpen(true)}
-            className="p-1 text-neutral-400 hover:text-[#5645d4]"
+            className="p-1 text-neutral-400 hover:text-[#0f6b57]"
             title="Create New Folder"
           >
             <FolderPlus className="h-3.5 w-3.5" />
@@ -766,7 +770,7 @@ export const NotesPage: React.FC = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search title & document text..."
-              className="w-full rounded-md border border-[#e5e3df] dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 pl-8 pr-7 py-1.5 text-xs text-[#37352f] dark:text-white placeholder:text-neutral-400 focus:outline-none focus:border-[#5645d4]"
+              className="w-full rounded-md border border-[#e5e3df] dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 pl-8 pr-7 py-1.5 text-xs text-[#37352f] dark:text-white placeholder:text-neutral-400 focus:outline-none focus:border-[#0f6b57]"
             />
             {search && (
               <button
@@ -851,7 +855,7 @@ export const NotesPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => createNoteMutation.mutate()}
-                className="mt-3 text-[#5645d4] dark:text-purple-400 font-semibold hover:underline"
+                className="mt-3 text-[#0f6b57] dark:text-teal-400 font-semibold hover:underline"
               >
                 + Create Blank Note
               </button>
@@ -860,7 +864,7 @@ export const NotesPage: React.FC = () => {
             sortedNotes.map((n) => {
               const isSelected = activeNote?.id === n.id;
               const cleanPreview = n.content
-                ? n.content.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim()
+                ? htmlToPlainText(n.content).replace(/\s+/g, ' ')
                 : 'Empty document';
 
               return (
@@ -869,7 +873,7 @@ export const NotesPage: React.FC = () => {
                   onClick={() => selectNote(n)}
                   className={`p-3 cursor-pointer transition-colors border-l-3 ${
                     isSelected
-                      ? 'bg-purple-50/60 dark:bg-neutral-800/80 border-[#5645d4]'
+                      ? 'bg-teal-50/60 dark:bg-neutral-800/80 border-[#0f6b57]'
                       : 'border-transparent hover:bg-neutral-50 dark:hover:bg-neutral-800/40'
                   }`}
                 >
@@ -877,7 +881,7 @@ export const NotesPage: React.FC = () => {
                     <h3
                       className={`text-xs font-semibold truncate ${
                         isSelected
-                          ? 'text-[#5645d4] dark:text-purple-300'
+                          ? 'text-[#0f6b57] dark:text-teal-300'
                           : 'text-[#37352f] dark:text-neutral-200'
                       }`}
                     >
@@ -924,7 +928,11 @@ export const NotesPage: React.FC = () => {
       {/* =========================================================================
           RIGHT WORKSPACE: WORD-STYLE DOCUMENT EDITOR
       ========================================================================= */}
-      <main className="flex flex-1 flex-col overflow-hidden bg-white dark:bg-neutral-900">
+      <main
+        className={`${
+          !requestedNoteId && !isFullScreen ? 'hidden md:flex' : 'flex'
+        } min-w-0 flex-1 flex-col overflow-hidden bg-white dark:bg-neutral-900`}
+      >
         {noteStatus.kind === 'not_found' ? (
           <div className="flex flex-col items-center justify-center h-full text-center p-8">
             <div className="w-16 h-16 rounded-2xl bg-rose-50 dark:bg-rose-950/40 flex items-center justify-center mb-4">
@@ -1059,13 +1067,13 @@ export const NotesPage: React.FC = () => {
           </div>
         ) : showLoading ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-3 p-8 text-center text-[#787774] dark:text-neutral-400">
-            <div className="animate-spin h-8 w-8 rounded-full border-2 border-[#5645d4] border-t-transparent" />
+            <div className="animate-spin h-8 w-8 rounded-full border-2 border-[#0f6b57] border-t-transparent" />
             <span className="text-xs font-medium">Loading note...</span>
           </div>
         ) : !activeNote ? (
           <div className="flex flex-col items-center justify-center h-full text-neutral-400 text-sm p-6 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-purple-50 dark:bg-purple-950/40 flex items-center justify-center mb-4">
-              <FileText className="h-8 w-8 text-[#5645d4]" />
+            <div className="w-16 h-16 rounded-2xl bg-teal-50 dark:bg-teal-950/40 flex items-center justify-center mb-4">
+              <FileText className="h-8 w-8 text-[#0f6b57]" />
             </div>
             <h3 className="font-bold text-base text-[#37352f] dark:text-white">
               ScholarFlow Word-Style Document Workspace
@@ -1117,7 +1125,7 @@ export const NotesPage: React.FC = () => {
                   disabled={toggleArchiveMutation.isPending}
                   className="flex items-center gap-1 px-2 py-0.5 bg-white dark:bg-neutral-900 border border-[#e5e3df] dark:border-neutral-700 rounded font-medium text-[#37352f] dark:text-neutral-200 hover:bg-neutral-50 text-[11px] shadow-2xs"
                 >
-                  <ArchiveRestore className="w-3 h-3 text-[#5645d4]" />
+                  <ArchiveRestore className="w-3 h-3 text-[#0f6b57]" />
                   <span>Restore</span>
                 </button>
               </div>
@@ -1154,11 +1162,21 @@ export const NotesPage: React.FC = () => {
             {/* Document Quick Action Toolbar Strip */}
             <div className="flex items-center justify-between px-4 py-1.5 bg-[#fbfbfa] dark:bg-neutral-850 border-b border-[#e5e3df] dark:border-neutral-800 text-xs text-[#787774] dark:text-neutral-400 shrink-0 select-none">
               <div className="flex items-center space-x-2">
+                {/* Mobile: back to the notes list */}
+                {!isFullScreen && (
+                  <Link
+                    to={isSemesterScopedRoute && routeSemesterId ? `/semesters/${routeSemesterId}/notes` : '/notes'}
+                    className="-ml-2 flex h-10 items-center gap-1 rounded-md px-2 text-sm font-medium text-[#0f6b57] hover:bg-[#eef8f4] dark:text-[#4ccba5] md:hidden"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                    All notes
+                  </Link>
+                )}
                 {/* Linked Document reference */}
                 {activeNote.document && (
                   <Link
                     to={`/documents/${activeNote.document.id}/view`}
-                    className="inline-flex items-center gap-1 text-xs text-[#5645d4] hover:underline"
+                    className="inline-flex items-center gap-1 text-xs text-[#0f6b57] hover:underline"
                   >
                     <LinkIcon className="w-3 h-3" />
                     <span>Linked PDF: {activeNote.document.title}</span>
@@ -1212,7 +1230,7 @@ export const NotesPage: React.FC = () => {
                 >
                   {activeNote.isArchived ? (
                     <>
-                      <ArchiveRestore className="w-3.5 h-3.5 text-[#5645d4]" />
+                      <ArchiveRestore className="w-3.5 h-3.5 text-[#0f6b57]" />
                       <span className="hidden sm:inline text-[11px]">Restore</span>
                     </>
                   ) : (
@@ -1267,7 +1285,7 @@ export const NotesPage: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
           <div className="w-full max-w-lg bg-white dark:bg-neutral-900 rounded-lg p-6 shadow-xl border border-neutral-200 dark:border-neutral-800">
             <div className="flex items-center gap-2 mb-2">
-              <History className="h-5 w-5 text-[#5645d4]" />
+              <History className="h-5 w-5 text-[#0f6b57]" />
               <h3 className="text-base font-bold text-[#37352f] dark:text-white">
                 Document Revision History
               </h3>
@@ -1302,7 +1320,7 @@ export const NotesPage: React.FC = () => {
                       type="button"
                       onClick={() => restoreRevisionMutation.mutate(rev.id)}
                       disabled={restoreRevisionMutation.isPending}
-                      className="px-2.5 py-1 text-xs font-medium text-[#5645d4] bg-purple-50 dark:bg-purple-950/40 rounded hover:bg-purple-100 dark:hover:bg-purple-900/60"
+                      className="px-2.5 py-1 text-xs font-medium text-[#0f6b57] bg-teal-50 dark:bg-teal-950/40 rounded hover:bg-teal-100 dark:hover:bg-teal-900/60"
                     >
                       Restore
                     </button>
@@ -1343,7 +1361,7 @@ export const NotesPage: React.FC = () => {
                   placeholder="e.g. Exam Cram Sheets, Research Papers"
                   value={newFolderName}
                   onChange={(e) => setNewFolderName(e.target.value)}
-                  className="w-full rounded border border-[#e5e3df] dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 px-3 py-1.5 text-xs text-[#37352f] dark:text-white focus:outline-none focus:border-[#5645d4]"
+                  className="w-full rounded border border-[#e5e3df] dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 px-3 py-1.5 text-xs text-[#37352f] dark:text-white focus:outline-none focus:border-[#0f6b57]"
                   autoFocus
                 />
               </div>

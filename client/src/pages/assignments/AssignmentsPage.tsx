@@ -229,8 +229,8 @@ export const AssignmentsPage: React.FC = () => {
     { id: 'BACKLOG', label: 'Backlog', color: 'border-t-slate-400' },
     { id: 'TODO', label: 'To Do', color: 'border-t-blue-500' },
     { id: 'IN_PROGRESS', label: 'In Progress', color: 'border-t-amber-500' },
-    { id: 'SUBMITTED', label: 'Submitted', color: 'border-t-purple-500' },
-    { id: 'IN_REVIEW', label: 'In Review', color: 'border-t-[#5645d4]' },
+    { id: 'SUBMITTED', label: 'Submitted', color: 'border-t-teal-500' },
+    { id: 'IN_REVIEW', label: 'In Review', color: 'border-t-[#0f6b57]' },
     { id: 'COMPLETED', label: 'Completed', color: 'border-t-emerald-500' },
     { id: 'CANCELLED', label: 'Cancelled', color: 'border-t-rose-400' },
   ];
@@ -264,7 +264,7 @@ export const AssignmentsPage: React.FC = () => {
           {mainTab === 'tasks' ? (
             <button
               onClick={() => setIsCreateOpen(true)}
-              className="flex items-center gap-2 rounded-[8px] bg-[#5645d4] hover:bg-[#4534b3] px-4 py-2 text-xs font-semibold text-white shadow-xs active:scale-95 transition-all"
+              className="flex items-center gap-2 rounded-[8px] bg-[#0f6b57] hover:bg-[#0b5645] px-4 py-2 text-xs font-semibold text-white shadow-xs active:scale-95 transition-all"
             >
               <Plus className="h-4 w-4" />
               Add Task
@@ -272,7 +272,7 @@ export const AssignmentsPage: React.FC = () => {
           ) : (
             <button
               onClick={() => setIsCreateProjectOpen(true)}
-              className="flex items-center gap-2 rounded-[8px] bg-[#5645d4] hover:bg-[#4534b3] px-4 py-2 text-xs font-semibold text-white shadow-xs active:scale-95 transition-all"
+              className="flex items-center gap-2 rounded-[8px] bg-[#0f6b57] hover:bg-[#0b5645] px-4 py-2 text-xs font-semibold text-white shadow-xs active:scale-95 transition-all"
             >
               <Plus className="h-4 w-4" />
               New Project
@@ -288,7 +288,7 @@ export const AssignmentsPage: React.FC = () => {
             onClick={() => setMainTab('tasks')}
             className={`pb-3 text-xs font-bold border-b-2 transition-colors ${
               mainTab === 'tasks'
-                ? 'border-[#5645d4] text-[#5645d4]'
+                ? 'border-[#0f6b57] text-[#0f6b57]'
                 : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
@@ -298,7 +298,7 @@ export const AssignmentsPage: React.FC = () => {
             onClick={() => setMainTab('projects')}
             className={`pb-3 text-xs font-bold border-b-2 transition-colors ${
               mainTab === 'projects'
-                ? 'border-[#5645d4] text-[#5645d4]'
+                ? 'border-[#0f6b57] text-[#0f6b57]'
                 : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
             }`}
           >
@@ -340,8 +340,8 @@ export const AssignmentsPage: React.FC = () => {
         <div className="space-y-6">
           {/* Smart Task Recommendations Callout */}
           {recommendations.length > 0 && (
-            <div className="card-notion p-4 bg-[#5645d4]/5 border-[#5645d4]/20 dark:bg-[#5645d4]/10">
-              <div className="flex items-center gap-2 mb-2 text-[#5645d4] dark:text-[#8070f6] font-bold text-xs">
+            <div className="card-notion p-4 bg-[#0f6b57]/5 border-[#0f6b57]/20 dark:bg-[#0f6b57]/10">
+              <div className="flex items-center gap-2 mb-2 text-[#0f6b57] dark:text-[#4ccba5] font-bold text-xs">
                 <Sparkles className="h-4 w-4" />
                 <span>AI Recommended Priority Focus — What to Work on First</span>
               </div>
@@ -352,10 +352,10 @@ export const AssignmentsPage: React.FC = () => {
                     className="card-notion p-3 text-xs"
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <span className="font-bold text-[10px] text-[#5645d4] dark:text-[#8070f6]">
+                      <span className="font-bold text-[10px] text-[#0f6b57] dark:text-[#4ccba5]">
                         #{idx + 1} {rec.course?.code || 'Course'}
                       </span>
-                      <span className="text-[10px] px-1.5 py-0.5 rounded-[4px] bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6] font-semibold">
+                      <span className="text-[10px] px-1.5 py-0.5 rounded-[4px] bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5] font-semibold">
                         Score: {Math.round(rec.recommendationScore)}
                       </span>
                     </div>
@@ -377,7 +377,7 @@ export const AssignmentsPage: React.FC = () => {
             <select
               value={courseFilter}
               onChange={(e) => setCourseFilter(e.target.value)}
-              className="rounded-[8px] border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-2xs focus:border-[#5645d4] focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
+              className="rounded-[8px] border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-2xs focus:border-[#0f6b57] focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
             >
               <option value="">All Courses</option>
               {courses.map((c) => (
@@ -388,7 +388,7 @@ export const AssignmentsPage: React.FC = () => {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="rounded-[8px] border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-2xs focus:border-[#5645d4] focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
+              className="rounded-[8px] border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 shadow-2xs focus:border-[#0f6b57] focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
             >
               <option value="">All Statuses (7 Available)</option>
               {statusCategories.map((s) => (
@@ -422,7 +422,7 @@ export const AssignmentsPage: React.FC = () => {
                       {colAssignments.map((a) => (
                         <div
                           key={a.id}
-                          className="rounded-[8px] border border-slate-200 bg-white p-3 shadow-2xs dark:border-slate-800 dark:bg-slate-900 space-y-2.5 hover:border-[#5645d4]/40 transition-colors"
+                          className="rounded-[8px] border border-slate-200 bg-white p-3 shadow-2xs dark:border-slate-800 dark:bg-slate-900 space-y-2.5 hover:border-[#0f6b57]/40 transition-colors"
                         >
                           <div>
                             <div className="flex items-center justify-between mb-1">
@@ -471,7 +471,7 @@ export const AssignmentsPage: React.FC = () => {
                                   onClick={() => toggleChecklistMutation.mutate({ assignmentId: a.id, itemId: item.id })}
                                   className="flex items-start gap-1 cursor-pointer text-[10px] text-slate-600 dark:text-slate-300"
                                 >
-                                  <span className={`mt-0.5 h-2.5 w-2.5 rounded flex items-center justify-center border ${item.isCompleted ? 'bg-[#5645d4] border-[#5645d4] text-white' : 'border-slate-300'}`}>
+                                  <span className={`mt-0.5 h-2.5 w-2.5 rounded flex items-center justify-center border ${item.isCompleted ? 'bg-[#0f6b57] border-[#0f6b57] text-white' : 'border-slate-300'}`}>
                                     {item.isCompleted && <Check className="h-2 w-2" />}
                                   </span>
                                   <span className={item.isCompleted ? 'line-through text-slate-400' : ''}>
@@ -497,14 +497,14 @@ export const AssignmentsPage: React.FC = () => {
                             <div className="flex items-center gap-1">
                               <button
                                 onClick={() => duplicateMutation.mutate(a.id)}
-                                className="text-slate-400 hover:text-[#5645d4] p-0.5"
+                                className="text-slate-400 hover:text-[#0f6b57] p-0.5"
                                 title="Duplicate task template"
                               >
                                 <Copy className="h-3 w-3" />
                               </button>
                               <button
                                 onClick={() => setShareTarget(a)}
-                                className="text-slate-400 hover:text-[#5645d4] p-0.5"
+                                className="text-slate-400 hover:text-[#0f6b57] p-0.5"
                                 title="Share"
                               >
                                 <Share2 className="h-3 w-3" />
@@ -563,7 +563,7 @@ export const AssignmentsPage: React.FC = () => {
 
                       <button
                         onClick={() => duplicateMutation.mutate(a.id)}
-                        className="p-1.5 rounded-[6px] text-slate-400 hover:text-[#5645d4] hover:bg-slate-100 dark:hover:bg-slate-800"
+                        className="p-1.5 rounded-[6px] text-slate-400 hover:text-[#0f6b57] hover:bg-slate-100 dark:hover:bg-slate-800"
                         title="Duplicate task"
                       >
                         <Copy className="h-4 w-4" />
@@ -597,7 +597,7 @@ export const AssignmentsPage: React.FC = () => {
               <p className="mt-1">Organize large semester projects, capstone roadmaps, milestones, and deliverables.</p>
               <button
                 onClick={() => setIsCreateProjectOpen(true)}
-                className="mt-4 inline-flex items-center gap-2 rounded-[8px] bg-[#5645d4] hover:bg-[#4534b3] px-4 py-2 text-xs font-semibold text-white shadow-xs"
+                className="mt-4 inline-flex items-center gap-2 rounded-[8px] bg-[#0f6b57] hover:bg-[#0b5645] px-4 py-2 text-xs font-semibold text-white shadow-xs"
               >
                 <Plus className="h-4 w-4" />
                 Create First Project
@@ -612,7 +612,7 @@ export const AssignmentsPage: React.FC = () => {
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-[4px] bg-[#5645d4]/10 text-[#5645d4] dark:bg-[#5645d4]/20 dark:text-[#8070f6] uppercase">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-[4px] bg-[#0f6b57]/10 text-[#0f6b57] dark:bg-[#0f6b57]/20 dark:text-[#4ccba5] uppercase">
                         {proj.course?.code || 'Academic Project'}
                       </span>
                       <h3 className="text-base font-bold text-slate-900 dark:text-white mt-1">
@@ -644,7 +644,7 @@ export const AssignmentsPage: React.FC = () => {
                     </div>
                     <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                       <div
-                        className="bg-[#5645d4] h-full rounded-full transition-all"
+                        className="bg-[#0f6b57] h-full rounded-full transition-all"
                         style={{ width: `${proj.progressPercentage || 0}%` }}
                       />
                     </div>
@@ -671,7 +671,7 @@ export const AssignmentsPage: React.FC = () => {
                   {proj.importantLinks && (
                     <div className="text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
                       <span className="font-semibold text-slate-600 dark:text-slate-300">Links: </span>
-                      <span className="text-[#5645d4] dark:text-[#8070f6] underline">{proj.importantLinks}</span>
+                      <span className="text-[#0f6b57] dark:text-[#4ccba5] underline">{proj.importantLinks}</span>
                     </div>
                   )}
                 </div>
@@ -701,7 +701,7 @@ export const AssignmentsPage: React.FC = () => {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g. Milestone 2 Deliverable"
-                  className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 />
               </div>
 
@@ -712,7 +712,7 @@ export const AssignmentsPage: React.FC = () => {
                     required
                     value={courseId}
                     onChange={(e) => setCourseId(e.target.value)}
-                    className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                   >
                     <option value="">Select course...</option>
                     {courses.map((c) => (
@@ -726,7 +726,7 @@ export const AssignmentsPage: React.FC = () => {
                   <select
                     value={priority}
                     onChange={(e) => setPriority(e.target.value as any)}
-                    className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                   >
                     <option value="LOW">Low</option>
                     <option value="MEDIUM">Medium</option>
@@ -745,7 +745,7 @@ export const AssignmentsPage: React.FC = () => {
                     step="0.5"
                     value={estimatedHours}
                     onChange={(e) => setEstimatedHours(e.target.value ? Number(e.target.value) : '')}
-                    className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                   />
                 </div>
 
@@ -754,7 +754,7 @@ export const AssignmentsPage: React.FC = () => {
                   <select
                     value={taskStatus}
                     onChange={(e) => setTaskStatus(e.target.value)}
-                    className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                    className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                   >
                     {statusCategories.map((s) => (
                       <option key={s.id} value={s.id}>{s.label}</option>
@@ -770,7 +770,7 @@ export const AssignmentsPage: React.FC = () => {
                   required
                   value={deadline}
                   onChange={(e) => setDeadline(e.target.value)}
-                  className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 />
               </div>
 
@@ -781,7 +781,7 @@ export const AssignmentsPage: React.FC = () => {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Task instructions and guidelines..."
-                  className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 />
               </div>
             </div>
@@ -798,7 +798,7 @@ export const AssignmentsPage: React.FC = () => {
                 type="button"
                 onClick={() => createAssignmentMutation.mutate()}
                 disabled={createAssignmentMutation.isPending || !title || !courseId || !deadline}
-                className="px-4 py-2 text-xs font-semibold text-white bg-[#5645d4] hover:bg-[#4534b3] rounded-[8px] disabled:opacity-50"
+                className="px-4 py-2 text-xs font-semibold text-white bg-[#0f6b57] hover:bg-[#0b5645] rounded-[8px] disabled:opacity-50"
               >
                 {createAssignmentMutation.isPending ? 'Creating...' : 'Create Task'}
               </button>
@@ -827,7 +827,7 @@ export const AssignmentsPage: React.FC = () => {
                   value={projTitle}
                   onChange={(e) => setProjTitle(e.target.value)}
                   placeholder="e.g. Distributed Database Capstone"
-                  className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 />
               </div>
 
@@ -836,7 +836,7 @@ export const AssignmentsPage: React.FC = () => {
                 <select
                   value={projCourseId}
                   onChange={(e) => setProjCourseId(e.target.value)}
-                  className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 >
                   <option value="">General Project</option>
                   {courses.map((c) => (
@@ -851,7 +851,7 @@ export const AssignmentsPage: React.FC = () => {
                   type="date"
                   value={projDeadline}
                   onChange={(e) => setProjDeadline(e.target.value)}
-                  className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 />
               </div>
 
@@ -862,7 +862,7 @@ export const AssignmentsPage: React.FC = () => {
                   value={projDeliverables}
                   onChange={(e) => setProjDeliverables(e.target.value)}
                   placeholder="Source code repo, report PDF, presentation slides..."
-                  className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 />
               </div>
 
@@ -873,7 +873,7 @@ export const AssignmentsPage: React.FC = () => {
                   value={projImportantLinks}
                   onChange={(e) => setProjImportantLinks(e.target.value)}
                   placeholder="e.g. GitHub URL, Figma link, Google Drive"
-                  className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#5645d4] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  className="w-full rounded-[8px] border border-slate-300 p-2 text-slate-900 focus:border-[#0f6b57] focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 />
               </div>
             </div>
@@ -890,7 +890,7 @@ export const AssignmentsPage: React.FC = () => {
                 type="button"
                 onClick={() => createProjectMutation.mutate()}
                 disabled={createProjectMutation.isPending || !projTitle}
-                className="px-4 py-2 text-xs font-semibold text-white bg-[#5645d4] hover:bg-[#4534b3] rounded-[8px] disabled:opacity-50"
+                className="px-4 py-2 text-xs font-semibold text-white bg-[#0f6b57] hover:bg-[#0b5645] rounded-[8px] disabled:opacity-50"
               >
                 {createProjectMutation.isPending ? 'Creating...' : 'Create Project'}
               </button>
